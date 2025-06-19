@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS cmsList (
+  idx mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
+  cmsDivi tinyint(4) NOT NULL DEFAULT '1' COMMENT '구분',
+  cmsName varchar(255) NOT NULL COMMENT '콘텐츠명',
+  cmsCode varchar(20) NOT NULL COMMENT '콘텐츠코드',
+  cmsPath varchar(255) NOT NULL COMMENT '콘텐츠 위치',
+  filename0 varchar(255) NOT NULL COMMENT '포스터',
+  filename1 varchar(255) NOT NULL COMMENT '여분',
+  uContents text NOT NULL COMMENT '프로그램소개',
+  cStatus tinyint(4) NOT NULL DEFAULT '1' COMMENT '퍼블리싱',
+  editDate date NOT NULL COMMENT '수정일자',
+  signDate date NOT NULL COMMENT '등록일자',
+  PRIMARY KEY (idx)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

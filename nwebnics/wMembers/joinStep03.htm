@@ -1,0 +1,403 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnics.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
+//== last modify date : 2016. 03. 05
+//==================================================================
+//== 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" class="no-js" lang="<?=$languageSet;?>">
+<!--<![endif]-->
+	<head>
+		<!-- META TAG COMMON -->
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<title><?=$Title_Txt;?></title>
+
+		<meta name="Title" content="<?=$Title_Txt;?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes, target-densitydpi=medium-dpi" /> -->
+		<!-- ROBOTS SET -->
+		<meta name="robots" content="index, follow" />
+		<!-- BEGIN OPENGRAPH -->
+		<meta name="naver-site-verification" content="101cc8a804a8b30ac8d82b8a767bace7926417b2" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="<?=$siteName;?>" >
+		<meta property="og:title" content="<?=$Title_Txt;?>" />
+		<meta property="og:description" content="<?=$Description_Txt;?>" />
+		<meta property="og:image" content="http://<?=$siteDomain;?>/img/comm/og.jpg" />
+		<meta property="og:url" content="http://<?=$siteDomain;?>" />
+		<!-- END OPENGRAPH -->
+
+		<!-- BEGIN TWITTERCARD -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@WEBSITE" />
+		<meta name="twitter:title" content="<?=$Title_Txt;?>" />
+		<meta name="twitter:description" content="<?=$Description_Txt;?>" />
+		<meta name="twitter:url" content="http://<?=$siteDomain;?>" />
+		<meta name="twitter:image" content="http://<?=$siteDomain;?>/img/comm/og.jpg" />
+		<!-- END TWITTERCARD -->
+
+		<title><?=$Title_Txt;?></title>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" media="all" />
+		<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
+		<script type="text/javascript" src="/js/respond.min.js"></script>
+		<script type="text/javascript" src="/js/html5shiv.min.js"></script>
+		<![endif]-->
+		<!--[if lte IE 6]><script type="text/javascript">location.href='/NoticeIE6.htm';</script><![endif]-->
+	</head>
+	<body>
+		<h1 class="blind"><?=$siteName;?> 홈페이지에 오신것을 환영합니다.</h1>
+		<hr/>
+		<!-- 스킵 바로가기 메뉴 -->
+		<ul id="skipmenu">
+			<li><a href="#navi-quick">메인메뉴 바로가기</a></li>
+			<li><a href="#content-quick">콘텐츠 바로가기</a></li>
+			<li><a href="#footer-quick">카피라이터 바로가기</a></li>
+		</ul>
+		<div id="layoutWrap">
+			<hr/>
+			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
+			<!-- 헤더 섹션 시작 -->
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
+			<!-- 헤더 섹션 종료 -->
+
+			<hr/>
+			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">콘텐츠</a></h2>
+			<!-- 콘텐츠 섹션 시작 -->
+			<div id="contentsWrap">
+				<div id="contentsArea">
+					<!-- 로컬 메뉴 섹션 시작 -->
+					<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<!-- 로컬 메뉴 섹션 종료 -->
+
+					<!-- 콘텐츠 시작 -->
+					<div id="contentsView">
+						<div id="titleWrap">
+							<div id="contentsDepth"><?=$Site_Path;?></div>
+							<h3 id="contentsTitle"><?=$cTitle;?></h3>
+						</div>
+						<div id="contentsPrint">
+						<!----------------------------------------------------콘텐츠 내용------------------------------------------>
+
+						<?
+						//== 본인확인서비스 결과 리턴 항목
+						$memId							= $_POST["mem_id"];					// 회원사코드
+						$svcTxSeqno			= $_POST["svc_tx_seqno"];	// 거래번호
+						$rqstCausCd			= $_POST["rqst_caus_cd"];	// 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타);//
+						$resultCd						= $_POST["result_cd"];				// 결과코드
+						$resultMsg					= $_POST["result_msg"];			// 결과메세지
+						$certDtTm						= $_POST["cert_dt_tm"];			// 인증일시
+						$di										= $_POST["di"];									// DI
+						$ci										= $_POST["ci"];									// CI
+						$name								= $_POST["name"];							// 성명
+						$birthday						= $_POST["birthday"];					// 생년월일
+						$sex									= $_POST["sex"];								// 성별
+						$nation							= $_POST["nation"];						// 내외국인구분
+						$telComCd					= $_POST["tel_com_cd"];			// 통신사코드
+						$telNo								= $_POST["tel_no"];						// 휴대폰번호
+						$returnMsg				= $_POST["return_msg"];			// 리턴메시지
+
+						$arrSel[0] = substr($telNo,0,3);
+						$arrSel[1] = substr($telNo,3,-4);
+						$arrSel[2] = substr($telNo,-4,4);
+
+						if($_GET['kMode']=='add') {																																														//== 신규가입
+							if(!$_POST['name']) js_action(1,"휴대폰 본인확인이 선행되어야 합니다.","",-1);
+							$mNames=$_POST['name'];
+						}else if($_GET['kMode']=='edit') {																																										//== 회원정보 수정
+							if(login_session()) {
+								$sqlStr="SELECT * FROM wMember WHERE idx='".$_SESSION[my_idx]."' and mId='".$_SESSION[my_id]."'";
+								$view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
+								if(DB::isError($view)) die($view->getMessage());
+								$mNames=$view[mName];
+								$view[adminMemo]=htmlspecialchars($view[adminMemo]);
+								$view[adminMemo]=nl2br($view[adminMemo]);
+								$arrEmail=explode("@",$view[email]);
+								$arrTel=explode("-",$view[telNum]);
+								$arrSel=explode("-",$view[selNum]);
+								$v_birth=explode("-",$view[birthDay]);
+							}else { js_action(1,"회원 로그인후 이용하세요.","",-1); }
+						}else { js_action(1,"올바른 방법으로 접근하세요.","",-1); }
+						?>
+						<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+						<script>
+								function DaumPostcode(mode) {
+									new daum.Postcode({
+										oncomplete: function(data) {
+											// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+											// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+											// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+											var fullAddr = ''; // 최종 주소 변수
+											var extraAddr = ''; // 조합형 주소 변수
+
+											// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+											if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+													fullAddr = data.roadAddress;
+
+											} else { // 사용자가 지번 주소를 선택했을 경우(J)
+													fullAddr = data.jibunAddress;
+											}
+
+											// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+											if(data.userSelectedType === 'R'){
+													//법정동명이 있을 경우 추가한다.
+													if(data.bname !== ''){
+															extraAddr += data.bname;
+													}
+													// 건물명이 있을 경우 추가한다.
+													if(data.buildingName !== ''){
+															extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+													}
+													// 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+													fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+											}
+											if(mode == 1) {
+												// 우편번호와 주소 정보를 해당 필드에 넣는다.
+												document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+												document.getElementById('haddress1').value = fullAddr;
+												// 커서를 상세주소 필드로 이동한다.
+												document.getElementById('haddress2').focus();
+											}else {
+												// 우편번호와 주소 정보를 해당 필드에 넣는다.
+												document.getElementById('czipcode').value = data.zonecode; //5자리 새우편번호 사용
+												document.getElementById('caddress1').value = fullAddr;
+												// 커서를 상세주소 필드로 이동한다.
+												document.getElementById('caddress2').focus();
+											}
+										}
+									}).open();
+								}
+						</script>
+						<script>
+						// GNB
+						$(document).ready(function() {
+							$('input.mType1').click(function(){ $('.joinHiddenBox').hide(); });
+							$('input.mType2').click(function(){ $('.joinHiddenBox').show(); });
+							$('input.mType3').click(function(){ $('.joinHiddenBox').show(); });
+						});
+
+						function fCheck(kmode, idx, page) {
+							var thisform = document.setForm;
+							var cnt01 = $("input[name=ulevel]:radio:checked").length;
+							if(cnt01 < 1) { alert('회원구분을 선택하세요.'); return; }
+							if(!thisform.mId.value) { alert("아이디를 입력하세요!"); thisform.mId.focus(); return false; }
+							if(!thisform.mName.value) { alert("성명을 입력하세요!"); thisform.mName.focus(); return false; }
+							if(kmode == "add") {
+								if(!thisform.password1.value || thisform.password1.value.length < 6) { alert('6자리 이상의 첫번째 비밀번호를 입력하세요!'); thisform.password1.focus(); return false; }
+								if(!thisform.password2.value || thisform.password2.value.length < 6) { alert('6자리 이상의 두번째 비밀번호를 입력하세요!'); thisform.password2.focus(); return false; }
+								if((thisform.password1.value) != (thisform.password2.value)) {
+									alert("비밀번호가 같지 않습니다.");
+									thisform.password1.value="";
+									thisform.password2.value="";
+									thisform.password1.focus();
+									return false;
+								}
+							}
+
+							if(kmode == "edit") vtext="회원정보 수정을"; else if(kmode == "del") vtext="삭제"; else if(kmode == "add") vtext="회원가입을";
+							var ok_no = confirm(vtext+" 하시겠습니까?");
+							if(ok_no == true) {
+								document.setForm.action = 'https://www.hwgunsan.or.kr/appExe.php?kmode='+kmode+'&idx='+idx+'&page='+page;
+								document.setForm.method = 'POST';
+								document.setForm.submit();
+							}else { return; }
+						}
+
+						function emailCheck() {
+							var thisform = document.setForm;
+							if(thisform.email_c.value == ""){
+								thisform.email_b.readOnly = false;
+								thisform.email_b.value = "";
+								thisform.email_b.focus();
+							}else{
+								thisform.email_b.value = "";
+								thisform.email_b.value = thisform.email_c.value;
+								thisform.email_b.readOnly = true;
+							}
+						}
+
+						function dupl_id_check(mode) {
+								if(!document.setForm.mId.value) {
+									alert('아이디(ID)를 입력하신 후에 확인하세요!'); document.setForm.mId.focus(); return;
+								}else {
+									url = "/nwebnics/wMembers/idCheck.php?mId="+document.setForm.mId.value+"&divi="+mode;
+									var window_left = (screen.width-640)/2;
+									var window_top = (screen.height-480)/2;
+									window.open(url,"id_check_window",'width=410,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,top=' + window_top + ',left=' + window_left + '');
+								}
+						}
+						</script>
+						<style>
+						.joinHiddenBox { display:none; }
+						</style>
+						<div id="joinTop">
+							<span class="joinTab1">약관동의</span>
+							<img src="/img/07/joinTabArrow.png" alt="다음" />
+							<span class="joinTab2">본인확인</span>
+							<img src="/img/07/joinTabArrow.png" alt="다음" />
+							<span class="joinTab3" style="background-color:#66acd0;">정보입력</span>
+							<img src="/img/07/joinTabArrow.png" alt="다음" />
+							<span class="joinTab4">가입완료</span>
+						</div>
+						<h3 class="title1">회원정보 입력</h3>
+
+						<form name="setForm">
+							<fieldset>
+								<legend>회원정보 관리</legend>
+
+								<table class="tblComm join" style="width:738px; margin:0 0 20px 22px;" summary="회원정보 입력">
+									<colgroup>
+										<col width="25%" />
+										<col width="75%" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<th><span>*</span> 회원구분</th>
+											<td><input type="radio" name="ulevel" value="4" class="mType1 align_left_middle"<?if($view[ulevel]=="4") echo " checked";?> />학부모<input type="radio" name="ulevel" value="3" class="mType2 align_left_middle"<?if($view[ulevel]=="3") echo " checked";?> />보육교직원<input type="radio" name="ulevel" value="2" class="mType3 align_left_middle"<?if($view[ulevel]=="2") echo " checked";?> />원장
+												<p class="joinHiddenBox" style="margin-top:5px; padding:5px 10px; border:1px solid #ddd; background:#fafafa; font-size:12px;">어린이집교사나 원장으로 회원가입을 원하시는 경우, 회원가입을 완료하시고 <b>사업자등록증</b>과 <b>회원아이디</b>를 센터 메일(hwgunsan@daum.net)로 발송 후 전화 연락 주시면 증빙자료 확인 후에 승인해드립니다.<br />- 문의 : 063-911-0756 (군산시육아종합지원센터)</p>
+											</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 아이디</th>
+											<td><input type="text" name="mId" maxlength="20" class="textbox" value="<?=$view[mId];?>" placeholder="아이디 입력"<?if($_GET[kMode]=='edit') echo " readonly";?> /> <a href="javascript:dupl_id_check(1)" title="아이디 중복확인"class="statusBtn02">중복확인</a></td>
+										</tr>
+										<tr>
+											<th><span>*</span> 성명</th>
+											<td><input type="text" name="mName" maxlength="20" class="textbox" value="<?=$mNames;?>" placeholder="성명 입력" readonly /></td>
+										</tr>
+										<tr>
+											<th><span>*</span> 비밀번호</th>
+											<td><input type="password" name="password1" maxlength="12" class="textbox" value="<?=$view[password];?>" placeholder="비밀번호 입력" /><span style="color:#999;"> 영문과 숫자를 포함하여 6자 이상으로 작성합니다.</span></td>
+										</tr>
+										<tr>
+											<th><span>*</span> 비밀번호 확인</th>
+											<td><input type="password" name="password2" maxlength="12" class="textbox" placeholder="비밀번호 확인" /></td>
+										</tr>
+										<tr>
+											<th><span>*</span> 생년월일</th>
+											<td class="selectWrapLine">
+												<input type="text" name="birthYear" maxlength="4" class="textbox" value="<?=$v_birth[0];?>" style="width:40px; margin-right:3px;" placeholder="년도" />년
+												<select name="birthMonth" class="selectbox">
+													<option>선택</option>
+													<option value="1"<?if($v_birth[1]=='1') echo " selected";?>>1</option>
+													<option value="2"<?if($v_birth[1]=='2') echo " selected";?>>2</option>
+													<option value="3"<?if($v_birth[1]=='3') echo " selected";?>>3</option>
+													<option value="4"<?if($v_birth[1]=='4') echo " selected";?>>4</option>
+													<option value="5"<?if($v_birth[1]=='5') echo " selected";?>>5</option>
+													<option value="6"<?if($v_birth[1]=='6') echo " selected";?>>6</option>
+													<option value="7"<?if($v_birth[1]=='7') echo " selected";?>>7</option>
+													<option value="8"<?if($v_birth[1]=='8') echo " selected";?>>8</option>
+													<option value="9"<?if($v_birth[1]=='9') echo " selected";?>>9</option>
+													<option value="10"<?if($v_birth[1]=='10') echo " selected";?>>10</option>
+													<option value="11"<?if($v_birth[1]=='11') echo " selected";?>>11</option>
+													<option value="12"<?if($v_birth[1]=='12') echo " selected";?>>12</option>
+												</select>월
+													<input type="text" name="birthDay" maxlength="2" class="textbox" value="<?=$v_birth[2];?>" style="width:40px; margin-left:7px;" placeholder="일" />일
+													<input type="radio" name="solu" value="1" class="align_left_middle"<?if($view[solu]=='1') echo " checked";?> />양력
+													<input type="radio" name="solu" value="2" class="align_left_middle"<?if($view[solu]=='2') echo " checked";?> />음력
+											</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 성별</th>
+											<td><input type="radio" name="sex" value="1" class="align_left_middle"<?if($view[sex]=='1') echo " checked";?> />남 <input type="radio" name="sex" value="2" class="align_left_middle"<?if($view[sex]=='2') echo " checked";?> />여</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 주소</th>
+											<td>
+												<div><input type="text" id="zipcode" name="zipcode" maxlength="5" value="<?=$view[zipcode];?>" class="textbox" readonly style="width:40px;" /><span onClick="DaumPostcode('1');" class="statusBtn02" style="cursor:pointer;">주소찾기</span></div>
+												<div style="padding-top:5px;"><input type="text" id="haddress1" name="haddress1" maxlength="255" value="<?=$view[haddress1];?>" class="textbox" placeholder="주소 입력" />
+												<input style="width:200px;" type="text" id="haddress2" name="haddress2" maxlength="255" value="<?=$view[haddress2];?>" class="textbox" placeholder="상세주소 입력" /></div>
+											</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 이메일주소</th>
+											<td class="selectWrapLine">
+												<input type="text" name="email_a" maxlength="255" class="textbox" value="<?=$arrEmail[0];?>" />@
+												<input type="text" name="email_b" maxlength="255" class="textbox" value="<?=$arrEmail[1];?>" />
+												<select name="email_c" class="selectbox" onChange="emailCheck();">
+													<option value="">직접입력</option>
+													<option value="naver.com">naver.com</option>
+													<option value="daum.net">daum.net</option>
+													<option value="hanmail.net">hanmail.net</option>
+													<option value="gmail.com">gmail.com</option>
+													<option value="nate.com">nate.com</option>
+													<option value="msn.com">msn.com</option>
+													<option value="lycos.co.kr">lycos.co.kr</option>
+													<option value="hotmail.com">hotmail.com</option>
+													<option value="empal.com">empal.com</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 메일수신</th>
+											<td><input type="radio" name="newsDm" value="1" class="align_left_middle"<?if($view[newsDm]=='1') echo " checked";?> />예<input type="radio" name="newsDm" value="2" class="align_left_middle"<?if($view[newsDm]=='2') echo " checked";?> />아니오</td>
+										</tr>
+										<tr>
+											<th><span>*</span> 핸드폰</th>
+											<td><input type="text" name="selNum01" maxlength="4" class="textbox" value="<?=$arrSel[0];?>" placeholder="02" style="width:40px;" />-<input type="text" name="selNum02" maxlength="4" class="textbox" value="<?=$arrSel[1];?>" placeholder="1234" style="width:40px;" />-<input type="text" name="selNum03" maxlength="4" class="textbox" value="<?=$arrSel[2];?>" placeholder="5678" style="width:40px;" /></td>
+										</tr>
+										<tr>
+											<th><span>*</span> 전화번호</th>
+											<td><input type="text" name="telNum01" maxlength="4" class="textbox" value="<?=$arrTel[0];?>" placeholder="02" style="width:40px;" />-<input type="text" name="telNum02" maxlength="4" class="textbox" value="<?=$arrTel[1];?>" placeholder="1234" style="width:40px;" />-<input type="text" name="telNum03" maxlength="4" class="textbox" value="<?=$arrTel[2];?>" placeholder="5678" style="width:40px;" /></td>
+										</tr>
+										<tr class="joinHiddenBox">
+											<td colspan="2"><strong>어린이집정보 입력</strong></td>
+										</tr>
+										<tr class="joinHiddenBox">
+											<th><span>*</span> 어린이집명</th>
+											<td><input type="text" name="careCenter" maxlength="20" class="textbox" value="<?=$view[careCenter];?>" placeholder="어린이집명 입력" /></td>
+										</tr>
+										<tr class="joinHiddenBox">
+											<th><span>*</span> 어린이집 전화번호</th>
+											<td><input type="text" name="ctelNum01" maxlength="4" class="textbox" value="<?=$view[ctelNum01];?>" placeholder="02" style="width:40px;" />-<input type="text" name="ctelNum02" maxlength="4" class="textbox" value="<?=$view[ctelNum02];?>" placeholder="1111" style="width:40px;" />-<input type="text" name="ctelNum03" maxlength="4" class="textbox" value="<?=$view[ctelNum03];?>" placeholder="2222" style="width:40px;" /></td>
+										</tr>
+										<tr class="joinHiddenBox">
+											<th><span>*</span> 어린이집 주소</th>
+											<td>
+												<div><input type="text" id="czipcode" name="czipcode" size="5" maxlength="5" value="<?=$view[czipcode];?>" class="textbox" style="width:40px;" readonly /><span class="statusBtn02" onClick="DaumPostcode('2');" style="cursor:pointer;">주소찾기</span></div>
+												<div style="margin-top:5px;"><input style="width:200px;" type="text" id="caddress1" name="caddress1" size="45" maxlength="60" value="<?=$view[caddress1];?>" class="textbox" placeholder="주소 입력" />
+												<input type="text" style="width:200px;" id="caddress2" name="caddress2" size="30" maxlength="30" value="<?=$view[caddress2];?>" class="textbox" placeholder="상세주소 입력" /></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<input type="hidden" name="mode" value="3" />
+							</fieldset>
+						</form>
+						<?if($_GET[kMode]=='add') $vTxt="회원가입"; else if($_GET[kMode]=='edit') $vTxt="정보수정";?>
+						<div style="text-align:center;"><input type="button" value="<?=$vTxt;?>" class="boardBtn" style="width:100px; padding:10px 0;" onClick="fCheck('<?=$_GET[kMode];?>', '<?=$view[idx];?>', '<?=$_GET[page];?>');" /> <input type="button" value="취소하기" class="boardBtn" style="width:100px; padding:10px 0; background:#aaa;" onClick="history.back();" /></div>
+
+						<!---------------------------------------------------------------------------------------------------------->
+						</div>
+					</div>
+					<!-- 콘텐츠 종료 -->
+				</div>
+			</div>
+			<!-- 콘텐츠 섹션 종료 -->
+
+			<hr/>
+			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
+			<!-- 풋터 섹션 시작 -->
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<!-- 풋터 섹션 종료 -->
+		</div>
+		<div id="gotop" class="gotop">
+			<div></div>
+		</div>
+	</body>
+</html>
+<?addCount(); $db->disconnect();?>

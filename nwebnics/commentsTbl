@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS wComments (
+  idx mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
+  code varchar(100) NOT NULL COMMENT '코드값',
+  prarentIdx varchar(255) NOT NULL COMMENT '부모시쿼스',
+  cName varchar(100) NOT NULL COMMENT '성명',
+  mId varchar(100) NOT NULL COMMENT '회원아이디',
+  passwd varchar(41) NOT NULL COMMENT '비밀번호',
+  selPhone varchar(15) NOT NULL COMMENT '전화번호',
+  comments text NOT NULL COMMENT '코멘트',
+  userIp varchar(15) NOT NULL COMMENT '사용자IP',
+  signDate date NOT NULL COMMENT '등록일자',
+  signTime time NOT NULL COMMENT '등록시간',
+  PRIMARY KEY (idx)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

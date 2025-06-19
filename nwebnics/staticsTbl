@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS wStatics (
+  idx mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
+  siteCode varchar(10) DEFAULT NULL COMMENT '열람코드',
+  pageUrl varchar(255) NOT NULL DEFAULT '' COMMENT '열람페이지',
+  refererUrl varchar(255) NOT NULL DEFAULT '' COMMENT '접속경로',
+  visitDate date NOT NULL DEFAULT '0000-00-00' COMMENT '방문일자',
+  visitTime time NOT NULL DEFAULT '00:00:00' COMMENT '방문시간',
+  user_ip varchar(15) NOT NULL DEFAULT '' COMMENT '접속아이피',
+  userOs varchar(30) NOT NULL DEFAULT '' COMMENT '운영체제',
+  userAgent varchar(30) NOT NULL DEFAULT '' COMMENT '브라우저',
+  PRIMARY KEY (idx)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

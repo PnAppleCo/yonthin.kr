@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS infoTbl (
+  idx int(10) NOT NULL AUTO_INCREMENT,
+  c_name varchar(100) NOT NULL DEFAULT '',
+  c_cate varchar(100) NOT NULL DEFAULT '',
+  c_event varchar(100) NOT NULL DEFAULT '',
+  zipcode varchar(5) NOT NULL DEFAULT '',
+  haddress1 varchar(255) NOT NULL DEFAULT '',
+  haddress2 varchar(255) NOT NULL DEFAULT '',
+  c_num varchar(20) NOT NULL DEFAULT '',
+  c_t_num varchar(50) NOT NULL DEFAULT '',
+  c_ceo varchar(20) NOT NULL DEFAULT '',
+  c_user varchar(20) NOT NULL DEFAULT '',
+  c_tel varchar(20) NOT NULL DEFAULT '',
+  c_fax varchar(20) NOT NULL DEFAULT '',
+  agreeinfo text NOT NULL,
+  privateinfo text NOT NULL,
+  private_agree text NOT NULL,
+  c_title varchar(255) NOT NULL DEFAULT '',
+  c_meta varchar(255) NOT NULL DEFAULT '',
+  c_noid varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (idx)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;

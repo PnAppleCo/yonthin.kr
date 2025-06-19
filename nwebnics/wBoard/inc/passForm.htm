@@ -1,0 +1,100 @@
+<script type="text/javascript">
+function passCheck(thisform,mode,c_idx) {
+	//var thisform=document.PassForm;
+	if(!thisform.passwd.value) { alert('비밀번호를 입력하세요');  thisform.passwd.focus(); return false; }
+	if(thisform.passwd.value.length < 4) { alert('최소 4자리 이상 입력!'); thisform.passwd.focus(); return false; }
+	if(mode == 'check' || mode == 'delete') {
+		thisform.action = './execute.php?code=<?=$_GET[code];?>&page=<?=$_GET[page];?>&idx=<?=$_GET[idx];?>&keyword&=<?=$_GET[keyword];?>&s_1=<?=$_GET[s_1];?>&s_2=<?=$_GET[s_2];?>&s_3=<?=$_GET[s_3];?>';
+		thisform.mode.value = mode;						//== 게시물 작업
+	}else if(mode == 'secret') {
+		thisform.action = './execute.php?code=<?=$_GET[code];?>&page=<?=$_GET[page];?>&idx='+c_idx+'&keyword&=<?=$_GET[keyword];?>&s_1=<?=$_GET[s_1];?>&s_2=<?=$_GET[s_2];?>&s_3=<?=$_GET[s_3];?>';
+		thisform.mode.value = mode;						//== 게시물 작업
+	}else if(mode == 'ucontents') {
+		thisform.action = './comment/commentExe.php?code=<?=$_GET[code];?>&c_idx='+c_idx+'&b_idx=<?=$view[idx];?>';
+		thisform.mode.value = 'delete';				//== 코멘트 작업
+	}else { alert('작업모드를 찾을수 없습니다.'); }
+	thisform.method='POST';
+	thisform.submit();
+}
+var ie=document.all;
+var ns6=document.getElementById&&!document.all;
+
+function ietruebody() {
+	return (document.compatMode && document.compatMode!="BackCompat" && !window.opera)? document.documentElement : document.body;
+}
+
+function enlarge(v_mode,e,mode,c_idx) {
+	if(ie||ns6) {
+		if(v_mode == 'front') {
+			var horzpos=ns6? pageXOffset+e.clientX-120 : ietruebody().scrollLeft+event.clientX-120;
+		}else if(v_mode == 'back') {
+			var horzpos=ns6? pageXOffset+e.clientX : ietruebody().scrollLeft+event.clientX;
+		}
+		var vertpos=ns6? pageYOffset+e.clientY : ietruebody().scrollTop+event.clientY;
+		crossobj=document.getElementById? document.getElementById("showimage") : document.all.showimage;
+		crossobj.style.left=horzpos+"px";
+		crossobj.style.top=vertpos+"px";
+		In_Html = "<div align='center'>";
+		In_Html += "<table width='120' border='0' cellspacing='1' cellpadding='0' bgcolor='#CCCCCC'>";
+		In_Html += "	<tr>";
+		In_Html += "		<td width='100%' bgcolor='#FFFFFF'>";
+		In_Html += "			<form name=\"PassForm\" onsubmit=\"passCheck('"+mode+"','"+c_idx+"'); return false;\">";
+		In_Html += "			<table width='100%' border='0' cellspacing='1' cellpadding='3'>";
+		In_Html += "				<tr>";
+		In_Html += "					<td align='center' bgcolor='#F4F4F4'>";
+		In_Html += "						<table width='100%' border='0' cellspacing='0' cellpadding='0'>";
+		In_Html += "							<tr><td align='left'><font color='#FF7E00'>비밀번호 입력!</font></td><td align='right'><a href='javascript:closepreview();' class='basic'>닫기</a></td></tr>";
+		In_Html += "						</table>";
+		In_Html += "					</td>";
+		In_Html += "				</tr>";
+		In_Html += "				<tr>";
+		In_Html += "					<td align='center'>";
+		In_Html += "						<table width='100%' border='0' cellspacing='0' cellpadding='0'>";
+		In_Html += "							<tr>";
+		In_Html += "								<td align='left'><input type='password' name='passwd' size='10' maxlength='12' class='textbox1'><input type='hidden' name='mode' value=''><input type='hidden' name='fid' value='<?=$view[fid];?>'><input type='hidden' name='thread' value='<?=$view[thread];?>'><input type='hidden' name='mem_id' value='<?=$view[mem_id];?>'></td>";
+		In_Html += "								<td width='60' align='right'><input type='image' src='./skin/<?=$board_info[skin];?>/img/delete(btn).gif' width='30' height='20' align='absmiddle' border='0'></td>";
+		In_Html += "							</tr>";
+		In_Html += "						</table>";
+		In_Html += "					</td>";
+		In_Html += "				</tr></form></table>";
+		In_Html += "			</form></table>";
+		In_Html += "		</td></tr></form></table>";
+		In_Html += "	</td></tr></table>";
+		In_Html += "</div>";
+		crossobj.innerHTML = In_Html;
+		crossobj.style.visibility="visible";
+		return false;
+	}else {
+		return true;
+	}
+}
+
+function closepreview() {
+	crossobj.style.visibility="hidden";
+}
+
+function initializedrag(e) {
+	if(ie&&event.srcElement.id=="dragbar"||ns6&&e.target.id=="dragbar") {
+		offsetx=ie? event.clientX : e.clientX;
+		offsety=ie? event.clientY : e.clientY;
+		tempx=parseInt(crossobj.style.left);
+		tempy=parseInt(crossobj.style.top);
+	}
+}
+document.onmousedown=initializedrag;
+document.onmouseup=new Function("dragapproved=false");
+</script>
+<div id="showimage" style="position:absolute; visibility:hidden;"></div>
+
+
+<script type="text/javascript">
+
+function formShow(cDForm) {
+	var item = document.getElementById(cDForm);
+	if(item.style.display == 'none') {
+		item.style.display = 'block';
+	}else if(item.style.display == 'block') {
+		item.style.display = 'none';
+	}
+}
+</script>

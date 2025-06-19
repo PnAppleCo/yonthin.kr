@@ -1,0 +1,157 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnics.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
+//== last modify date : 2016. 03. 05
+//==================================================================
+//== 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" class="no-js" lang="<?=$languageSet;?>">
+<!--<![endif]-->
+	<head>
+		<!-- META TAG COMMON -->
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<title><?=$Title_Txt;?></title>
+
+		<meta name="Title" content="<?=$Title_Txt;?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes, target-densitydpi=medium-dpi" /> -->
+		<title><?=$Title_Txt;?></title>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" media="all" />
+		<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
+		<script type="text/javascript" src="/js/respond.min.js"></script>
+		<script type="text/javascript" src="/js/html5shiv.min.js"></script>
+		<![endif]-->
+		<!--[if lte IE 6]><script type="text/javascript">location.href='/NoticeIE6.htm';</script><![endif]-->
+	</head>
+	<body>
+		<h1 class="blind"><?=$siteName;?> 홈페이지에 오신것을 환영합니다.</h1>
+		<hr/>
+		<!-- 스킵 바로가기 메뉴 -->
+		<ul id="skipmenu">
+			<li><a href="#navi-quick">메인메뉴 바로가기</a></li>
+			<li><a href="#content-quick">콘텐츠 바로가기</a></li>
+			<li><a href="#footer-quick">카피라이터 바로가기</a></li>
+		</ul>
+		<div id="layoutWrap">
+			<hr/>
+			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
+			<!-- 헤더 섹션 시작 -->
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
+			<!-- 헤더 섹션 종료 -->
+
+			<hr/>
+			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">콘텐츠</a></h2>
+			<!-- 콘텐츠 섹션 시작 -->
+			<div id="contentsWrap">
+				<div id="contentsArea">
+					<!-- 로컬 메뉴 섹션 시작 -->
+					<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<!-- 로컬 메뉴 섹션 종료 -->
+
+					<!-- 콘텐츠 시작 -->
+					<div id="contentsView">
+						<div id="titleWrap">
+							<div id="contentsDepth"><?=$Site_Path;?></div>
+							<h3 id="contentsTitle"><?=$cTitle;?></h3>
+						</div>
+						<div id="contentsPrint">
+						<!----------------------------------------------------콘텐츠 내용------------------------------------------>
+
+							<script>
+							<!--
+								function jsSubmit(mode) {
+									var form1 = document.fForm;
+									form1.imode.value = mode;
+									window.open('','auth_popup','scrollbars=yes,toolbar=yes,resizable=yes,width=430,height=590,left=100,top=100');
+									form1.target = "auth_popup";
+									form1.submit();
+								}
+							//-->
+							</script>
+
+							<ul class="list2" style="clear:both; padding:10px 15px; background:#fafafa; border:1px solid #e5e5e5; border-radius:5px;">
+								<li>휴대전화가 본인명의로 가입되지 않은 회원님은 본인인증이 불가능합니다.</li>
+								<li>비밀번호는 암호화 처리되어 절대 알 수가 없으며, 휴대폰 본인인증으로 찾기 어려운 경우 사무국으로 전화주시기 바랍니다.</li>
+							</ul>
+							<br />
+							<div style="clear:both;">
+								<div style="float:left; width:49%; height:200px;">
+									<p style="text-align:center; padding:.5em; font-weight:600; font-size:1.1em; background:#00548D; color:#fff;">아이디 찾기</p>
+									<div style="width:auto; height:160px; vertical-align:middle; border:1px solid #ddd; text-align:center;">
+										<p style="height:50px; padding-top:40px;">아이디를 찾고 싶다면 아래버튼을 클릭하세요.</p>
+										<p><a href="#" class="btn2" onClick="jsSubmit('1');" style="background:#5789bf;">아이디 찾기</a></p>
+									</div>
+								</div>
+								<div style="float:right; width:49%; height:200px;">
+									<p style="text-align:center; padding:.5em; font-weight:600; font-size:1.1em; background:#00548D; color:#fff;">비밀번호 찾기</p>
+									<div style="width:auto; height:160px; vertical-align:middle; border:1px solid #ddd; text-align:center;">
+										<p style="height:50px; padding-top:40px;">비밀번호를 찾고 싶다면 아래버튼을 클릭하세요.</p>
+										<p><a href="#" class="btn2" onClick="jsSubmit('2');" style="background:#5789bf;">비밀번호 찾기</a></p>
+									</div>
+								</div>
+							</div>
+							<div style="clear:both;"></div><br />
+							<ul class="list2" style="clear:both; padding:10px 15px; background:#fafafa; border:1px solid #e5e5e5; border-radius:5px;">
+								<li>본인확인 서비스중 실명인증시 입력하는 주민등록번호와 성명은 공인된 기관과 실명인증 용도로만 사용되며 군산시육아종합지원센터는 위와 같은 고유식별정보를 별도로 저장하지 않습니다.</li>
+								<li>개인정보보호법(11.09.30 시행) 제24조 제2항에 따라 주민등록번호 이외의 회원가입 방법을 제공합니다.</li>
+								<li>본인확인시 화면이 멈추는 증상이 발생하면 사용하고 계신 인터넷 브라우저나 각종툴바(ex,알툴바)의 팝업차단을 해제하여주시기 바랍니다.</li>
+							</ul>
+							<form name="fForm" action="/modules/kcb/okname/hs_cnfrm_popup2.php" method="post">
+								<input type="hidden" name="rqst_caus_cd" value="00" />
+								<input type="hidden" name="in_tp_bit" value="0" />
+								<input type="hidden" name="imode" value="" />
+							</form>
+							<form name="kcbResultForm" method="post">
+								<input type="hidden" name="mem_id" value="" />
+								<input type="hidden" name="svc_tx_seqno" value="" />
+								<input type="hidden" name="rqst_caus_cd" value="" />
+								<input type="hidden" name="result_cd" value="" />
+								<input type="hidden" name="result_msg" value="" />
+								<input type="hidden" name="cert_dt_tm" value="" />
+								<input type="hidden" name="di" value="" />
+								<input type="hidden" name="ci" value="" />
+								<input type="hidden" name="name" value="" />
+								<input type="hidden" name="birthday" value="" />
+								<input type="hidden" name="sex" value="" />
+								<input type="hidden" name="nation" value="" />
+								<input type="hidden" name="tel_com_cd" value="" />
+								<input type="hidden" name="tel_no" value="" />
+								<input type="hidden" name="return_msg" value="" />
+								<input type="hidden" name="mName" value="" />
+								<input type="hidden" name="mId" value="" />
+							</form>
+
+						<!---------------------------------------------------------------------------------------------------------->
+						</div>
+					</div>
+					<!-- 콘텐츠 종료 -->
+				</div>
+			</div>
+			<!-- 콘텐츠 섹션 종료 -->
+
+			<hr/>
+			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
+			<!-- 풋터 섹션 시작 -->
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<!-- 풋터 섹션 종료 -->
+		</div>
+		<div id="gotop" class="gotop">
+			<div></div>
+		</div>
+	</body>
+</html>
+<?addCount(); $db->disconnect();?>

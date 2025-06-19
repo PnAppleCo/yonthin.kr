@@ -1,0 +1,88 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnicsoft.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
+//== last modify date : 2011. 03. 01
+//==================================================================
+//== 게시판 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+
+if(member_session(1)) header('Location: ../wTools/mList.php');
+
+if($_COOKIE[md5($siteDomain)]) $idBack="value=\"".$_COOKIE[md5($siteDomain)]."\""; else $idBack=" style=\"background:url(/nwebnics/img/id.gif) no-repeat;\"";
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<meta name="Title" content="<?=$Title_Txt;?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<title><?=$Title_Txt;?></title>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" />
+		<script type="text/javascript" src="/nwebnics/js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="/nwebnics/js/common.js"></script>
+	</head>
+	<body>
+		<h1 class="blind"><?=$siteName;?> 홈페이지에 오신것을 환영합니다.</h1>
+		<!-- 스킵 바로가기 메뉴 -->
+		<ul id="skipmenu">
+			<li><a href="#navi-quick">메인메뉴 바로가기</a></li>
+			<li><a href="#content-quick">콘텐츠 바로가기</a></li>
+			<li><a href="#footer-quick">카피라이터 바로가기</a></li>
+		</ul>
+		<!-- 바디 시작 -->
+		<div id="wrapper">
+			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
+			<!-- 헤더 -->
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<!-- 콘텐츠 시작 -->
+			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
+			<div id="container">
+				<!-- 콘텐츠 좌측 -->
+				<?//if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+				<!-- 콘텐츠 메인 -->
+				<div id="subContents">
+
+					<!-- 메인 콘텐츠 시작 -->
+					<p id="siteDepth">사이트 깊이</p>
+					<p id="headTitle">팝업관리</p>
+					<p id="contentsBody">
+
+					<!-- 메인 콘텐츠 시작 -->
+					<p id="headTitle">로그인</p>
+					<p id="contentsBody">
+					<div id="loginSection">
+						<div id="loginBox">
+							<fieldset>
+								<legend class="blind">로그인</legend>
+								<form name="l_log_Form" onsubmit="divLogin(); return false;">
+									<dl id="login_textbox">
+										<dd><input type="text" name="id" style="width:95%; height:18px;" maxlength="20" class="textbox" value="<?=$_COOKIE[md5($siteDomain)];?>"></dd>
+										<dd style="margin-top:3px;"><input type="password" name="pass" style="width:95%; height:18px;" maxlength="20" class="textbox"></dd>
+									</dl>
+									<div id="login_btn"><input type="image" src="/img/comm/login_main_btn.gif" alt="로그인" /></div>
+									<ul id="login_bottom">
+										<li><span><input type="checkbox" name="saveid" value="ok"<? if($_COOKIE[md5($siteDomain)]) echo " checked";?> class="align_left_middle" /> ID저장</span><span style="padding-left:30px;"><input type="checkbox" name="safecon" value="ok" class="align_left_middle" /> 보안접속</span></li>
+										<li><span><a href="javascript:void(window.open('/nwebnics/wMembers/infoFind.php?mode=1','FindId','width=400,height=300,status=no,resizable=0,scrollbars=0,1,1'));" onfocus="this.blur()" title="id/pw찾기">아이디/비밀번호 찾기</a></span></li>
+									</ul>
+								</form>
+							</fieldset>
+						</div>
+
+					</div>
+					</p>
+					<!-- 메인 콘텐츠 종료 -->
+
+				</div>
+			</div>
+			<!-- 콘텐츠 우측 -->
+			<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+			<!-- 주소 및 보텀 메뉴 시작 -->
+			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
+			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+		</div>
+	</body>
+</html>
+<?$db->disconnect();?>

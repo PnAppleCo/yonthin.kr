@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS wPopup (
+  idx int(10) unsigned NOT NULL AUTO_INCREMENT,
+  popupTitle varchar(255) NOT NULL DEFAULT '' COMMENT '팝업제목',
+  popupType tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '팝업종류',
+  startDate date NOT NULL DEFAULT '0000-00-00' COMMENT '시작일자',
+  stopDate date NOT NULL DEFAULT '0000-00-00' COMMENT '종료일자',
+  popWidth smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '팝업넓이',
+  popHeight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '팝업높이',
+  locationTop smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '상단위치',
+  locationLeft smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '좌측위치',
+  linkUrl varchar(255) NOT NULL DEFAULT '' COMMENT '링크주소',
+  linkTarget varchar(20) NOT NULL DEFAULT '' COMMENT '링크타겟',
+  scrollbar tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '스크롤바',
+  ingTime tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '하루종료',
+  filename0 varchar(255) NOT NULL DEFAULT '' COMMENT '첨부파일',
+  filename1 varchar(255) NOT NULL COMMENT '파일두번째',
+  uContents text NOT NULL COMMENT '팝업내용',
+  signDate date NOT NULL DEFAULT '0000-00-00' COMMENT '등록일자',
+  PRIMARY KEY (idx)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

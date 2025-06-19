@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS wComment (
+  idx int(10) unsigned NOT NULL AUTO_INCREMENT,
+  board_idx int(10) unsigned NOT NULL DEFAULT '0',
+  code varchar(12) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  mem_id varchar(12) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  name varchar(12) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  ucontents text CHARACTER SET utf8 NOT NULL,
+  passwd varchar(41) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  signdate date NOT NULL DEFAULT '0000-00-00',
+  signtime time NOT NULL DEFAULT '00:00:00',
+  html tinyint(1) NOT NULL DEFAULT '0',
+  user_ip varchar(19) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  char_img tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (idx),
+  KEY board_uid (board_idx),
+  KEY code (code)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
