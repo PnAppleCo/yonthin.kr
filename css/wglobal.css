@@ -1,0 +1,160 @@
+@charset "utf-8";
+
+*{ margin: 0; padding: 0; border:none; font-family:"NanumGothic", sans-serif; }
+html { overflow-x:auto; height:100%; }
+
+html:first-child select { padding-right: 6px; }	/* Opera Fix height: 20px;  */
+option, x:-moz-any-link { padding-right: 4px; }					/* Firefox Fix */
+option, x:-moz-any-link, x:default { padding-right: 0; }		/* Firefox Fix */
+* html #png {background:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img.png',sizingMethod='crop'); }
+
+@font-face{
+	font-family:NanumGothic;
+	src:url(/fonts/NanumGothicRegular.eot);
+	src:local(※), url(/fonts/NanumGothicRegular.woff) format('woff');
+}
+
+@font-face{
+	font-family:NanumGothic;
+	font-weight:600;
+	src:url(/fonts/NanumGothicBold.eot);
+	src:local(※), url(/fonts/NanumGothicBold.woff) format('woff');
+}
+
+body {
+	position:relative;
+	width:100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	line-height: 150%;
+	background-color:#FFFFFF;
+	font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif !important;
+	color:#222;
+	background:#FFFFFF;
+}
+
+/* 링크(일반) */
+a:link, a:visited { color:#333; text-decoration:none; }
+a:hover, a:active { color:#2b9fc6; text-decoration:none; }
+/* 링크(볼드) */
+a.whiteTxt:link, a.whiteTxt:visited { font: 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#ccc; text-decoration:none; }
+a.whiteTxt:hover, a.whiteTxt:active { font: 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#fff; text-decoration:none; }
+
+a.tbold:link, a.tbold:visited { font: bold 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#666666; text-decoration:none; }
+a.tbold:hover, a.tbold:active { font: bold 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#666666; text-decoration:underline; }
+a.titlebold:link, a.titlebold:visited { font: bold 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#D24658; text-decoration:none; }
+a.titlebold:hover, a.titlebold:active { font: bold 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#D24658; text-decoration:underline; }
+a.gnbtext:link, a.gnbtext:visited { font: 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#333333; text-decoration:none; }
+a.gnbtext:hover, a.gnbtext:active { font: 12px Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; color:#666666; text-decoration:underline; }
+
+/* 이미지 롤오버 */
+a.rollover img { border-width:0px; display:inline; }
+a.rollover img.overout { display:none; }
+a.rollover:hover { border:0px; }
+a.rollover:hover img { display:none; }
+a.rollover:hover img.overout { display:inline; }
+
+div, p, ol, ul, li, img, a, h1, h2, h3, h4, h5, h6, form, span, iframe, dl, dt, dd { margin:0px; padding:0px; }
+ul, ol, li { list-style:none; }
+fieldset, img { margin:0px; padding:0px; vertical-align:middle; border: none; }
+hr, caption, legend { display: none; }
+label { cursor:pointer; }
+address, em { font-style:normal; }
+table { border-collapse:collapse; }
+/*table th, table td { text-align:left; }*/
+
+.textbox { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; text-decoration: none; border:1px solid #CCCCCC; height:16px; background: #F4F4F4; }
+.textbox_money { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 13px; text-decoration: none; border:none; height: 16px; background: #FFFFFF; text-align:right; }
+.textbox_search { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 15px; font-weight:bold; text-decoration: none; width:300px; border:3px solid #E60E73; height: 25px; }
+.textbox_login { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; text-decoration: none; border:1px solid #CCCCCC; height: 18px; background: #FFFFFF; }
+.passbox { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; text-decoration: none; border:1px solid #CCCCCC; height: 16px; }
+.button { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; border: solid; background: #ECECEC; height:22px; border-color: #CCCCCC #CCCCCC #FF9900; padding: 3px 3px; margin: 0px 5px; border-width: 1px 1px 2px; cursor:pointer;}
+.selectbox { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; border: 1px #CCCCCC groove; background: #FFFFFF; vertical-align:middle; }
+.textarea { font-family: Nanum Gothic, "돋움", Dotum, AppleGothic, sans-serif; font-size: 12px; text-decoration: none; border: 1px #CCCCCC solid; background: #F4F4F4; }
+
+.commentBtn {
+	display: inline-block;
+	padding: .8em .8em;
+	font-size: 1.5em;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	background-color: #FE9900;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 2px #ccc;
+}
+
+/* 기본 클래스 */
+.blind { display: none; }
+.clear_both { clear: both; }
+.float_left { float: left; }
+.float_right { float: right; }
+.visibility_no { visibility: hidden; }
+.firstbind{ background: none; }
+.bg_no { background:none !important; }
+.fontbold { font-weight:bold; }
+/* margin & padding set */
+.margin_zero { margin:0 !important; }
+.padding_zero { padding:0 !important; }
+/* ie6에서 png투명픽스 */
+.iePngFix { behavior:url(/iepngfix/iepngfix.htc); }
+/* pointer */
+.cursor_default { cursor:default; }
+.cursor_edit { cursor:text; }
+.cursor_pointer { cursor:pointer; }
+/* align */
+.align_right_middle { text-align:right; vertical-align:middle; }
+.align_right_bottom { text-align:right; vertical-align:bottom; }
+.align_left_middle { text-align:left; vertical-align:middle; }
+.align_left_bottom { text-align:left; vertical-align:bottom; }
+.align_center_middle { text-align:center; vertical-align:middle; }
+.align_center_bottom { text-align:center; vertical-align:bottom; }
+/* table padding */
+.tdPadding { text-align:left; padding-left:5px; }
+/* shadow */
+.imgBox { border:1px solid #F4F4F4; }
+/* center align loading */
+.loadingAlign { position:absolute; top: 50%; left: 50%; width:30em; height:2em; margin-top: -1em; margin-left: -15em; text-align:center; }
+/* center align error */
+.errorAlign { position:absolute; top: 50%; left: 50%; width:30em; height:8em; margin-top: -4em; margin-left: -15em; text-align:left; background-color:#F3F3F3; border: 1px solid #CCCCCC; padding:5px; }
+
+#skipmenu { position:absolute; visibility:hidden; }
+
+label.requiredFeild { color:red; }
+
+/* responsive web */
+.img_respons { max-width:100%; height: auto; }
+div.photoCnt img, div.contentsPrint img { max-width:100%; height: auto; }
+embed,object,video { max-width: 100%; height: auto; }
+
+.contentBtn {
+  background: #f59139;
+  background-image: -webkit-linear-gradient(top, #f59139, #ebae6c);
+  background-image: -moz-linear-gradient(top, #f59139, #ebae6c);
+  background-image: -ms-linear-gradient(top, #f59139, #ebae6c);
+  background-image: -o-linear-gradient(top, #f59139, #ebae6c);
+  background-image: linear-gradient(to bottom, #f59139, #ebae6c);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.5em;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.contentBtn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+  cursor:pointer;
+}

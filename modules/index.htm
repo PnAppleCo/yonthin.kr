@@ -1,0 +1,471 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnics.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
+//== last modify date : 2019. 01. 14
+//==================================================================
+//== 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8 oldie" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9" lang="<?=$languageSet;?>"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" class="no-js" lang="<?=$languageSet;?>">
+<!--<![endif]-->
+	<head>
+		<!-- info -->
+		<title><?=$Title_Txt;?></title>
+		<link rel="canonical" href="http://<?=$siteDomain;?>" />
+		<link rel="shortcut icon" href="/img/comm/favicon.ico" />
+
+		<!-- meta -->
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta name="Title" content="<?=$Title_Txt;?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes, target-densitydpi=medium-dpi" />
+
+		<!-- twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@WEBSITE" />
+		<meta name="twitter:title" content="<?=$Title_Txt;?>" />
+		<meta name="twitter:description" content="<?=$Description_Txt;?>" />
+		<meta name="twitter:url" content="<?=$snsUrl;?>" />
+		<meta name="twitter:image" content="<?=$snsImage;?>" />
+
+		<!-- opengraph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="<?=$siteName;?>" />
+		<meta property="og:title" content="<?=$Title_Txt;?>" />
+		<meta property="og:description" content="<?=$Description_Txt;?>" />
+		<meta property="og:image" content="<?=$snsImage;?>" />
+		<meta property="og:url" content="<?=$snsUrl;?>" />
+
+		<!-- robot -->
+		<meta name="robots" content="index, follow" />
+		<meta name="naver-site-verification" content="795d8624d184b95f3a77496e5647787fe9f329e8"/>
+
+		<!-- css, javascript -->
+		<link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css" media="all" />
+		<script type="text/javascript" src="/js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.bxslider.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" media="all" />
+		<script type="text/javascript" src="/js/common.js"></script>
+		<script type="text/javascript" src="/js/index.js"></script>
+
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
+		<script type="text/javascript" src="/js/respond.min.js"></script>
+		<script type="text/javascript" src="/js/html5shiv.min.js"></script>
+		<![endif]-->
+		<!--[if lte IE 6]><script type="text/javascript">location.href='/NoticeIE6.htm';</script><![endif]-->
+		<script language="javascript">
+		<!--
+		<?=poupOpen(1);?>
+		//-->
+		</script>
+	</head>
+	<body>
+		<h1 class="blind"><?=$siteName;?> 홈페이지에 오신 것을 환영합니다.</h1>
+		<hr/>
+		<!-- 스킵 바로가기 메뉴 -->
+		<ul id="skipmenu">
+			<li><a href="#navi-quick">메인메뉴 바로가기</a></li>
+			<li><a href="#content-quick">콘텐츠 바로가기</a></li>
+			<li><a href="#footer-quick">카피라이터 바로가기</a></li>
+		</ul>
+		<div id="layoutWrap" class="index">
+			<?//if(!isMobile()) echo poupOpen(2);?>
+			<hr />
+			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<hr />
+			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">콘텐츠</a></h2>
+			<div id="icontentsWrap">
+			  <div id="indexArea">
+					<!-- 인덱스 섹션 시작 -->
+					<!-- 상단 슬라이드 -->
+					<div class="idx_section1_wrap">
+						<div class="idx_section1">
+							<div class="item item1">
+								<div>
+									<div class="title">
+										<span>사업소개 01</span>
+										<strong> 생활실습형 청년 금융컨텐츠 </strong>
+										<p>
+											# 가계부pt를 통해 지출관리 미션을 클리어하며 쉬운 돈관리 방법을 터득합니다<br>
+											# 알맹이청년생활경제지식 학습으로 금융상품과 서비스에 대한 결정 역량과 이해도를 높입니다.
+										</p>
+									</div>
+									<div class="links">
+										<div class="link">
+											<a href="/contents.htm?code=3_1#b1"><img src="/img/index/s1_icon2.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=4_1#b1">청년의 돈</a></strong>
+											<span># 특허 기술 # 가계부pt # 지출 관리</span>
+											<p>
+												1주부터 8주까지 총 8개의 미션을 클리어하며<br>
+												나에게 맞는 지출관리 방법을 터득하고,<br>
+												수입과 지출의 균형을 맞춥니다.
+											</p>
+											<a href="/contents.htm?code=4_1#b1">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+										<div class="link">
+											<a href="/contents.htm?code=3_1#b2"><img src="/img/index/s1_icon1.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=4_2#b2">청년의 생활경제지식</a></strong>
+											<span># 알맹이청년생활경제지식</span>
+											<p>
+												청년 일상생활에 꼭 필요한 생활경제지식을<br>
+												쉬운 글과 그림으로 학습하며<br>
+												금융상품과 서비스에 대한 결정역량을 높입니다.
+											</p>
+											<a href="/contents.htm?code=4_2#b2">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item item2">
+								<div>
+									<div class="title">
+										<span>사업소개 02</span>
+										<strong>청년 체험사업</strong>
+										<p>
+											실질적인 재정자립과 독립을 연습하고, <br>
+											쉼을 체험하는 프로젝트 입니다.<br>
+										</p>
+									</div>
+									<div class="links">
+										<div class="link">
+											<a href="/contents.htm?code=3_1"><img src="/img/index/s1_icon4.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_1">청년의 집</a></strong>
+											<span># 체험청년독립의 현장 # 청년독립군</span>
+											<p>
+												청년독립군은 주거를 분리하거나,<br>
+												집에서 가족과 분리하여 생활해 보는<br>
+												독립체험 프로젝트입니다.<br>
+											</p>
+											<a href="contents.htm?code=3_1">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+										<div class="link">
+											<a href="/contents.htm?code=3_1"><img src="/img/index/s1_icon5.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_12">청년의 쉼</a></strong>
+											<span># 삼시 두 끼 # 농막회원권</span>
+											<p>
+												호텔회원권이 아니면 어떠한가! <br>
+												농촌, 어촌, 산촌에서 자연과 함께 소박한 쉼을<br>
+												체험하는 프로젝트 입니다.
+											</p>
+											<a href="/contents.htm?code=3_1">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item item3">
+								<div>
+									<div class="title">
+										<span>사업소개 03</span>
+										<strong>청년 교육사업</strong>
+										<p>
+											청년의 “재정자립역량 향상”을 위한 교육으로<br>
+											청년금융멘토양성과 학교밖, 대학 등 수요처에 맞는<br>
+											맞춤교육 프로젝트입니다.
+										</p>
+									</div>
+									<div class="links">
+										<div class="link">
+											<a href="/contents.htm?code=3_2_1"><img src="/img/index/s1_icon4.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_2_1">청년 금융멘토양성훈련</a></strong>
+											<p>
+												청년이 “청년금융멘토”로 활동할 수 있도록<br>
+												개별역량을 훈련하는 과정입니다.<br>
+												&nbsp;<br>
+												&nbsp;
+											</p>
+											<a href="/contents.htm?code=3_2_1">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+										<div class="link">
+											<a href="/contents.htm?code=3_2_2"><img src="/img/index/s1_icon5.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_2_2">맞춤교육</a></strong>
+											<p>
+												청년교육 수요처(사회복지시설,<br>
+												시설보호청년, 학교밖청소년, 대학 등)에 맞는<br>
+												맞춤교육을 통해 청년의 재정자립역량을 높여<br>
+												경제자립의 기반을 마련하는 과정입니다.
+											</p>
+											<a href="/contents.htm?code=3_2_2">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item item4">
+								<div>
+									<div class="title">
+										<span>사업소개 04</span>
+										<strong>청년자산형성 사업</strong>
+										<p>
+											청년의 소액 자산형성 사업을 운영합니다.,<br>
+											자산형성사업을 운영하고자하는 기관에 사업운영 컨설팅을 지원하고,<br>
+											자산형성사업과 관련한 연구과제를 수행합니다. 
+										</p>
+									</div>
+									<div class="links">
+										<div class="link">
+											<a href="/contents.htm?code=3_3"><img src="/img/index/s1_icon6.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_3">청년저축클럽 운영</a></strong>
+											<span># 청년재정자립역량 # 풀패키지 프로젝트</span>
+											<p>
+												청년자산형성사업 자체운영 및 <br>
+												민·관 기관의 사업을 수탁영 합니다.
+											</p>
+											<a href="/contents.htm?code=3_3">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+										<div class="link">
+											<a href="/contents.htm?code=3_3"><img src="/img/index/s1_icon9.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_3">연구· 컨설팅</a></strong>
+											<span># 자산형성사업연구 # 자산형성사업컨설팅</span>
+											<p>
+												청년자산형성사업 및 성과도출을 연구하고<br>
+												청년자산형성사업을 운영하고자하는 기관에<br>
+												사업운영 컨설팅을 지원합니다.
+											</p>
+											<a href="/contents.htm?code=3_3">
+												<span>바로가기</span>
+												<img src="/img/index/s1_link.png" alt="icon">
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="idx_section1_pager">
+							<div>
+								<a data-slide-index="0" href="">01</a>
+								<a data-slide-index="1" href="">02</a>
+								<a data-slide-index="2" href="">03</a>
+								<a data-slide-index="3" href="">04</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="idx_section2">
+						<!-- 유튜브로 체험 미리보기 -->
+						<div class="item1">
+							<div class="idx_title c1">
+								<strong>유튜브로<br> 체험 미리 보기</strong>
+							</div>
+							<div class="links">
+								<a href="https://youtu.be/wjTCNIbdgRs" target="_blank">
+									<img src="/img/temp/1.png" alt="썸네일">
+									<span>광주광역시 청년13(일+삶)통장<br> 수기공모전 대상</span>
+								</a>
+								<a href="toon.html" target="_blank">
+									<img src="/img/temp/2.png" alt="썸네일">
+									<span>선배가 전해주는 찐 이야기</span>
+								</a>
+							</div>
+						</div>
+						<!-- 나의 독립도 테스트 -->
+						<div class="item2">
+							<div class="idx_title c1">
+								<strong>나의 독립도<br> 테스트</strong>
+							</div>
+							<div class="links">
+								<a href="/contents.htm?code=2_1"><img src="/img/index/test.png" alt="나는 독립적인 사람일까? 자립과 의존 체크 리스트"></a>
+							</div>
+						</div>
+					</div>
+
+					<!-- 청년 체험 시리즈 -->
+					<div class="idx_section3_wrap">
+						<div class="idx_section3">
+							<div class="idx_title c2">
+								<strong>청년 체험 시리즈</strong>
+								<p>자유롭게 사회를 미리 도전하고 경험할 수 있는 시간</p>
+							</div>
+							<div class="idx_section3_slider_wrap">
+								<div class="idx_section3_pager">
+									<div>
+										<a data-slide-index="0" href="">01</a>
+										<a data-slide-index="1" href="">02</a>
+										<a data-slide-index="2" href="">03</a>
+									</div>
+								</div>
+								<div class="idx_section3_slider">
+									<div class="item">
+										<a href="/contents.htm?code=4_1"><img src="/img/index/s3_1_1.png" alt="온라인 자기성찰형 지출관리체험"></a>
+										<a href="#:;"><img src="/img/index/s3_1.png" alt="청년의 돈"></a>
+										<a href="/contents.htm?code=4_2"><img src="/img/index/s3_1_2.png" alt="경제금융 학습 체험"></a>
+									</div>
+									<div class="item">
+										<a href="/contents.htm?code=3_1#b2"><img src="/img/index/s3_2_1.png" alt="곁다리 독립체험"></a>
+										<a href="#:;"><img src="/img/index/s3_2.png" alt="청년의 집"></a>
+										<a href="/contents.htm?code=3_1#b2"><img src="/img/index/s3_2_2.png" alt="오진 독립체험 (주거분리)"></a>
+									</div>
+									<div class="item">
+										<a href="/contents.htm?code=3_1#b3"><img src="/img/index/s3_3_1.png" alt="나는 청자다 (청년 자연인)"></a>
+										<a href="#:;"><img src="/img/index/s3_3.png" alt="청년의 쉼"></a>
+										<a href="/contents.htm?code=3_1#b3"><img src="/img/index/s3_3_2.png" alt="농막 회원권 (삼시두끼)"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 청년 독립 미션 -->
+					<div class="idx_missions">
+						<div class="idx_title c1">
+							<strong>청년 독립 미션</strong>
+						</div>
+						<div class="items">
+							<a href="/nwebnics/wBoard/list.php?code=5_2" class="item1">
+								<i>MISSION</i>
+								<strong>청년의 밥</strong>
+								<span>1주 1회 밥해먹기</span>
+							</a>
+							<a href="/nwebnics/wBoard/list.php?code=5_2" class="item2">
+								<i>MISSION</i>
+								<strong>청년의 건강</strong>
+								<span>청년건강주치의</span>
+							</a>
+							<a href="/nwebnics/wBoard/list.php?code=5_2" class="item3">
+								<i>MISSION</i>
+								<strong>청년의 지구</strong>
+								<span>1주 1회 지구살리기</span>
+							</a>
+							<a href="/nwebnics/wBoard/list.php?code=5_2" class="item4">
+								<i>MISSION</i>
+								<strong>청년의 책</strong>
+								<span>온라인 독서 동아리</span>
+							</a>
+						</div>
+					</div>
+
+					<!-- 생생후기 / 공지사항 / 오시는 길 -->
+					<div class="idx_banners" style="display: none;">
+						<a href="#">
+							<img src="/img/index/banners_icon1.png" alt="icon">
+							<span>생생후기</span>
+						</a>
+						<a href="#">
+							<img src="/img/index/banners_icon2.png" alt="icon">
+							<span>공지사항</span>
+						</a>
+						<a href="#">
+							<img src="/img/index/banners_icon3.png" alt="icon">
+							<span>오시는 길</span>
+						</a>
+					</div>
+
+					<!-- 공지사항 / 주요알림 -->
+					<div class="idx_bottom_wrap">
+						<div class="idx_notice_wrap">
+							<div class="idx_title c1">
+								<strong>
+									공지사항
+									<a href="/nwebnics/wBoard/list.php?code=5_1">
+										<img src="/img/index/notice_arrow.png" alt="바로가기">
+									</a>
+								</strong>
+							</div>
+							<div class="items">
+								<ul>
+									<?=boardList("/nwebnics/wBoard/","wBoard", "5_1", 3, 20);?>
+								</ul>
+							</div>
+						</div>
+						<div class="idx_imgbanner_wrap">
+							<div class="idx_title c1">
+								<strong>주요 알림</strong>
+							</div>
+							<div class="idx_imgbanner_slider">
+								<?=poupZones();?>
+<!--
+								<div class="item">
+									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
+								</div>
+								<div class="item">
+									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
+								</div>
+								<div class="item">
+									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
+								</div>
+ -->
+							</div>
+						</div>
+					</div>
+					<!-- 인덱스 섹션 종료 -->
+				</div>
+			</div>
+			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
+			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<!--
+			<div class="idx_popup_wrap">
+				<div class="idx_popup">
+					<button class="bt_idx_popup_close" title="닫기"><img src="/img/bt_close_w.png" alt="닫기"></button>
+					<div class="view">
+						<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/3.jpeg" alt="청년의 돈 체험프로젝트 신청하기"></a>
+					</div>
+				</div>
+			</div>
+			-->
+		</div>
+		<div id="gotop" class="gotop">
+			<div></div>
+		</div>
+
+
+	<div class="popupWrap popup1">
+		<div class="bg"></div>
+		<div class="popup">
+			<button class="bt_popup_close">닫기</button>
+			<?
+			$printPops=poupLayer();
+			if($printPops) echo $printPops;
+			?>
+		</div>
+	</div>
+	<script>
+	$(function(){
+		<?if($printPops) {?>
+		$(".popup1").show();
+		<?}?>
+		$(".popup1 .bt_popup_close").click(function(){
+			$(".popup1").hide();
+		});
+	});
+	</script>
+
+
+	</body>
+</html>
+<?addCount(); $db->disconnect();?>

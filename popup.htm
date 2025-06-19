@@ -1,0 +1,65 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnics.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
+//== last modify date : 2017. 05. 15
+//==================================================================
+//== 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+
+if(!$_GET[idx]) error_view(999, "IDX 정보를 찾을수 없습니다.","관리자에게 문의하시기 바랍니다.");
+$sqlStr="SELECT * FROM wPopup WHERE idx=$_GET[idx]";
+$view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
+if(DB::isError($view)) die($view->getMessage());
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<meta name="Title" content="<?=$view[popup_title];?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<title><?=$Title_Txt;?></title>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" />
+		<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<script type="text/javascript">
+			function jstargeturl(mode) {
+				if(mode=="1") {									/* 셀프 */
+					window.open('<?=$view[linkUrl];?>', '_self');
+				}else if(mode=="2") {					/* 새창 */
+					window.open('<?=$view[linkUrl];?>', '_blank');
+					window.close();
+				}else if(mode=="3") {					/* 부모 */
+					window.opener.location = '<?=$view[linkUrl];?>';
+					window.close();
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="popupContents">
+		<?
+		if($view[filename0]) {
+			$e_name=explode('.',$view[filename0]);
+			if($e_name[1]=='JPG' || $e_name[1]=='jpg' || $e_name[1]=='jpeg' || $e_name[1]=='gif' || $e_name[1]=='bmp' || $e_name[1]=='PNG' || $e_name[1]=='png' || $e_name[1]=='JPG') {
+				$img_path = $popupDir.$view[filename0];
+				$img_size = @getimagesize($_SERVER["DOCUMENT_ROOT"].$img_path);
+				echo "<a href=\"#\" onClick=\"jstargeturl('".$view[linkTarget]."');\"><img src=\"".$img_path."\" width=\"".$img_size[0]."\" height=\"".$img_size[1]."\" /></a>";
+			}else if($e_name[1]=='html' || $e_name[1]=='htm') {
+				require $popupDir.$view[filename0];
+			}
+		}
+			$printText=preg_replace("/\s+/", "", $view[uContents]);		//== 공백제거
+			if($printText) {
+			$o_popup_contents=stripslashes($view[uContents]);
+			echo "<p>".$o_popup_contents."</p>";
+		}
+		?>
+		</div>
+		<div id="popupBottom">
+			<form name="checkForm"><?if($view[ingTime]>0) echo "<span class=\"float_left\"><input type=\"checkbox\" name=\"pClose\" onClick=\"closePop('wpo".$view[idx]."');\" class=\"align_left_middle\" /> 하루만 보기</span>";?> <span class="float_right">[<a href="javascript:window.close();">닫기</a>]</span></form>
+		</div>
+</body>
+</html>

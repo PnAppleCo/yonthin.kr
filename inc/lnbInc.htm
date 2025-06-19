@@ -1,0 +1,13 @@
+<? //== 선택메뉴 활성화
+for($dep1=1; $dep1<10; $dep1++ ) if($gnbPath[1] == $dep1) $dep1style{$dep1} = "on"; else $dep1style{$dep1} = "";
+for($dep2=1; $dep2<10; $dep2++ ) if($gnbPath[2] == $dep2) $dep2style{$dep2} = "dep2style"; else $dep2style{$dep2} = "";
+?>
+
+<div id="lnbWrap">
+	<ul class="lnb">
+		<?
+		if(!$gnbPath[0]) $gnbPath[0]="08";	//== 기본값 설정
+		include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc_".sprintf("%02d", $gnbPath[0]).".htm";
+		?>
+	</ul>
+</div>

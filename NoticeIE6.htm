@@ -1,0 +1,47 @@
+<?
+//==================================================================
+//== webnics board  http://www.webnicsoft.co.kr
+//== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
+//== last modify date : 2014. 03. 15
+//==================================================================
+//== 기본정보 로드
+include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+
+?>
+<!DOCTYPE <?=$doctypeSet;?>>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?=$characterSet;?>" />
+		<meta name="Title" content="<?=$Title_Txt;?>" />
+		<meta name="Description" content="<?=$Description_Txt;?>" />
+		<meta name="Keywords" content="<?=$Keywords_Txt;?>" />
+		<meta name="Author" content="<?=$Author_Txt;?>" />
+		<title><?=$Title_Txt;?></title>
+		<link rel="stylesheet" type="text/css" href="/css/css.css" />
+		<style>
+			#floater {float:left; height:50%; margin-bottom:-120px; background:red; }
+			#content {clear:both; width:500px; height:200px; margin:0 auto; position:relative; border-top:2px solid #F49931; }
+			#content p { font-weight:bold; font-size:18px; text-align:center; padding:20px; }
+			#content div {  padding:5px; background:#FCF7F1; line-height:180%; }
+		</style>
+	</head>
+	<body>
+		<h1 class="blind"><?=$Site_Info_Company;?> 홈페이지에 오신것을 환영합니다.</h1>
+		<hr/>
+		<!-- 바디 시작 -->
+		<div id="wrapper">
+
+			<div id="floater"></div>
+			<div id="content">
+				<p>IE6 이하 버전은 지원하지 않습니다.</p>
+				<div style="text-align:center;">업데이트를 부탁드립니다.</div>
+				<p><a href="https://www.microsoft.com/ko-kr/download/internet-explorer.aspx" target="_blank">업데이트 사이트로 이동</a></p>
+			</div>
+
+		</div>
+	</body>
+</html>
+<?
+addCount();
+$db->disconnect();
+?>
