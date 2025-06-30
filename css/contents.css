@@ -2046,7 +2046,7 @@
 
 
 .section16 .intro {
-	position: relative;
+	position:relative;
 	padding-bottom: 90px;
 }
 
@@ -2059,26 +2059,19 @@
 }
 
 
-.section15 .intro::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -150px;
-	display: block;
-	width: 80px;
-	height: 80px;
-	background-image: image();
-	background-repeat: no-repeat;
-	border-radius: 80px;
-	border: 3px solid #8eb5ea;
-}
-
-
 .section16 .intro img {
 	position: absolute;
 	top: -20px;
 	right: 0;
 }
+
+.section16 .intro topimg .m {
+		display: block;
+		width: 100%;
+	}
+
+
+
 
 /*
 .section16 .section16 .year-box 
@@ -2091,8 +2084,8 @@
 .section16 .year-box {
 	padding-bottom: 40px;
 	padding-top: 40px;
-	border-top: 1px solid #272727;
-	
+	padding-right: 80px;
+	border-top: 1px solid #272727;	
 }
 
 
@@ -2105,11 +2098,13 @@
 }
 
 .section16 .year-box h3 strong {
+	z-index: 2;
     font-size: 3.2rem;
 	font-weight: 900;
 }
 
 .section16 .year-box h3::before {
+	z-index: 1;
 	content: "";
 	position: absolute;
 	top: 0;
@@ -2124,13 +2119,24 @@
 
 .section16 .year-box li {
 	position: relative;
-	padding-left: 10px;
+	padding:4px;
 	font-size: 2rem;
 	color: #666;
 	word-break: keep-all;
+	 display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60px 1fr;
+    /* gap을 개별로 분리 */
+    column-gap: 1rem;
 }
 
-.section16 .year-box li span {
+
+.section16 .date info {
+display: flex;
+
+}
+
+.section16 .date span {
   color: #2775de;
   font-size: 2rem;
   font-weight: 600;
@@ -2138,16 +2144,31 @@
 
 }
 
+.section16 .info p {
+    display: inline-block;
+	font-size: 2rem;
+	color: #666;
+	display: flex;
+}
+
 .section16 .year-img {
-  width: 100%;
+  width: 80%;
   max-height: 300px;
   object-fit: cover;
-  margin-top: 1rem;
+  margin-top: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
  @media screen and (min-width: 768px) {
+
+	.section16 .intro {
+    display: grid;
+    grid-template-rows: auto 1fr;
+	
+	/* gap을 개별로 분리 */
+    row-gap: 2rem;
+
+  }
   .section16 .year-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
