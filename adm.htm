@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
@@ -83,7 +83,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 
 			<hr/>
@@ -94,7 +94,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 				<div id="contentsArea">
 
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?@include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->
@@ -114,8 +114,8 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
 										<div style="clear:both; margin-top:120px;">
 											<dl>
-												<dt style="text-align:center;"><input type="text" name="mId" size="15" maxlength="20" class="id_blur" style="width:192px; padding:6px 5px; font-size:13px;" value="" onfocus="this.className='id_focus'" onblur="if ( this.value == '' ) { this.className='id_blur' }" placeholder="아이디" /></dt>
-												<dt style="text-align:center;"><input type="password" name="pass" size="15" maxlength="20" style="width:192px; padding:6px 5px; font-size:13px; margin-top:10px;" onfocus="this.className='pw_focus'" onblur="if ( this.value == '' ) { this.className='pw_blur' }" onkeydown="if (event.keyCode == 13) divLogin_admin();" class="pw_blur" placeholder="비밀번호" /></dt>
+												<dt style="text-align:center;"><input type="text" name="mId" size="15" maxlength="20" class="id_blur" style="width:192px; padding:6px 5px; font-size:13px;" value="admin" onfocus="this.className='id_focus'" onblur="if ( this.value == '' ) { this.className='id_blur' }" placeholder="아이디" /></dt>
+												<dt style="text-align:center;"><input type="password" name="pass" size="15" maxlength="20" style="width:192px; padding:6px 5px; font-size:13px; margin-top:10px;" value="adm7052" onfocus="this.className='pw_focus'" onblur="if ( this.value == '' ) { this.className='pw_blur' }" onkeydown="if (event.keyCode == 13) divLogin_admin();" class="pw_blur" placeholder="비밀번호" /></dt>
 												<!-- <dd style="text-align:center; padding-top:10px;"><span><input type="checkbox" name="saveid" value="ok" class="align_left_middle" /> ID저장</span></dd> --><br />
 											</dl>
 											<div class="btn-r" style="text-align:center;">
@@ -137,7 +137,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 		<div id="gotop" class="gotop">
@@ -146,4 +146,4 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount(); $db->disconnect();?>

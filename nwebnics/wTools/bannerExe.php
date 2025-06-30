@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -65,7 +65,7 @@ for($i=0;$i<sizeof($name_count)-1;$i++) {
 }
 
 //== 등록 처리 ====================================================================================
-if($_GET[mode]=="add") {
+if($_GET['mode']=="add") {
 	//== 새로 등록할 유지보수의 고유번호 생성
 	$max_idx = $db->getOne("SELECT MAX(idx) FROM bannerTbl");
 	if(DB::isError($max_idx)) die($max_idx->getMessage());
@@ -92,22 +92,22 @@ $newIdx,
 now());";
 
 //== 수정 처리 ====================================================================================
-}else if($_GET[mode]=="edit") {
-	if(!$_GET[idx]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+}else if($_GET['mode']=="edit") {
+	if(!$_GET['idx']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 	//== 첨부파일 수정/삭제
 	for($i=0; $i<5; $i++) {
 		if($filename[$i]) {																			//== 수정
-			$delFile = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$_POST[upFile][$i];
+			$delFile = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$_POST['upFile'][$i];
 			if(is_file($delFile)==true) unlink($delFile);
-			$delThubFile = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$_POST[upFile][$i];
+			$delThubFile = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$_POST['upFile'][$i];
 			if(is_file($delThubFile)==true) unlink($delThubFile);
 		}else {
-			$filename[$i]=$_POST[upFile][$i];
+			$filename[$i]=$_POST['upFile'][$i];
 		}
-		if($_POST[fChk.$i]=="chk") {											//== 삭제
-			$delete_file = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$_POST[upFile][$i];
+		if($_POST['fChk'.$i]=="chk") {											//== 삭제
+			$delete_file = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$_POST['upFile'][$i];
 			if(is_file($delete_file)==true) unlink($delete_file);
-			$delete_file_thumbnail = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$_POST[upFile][$i];
+			$delete_file_thumbnail = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$_POST['upFile'][$i];
 			if(is_file($delete_file_thumbnail)==true) unlink($delete_file_thumbnail);
 			$filename[$i]="";
 		}
@@ -123,17 +123,17 @@ sStatus='$_POST[sStatus]',
 filename0='$filename[0]' WHERE idx='$_GET[idx]'";
 
 //== 삭제 처리 ====================================================================================
-}else if($_GET[mode]=="del" && $_GET[idx]) {
-	if(!$_GET[idx] || !member_session(1)) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+}else if($_GET['mode']=="del" && $_GET['idx']) {
+	if(!$_GET['idx'] || !member_session(1)) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 	//== 등록된 첨부파일 삭제
 	$add_del = "SELECT filename0 FROM bannerTbl WHERE idx=$_GET[idx]";
 	$rows = $db->getRow($add_del,DB_FETCHMODE_ASSOC);
 	if(DB::isError($rows)) die($rows->getMessage());
 		for($i=0; $i<=count($rows); $i++) {
-			if($rows[filename.$i]) {
-					$delete_file = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$rows[filename.$i];
+			if($rows['filename'.$i]) {
+					$delete_file = $_SERVER['DOCUMENT_ROOT'].$bannerDir.$rows['filename'.$i];
 					if(is_file($delete_file)) unlink($delete_file);
-					$delete_file_tumbnail = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$rows[filename.$i];
+					$delete_file_tumbnail = $_SERVER['DOCUMENT_ROOT'].$bannerDir."thumbnail/".$rows['filename'.$i];
 					if(is_file($delete_file_tumbnail)) unlink($delete_file_tumbnail);
 			}
 		}
@@ -151,6 +151,6 @@ if($_GET['mode']=="add") {
 }else { $p_ment="오류가 발생하였습니다."; }
 
 $rst=$db->query($mSqlStr);
-if(DB::isError($rst)) die($rst->getMessage()); else redirect(1,"bannerList.php?idx=".$_GET[idx]."&page=".$_GET[page],$p_ment,1);
+if(DB::isError($rst)) die($rst->getMessage()); else redirect(1,"bannerList.php?idx=".$_GET['idx']."&page=".$_GET['page'],$p_ment,1);
 $db->disconnect();
 ?>

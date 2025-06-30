@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
@@ -69,13 +69,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 		<script type="text/javascript" src="/js/html5shiv.min.js"></script>
 		<![endif]-->
 		<!--[if lte IE 6]><script type="text/javascript">location.href='/NoticeIE6.htm';</script><![endif]-->
-		<script language="javascript">
-		<!--
-		<?=poupOpen(1);?>
-		//-->
-		</script>
+
 	</head>
-	<body></body>
+	<body>
 		<h1 class="blind"><?=$siteName;?> 홈페이지에 오신 것을 환영합니다.</h1>
 		<hr/>
 		<!-- 스킵 바로가기 메뉴 -->
@@ -88,7 +84,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 			<?//if(!isMobile()) echo poupOpen(2);?>
 			<hr />
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
 			<hr />
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">콘텐츠</a></h2>
 			<div id="icontentsWrap">
@@ -409,7 +405,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 								<strong>주요 알림</strong>
 							</div>
 							<div class="idx_imgbanner_slider">
-								<?=poupZones();?>
+								<?=popupZones();?>
 <!--
 								<div class="item">
 									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
@@ -428,7 +424,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 				</div>
 			</div>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!--
 			<div class="idx_popup_wrap">
 				<div class="idx_popup">
@@ -449,24 +445,14 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 		<div class="bg"></div>
 		<div class="popup">
 			<button class="bt_popup_close">닫기</button>
-			<?
-			$printPops=poupLayer();
-			if($printPops) echo $printPops;
+			<?php
+				//$printPops=poupLayer();
+				//if($printPops) echo $printPops;
 			?>
 		</div>
 	</div>
-	<script>
-	$(function(){
-		<?if($printPops) {?>
-		$(".popup1").show();
-		<?}?>
-		$(".popup1 .bt_popup_close").click(function(){
-			$(".popup1").hide();
-		});
-	});
-	</script>
-
-
+	</body>
+	</html>
 
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount();  $db->disconnect();  ?>

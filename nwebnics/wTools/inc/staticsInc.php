@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================== 월별 통계 =============================================================================
 function monthStatics($vYear, $vMonth, $vDay) {
 	global $db;
@@ -19,12 +19,12 @@ function monthStatics($vYear, $vMonth, $vDay) {
 		unset($addSql, $sqlStr);
 		$sqlStr = "SELECT COUNT(DISTINCT(user_ip)) FROM wStatics";
 		//if($startDate && $stopDate) $addSql .= " DATE_FORMAT(visitDate,'%Y-%m-%d') BETWEEN DATE_FORMAT('$startDate','%Y-%m-%d') AND DATE_FORMAT('$stopDate','%Y-%m-%d') AND";
+		$addSql = "";
 		if($vDate) $addSql .= " DATE_FORMAT(visitDate,'%Y-%m') = DATE_FORMAT('$vDate','%Y-%m') AND";
 		if($addSql) $sqlStr .= " WHERE".substr($addSql,0,-3);
-//		echo $sqlStr.'<br>';
 		$monthRet = $db->getOne($sqlStr);
 		if(DB::isError($monthRet)) die($monthRet->getMessage());
-		if($maxMonth[vCount]==$monthRet) $v_image="./img/red.gif"; else if($vMonth==sprintf('%02d',$i)) $v_image="./img/green.gif"; else $v_image="./img/blue.gif";
+		if($maxMonth['vCount']==$monthRet) $v_image="./img/red.gif"; else if($vMonth==sprintf('%02d',$i)) $v_image="./img/green.gif"; else $v_image="./img/blue.gif";
 		$vChart .= "<td style=\"vertical-align:bottom;\"><div>".$monthRet."</div><div><img src=\"".$v_image."\" width=\"30\" height=\"".$monthRet."\" /></div><div class=\"staticsSub\">".$i."월</div></td>";
 	}
 	$vChart .= "</tr>\n</tbody>\n</table>\n<br />\n";
@@ -34,7 +34,9 @@ function monthStatics($vYear, $vMonth, $vDay) {
 //==================================================== 일별 통계 =============================================================================
 function dayStatics($vYear, $vMonth, $vDay) {
 	global $db;
-
+	$formDate = "";
+	$vDTitle = "";
+	
 	if(empty($vYear)) { $vYear=date('Y'); } else { $vYear=sprintf('%02d',$vYear); $formDate .= '%Y-'; }
 	if(empty($vMonth)) { $vMonth='00'; } else { $vMonth=sprintf('%02d',$vMonth); $formDate .= '%m-'; }
 	if(empty($vDay)) { $vDay='00'; $formDate .= '%d-'; } else { $vDay=sprintf('%02d',$vDay); $formDate .= '%d-'; }		//== 일별에서 Day 포멧은 필수
@@ -61,12 +63,13 @@ function dayStatics($vYear, $vMonth, $vDay) {
 		$vDate=$vYear.'-'.$vMonth.'-'.sprintf('%02d',$i);
 		unset($addSql, $sqlStr);
 		$sqlStr = "SELECT COUNT(DISTINCT(user_ip)) FROM wStatics";
+		$addSql = "";
 		if($vDate) $addSql .= " DATE_FORMAT(visitDate,'".$formDate."') = DATE_FORMAT('$vDate','".$formDate."') AND";
 		if($addSql) $sqlStr .= " WHERE".substr($addSql,0,-3);
 		//echo $sqlStr.'<br>';
 		$dayRet = $db->getOne($sqlStr);
 		if(DB::isError($dayRet)) die($dayRet->getMessage());
-		if($maxDay[vCount]==$dayRet) $v_image="./img/red.gif"; else if($vDay==sprintf('%02d',$i)) $v_image="./img/green.gif"; else $v_image="./img/blue.gif";
+		if($maxDay['vCount']==$dayRet) $v_image="./img/red.gif"; else if($vDay==sprintf('%02d',$i)) $v_image="./img/green.gif"; else $v_image="./img/blue.gif";
 		$vChart .= "<td style=\"vertical-align:bottom;\"><div>".$dayRet."</div><div><img src=\"".$v_image."\" width=\"20\" height=\"".$dayRet."\"></div><div class=\"staticsSub\">".$i."</div></td>";
 	}
 	$vChart .= "</tr>\n</tbody>\n</table>\n<br />\n";
@@ -76,6 +79,8 @@ function dayStatics($vYear, $vMonth, $vDay) {
 //==================================================== 주별 통계 =============================================================================
 function weekStatics($vYear, $vMonth, $vDay) {
 	global $db;
+	$formDate= '';
+	$vDTitle = '';
 
 	if(empty($vYear)) { $vYear = date('Y'); $formDate .= '%Y-'; } else { $formDate .= '%Y-'; }
 	if(empty($vMonth)) { $vMonth .= '00'; } else { $formDate .= '%m-'; }
@@ -96,6 +101,7 @@ function weekStatics($vYear, $vMonth, $vDay) {
 		$vDate=$vYear.'-'.$vMonth.'-'.$vDay;
 		unset($addSql, $sqlStr);
 		$sqlStr = "SELECT COUNT(DISTINCT(user_ip)) FROM wStatics";
+		$addSql = "";
 		if($vDate) $addSql .= " DAYOFWEEK(visitDate) = ($i+1) AND DATE_FORMAT(visitDate,'".$formDate."') = DATE_FORMAT('$vDate','".$formDate."') AND";
 		if($addSql) $sqlStr .= " WHERE".substr($addSql,0,-3);
 		//echo $sqlStr.'<br>';
@@ -124,7 +130,7 @@ function weekStatics($vYear, $vMonth, $vDay) {
 				$weekName="토";
 			break;
 		}
-		if($maxWeek[vCount]==$weekRet) $v_image="./img/red.gif"; else $v_image="./img/blue.gif";									//== 최대값과 카운트가 일치하는경우
+		if($maxWeek['vCount']==$weekRet) $v_image="./img/red.gif"; else $v_image="./img/blue.gif";									//== 최대값과 카운트가 일치하는경우
 		$vChart .= "<td style=\"vertical-align:bottom;\"><div>".$weekRet."</div><div><img src=\"".$v_image."\" width=\"50\" height=\"".$weekRet."\"></div><div class=\"staticsSub\">".$weekName."요일</div></td>";
 	}
 	$vChart .= "</tr>\n</tbody>\n</table>\n<br />\n";
@@ -134,7 +140,9 @@ function weekStatics($vYear, $vMonth, $vDay) {
 //==================================================== 시간별 통계 ==========================================================================
 function timeStatics($vYear, $vMonth, $vDay) {
 	global $db;
-
+	$vDTitle = "";
+	$formDate = "";
+	
 	if(empty($vYear)) { $vYear = date('Y'); $formDate .= '%Y-'; } else { $vYear = $vYear; $formDate .= '%Y-'; }
 	if(empty($vMonth)) { $vMonth = '00'; } else { $vMonth = $vMonth; $formDate .= '%m-'; }
 	if(empty($vDay)) { $vDay .= '00'; } else { $vDay = $vDay; $formDate .= '%d-'; }
@@ -157,13 +165,14 @@ function timeStatics($vYear, $vMonth, $vDay) {
 		$vTime=sprintf('%02d',$i).':00:00';																																																	//== 시간별 형식 조합
 		unset($addSql, $sqlStr);
 		$sqlStr = "SELECT COUNT(DISTINCT(user_ip)) FROM wStatics";
+		$addSql = "";
 		if($vDate) $addSql .= " DATE_FORMAT(visitDate,'".$formDate."') = DATE_FORMAT('$vDate','".$formDate."') AND TIME_FORMAT(visitTime,'%H') = TIME_FORMAT('$vTime','%H') GROUP BY TIME_FORMAT(visitTime,'%H') AND";
 		if($addSql) $sqlStr .= " WHERE".substr($addSql,0,-3);
 		//echo $sqlStr.'<br>';
 		$hourRet = $db->getOne($sqlStr);
 		if(DB::isError($hourRet)) die($hourRet->getMessage());
 		if(!$hourRet) $hourRet=0;
-		if($maxHour[vCount]==$hourRet) $v_image="./img/red.gif"; else $v_image="./img/blue.gif";									//== 최대값과 카운트가 일치하는경우
+		if($maxHour['vCount']==$hourRet) $v_image="./img/red.gif"; else $v_image="./img/blue.gif";									//== 최대값과 카운트가 일치하는경우
 		$vChart .= "<td style=\"vertical-align:bottom;\"><div>".$hourRet."</div><div><img src=\"".$v_image."\" width=\"20\" height=\"".$hourRet."\"></div><div class=\"staticsSub\">".sprintf('%02d', $i)."</div></td>";
 	}
 	$vChart .= "</tr>\n</tbody>\n</table>\n<br />\n";

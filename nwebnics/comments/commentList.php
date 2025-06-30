@@ -1,4 +1,4 @@
-<?
+<?PHP
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin'
@@ -7,40 +7,40 @@
 
 //=============================================== 댓글 목록 질의 ==================================================//
 
-$sqlStr = "SELECT * FROM mzCommentTbl WHERE b_idx='".$_GET[idx]."' AND code='".$_GET[code]."' ORDER BY app DESC, opp ASC";
+$sqlStr = "SELECT * FROM mzCommentTbl WHERE b_idx='".$_GET['idx']."' AND code='".$_GET['code']."' ORDER BY app DESC, opp ASC";
 $rst = $db->query($sqlStr);
 if(DB::isError($rst)) die ($rst->getMessage());
 $k = 0;
 while($cView = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
 	//== 내용 복구
-	$cView[ucontents] = stripslashes($cView[ucontents]);
+	$cView['ucontents'] = stripslashes($cView['ucontents']);
 	//== 내용에 태그를 허용하지 않을 경우
-	if(!$cView[html] >0) $cView[ucontents] = htmlspecialchars($cView[ucontents]);
+	if(!$cView['html'] >0) $cView['ucontents'] = htmlspecialchars($cView['ucontents']);
 	//== 내용 개행처리
-	$cView[ucontents] = nl2br($cView[ucontents]);
+	$cView['ucontents'] = nl2br($cView['ucontents']);
 	//== 등록일
-	$old_date=explode(" ", $cView[signdate]);
+	$old_date=explode(" ", $cView['signdate']);
 	$v_time=explode(":", $old_date[1]);
 	$v_date=strtr($old_date[0],"-",".")." ".$v_time[0].":".$v_time[1];
-	$v_char_img="char".$cView[char_img].".gif";
+	$v_char_img="char".$cView['char_img'].".gif";
 
-	$v_date=strtr($cView[signdate],"-",".")." ".$cView[signtime];
-	$t_user_ip=explode('.',$cView[user_ip]);
+	$v_date=strtr($cView['signdate'],"-",".")." ".$cView['signtime'];
+	$t_user_ip=explode('.',$cView['user_ip']);
 	$v_user_ip=$t_user_ip[0].'.'.$t_user_ip[1].'.xx.'.$t_user_ip[3];
 
-	$v_link .= "<span><a href=\"/nwebnics/comments/commentExe.php?mode=rec&field=app&idx=".$cView[idx]."&b_idx=".$view[idx]."\" onClick=\"return confirm('추천 하시겠습니까?');\"><img src=\"/img/comm/icon_rec_20.png\" alt=\"rec\" /></a>(".$cView[app].")</span> <span><a href=\"/nwebnics/comments/commentExe.php?mode=rec&field=opp&idx=".$cView[idx]."&b_idx=".$view[idx]."\" onClick=\"return confirm('비추천 하시겠습니까?');\"><img src=\"/img/comm/icon_nrec_20.png\" alt=\"nrec\" /></a>(".$cView[opp].")</span>";
+	$v_link .= "<span><a href=\"/nwebnics/comments/commentExe.php?mode=rec&field=app&idx=".$cView['idx']."&b_idx=".$view['idx']."\" onClick=\"return confirm('추천 하시겠습니까?');\"><img src=\"/img/comm/icon_rec_20.png\" alt=\"rec\" /></a>(".$cView['app'].")</span> <span><a href=\"/nwebnics/comments/commentExe.php?mode=rec&field=opp&idx=".$cView['idx']."&b_idx=".$view['idx']."\" onClick=\"return confirm('비추천 하시겠습니까?');\"><img src=\"/img/comm/icon_nrec_20.png\" alt=\"nrec\" /></a>(".$cView['opp'].")</span>";
 	//== 코멘트삭제 : 관리자와 회원 코멘트(회원자신이 작성한코멘트)는 비번입력생략
-	if(member_session(1,1) == true || (login_session() == true && !strcmp($cView[m_id],$_SESSION[my_id]))) {
-		$v_link .= " <span><a href=\"/nwebnics/comments/commentExe.php?mode=del&idx=".$cView[idx]."&b_idx=".$view[idx]."\" onClick=\"return confirm('삭제 하시겠습니까?');\"><img src=\"/img/comm/icon_del_20.png\" alt=\"삭제\" /></a></span>";
+	if(member_session(1,1) == true || (login_session() == true && !strcmp($cView['m_id'],$_SESSION['my_id']))) {
+		$v_link .= " <span><a href=\"/nwebnics/comments/commentExe.php?mode=del&idx=".$cView['idx']."&b_idx=".$view['idx']."\" onClick=\"return confirm('삭제 하시겠습니까?');\"><img src=\"/img/comm/icon_del_20.png\" alt=\"삭제\" /></a></span>";
 	}
 
 	$o_ucontents .= "
 			<tr>
-				<td style=\"background:#F6FAFD; padding-left:.5em;\"><span style=\"color:#1363AA; font-weight:bold;\">".$cView[m_name]."</span> (".$v_date.")</td>
+				<td style=\"background:#F6FAFD; padding-left:.5em;\"><span style=\"color:#1363AA; font-weight:bold;\">".$cView['m_name']."</span> (".$v_date.")</td>
 				<td style=\"text-align:right; background:#F6FAFD;  padding-right:.5em;\">".$v_link."</td>
 			</tr>
 			<tr>
-				<td colspan=\"2\" style=\"border-bottom:1px solid #E9E8E8;\"><div style=\"word-break: break-all; padding:.5em;\">".$cView[ucontents]."</div></td>
+				<td colspan=\"2\" style=\"border-bottom:1px solid #E9E8E8;\"><div style=\"word-break: break-all; padding:.5em;\">".$cView['ucontents']."</div></td>
 			</tr>";
 	$k++;
 	unset($v_link);
@@ -130,6 +130,6 @@ while($cView = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
 				</tr>
 			</tbody>
 		</table>
-		<p style="text-align:center;"><span class="button01" onClick="fCheck('add','<?=$_GET[idx];?>');">등록</span></p>
+		<p style="text-align:center;"><span class="button01" onClick="fCheck('add','<?=$_GET['idx'];?>');">등록</span></p>
 	</form>
 </div>

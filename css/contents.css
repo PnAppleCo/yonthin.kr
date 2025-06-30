@@ -1581,6 +1581,22 @@
 		margin-top: 20px;
 	}
 	
+		.section7 .ex .text {
+		font-size: 1.6rem;
+	}
+	
+	.section7 .ex .text br {
+		display: none;
+	}
+	
+	.section7 .ex img {
+		position: relative;
+		top: auto;
+		right: auto;
+		width: 100%;
+		margin-top: 20px;
+	}
+	
 	.section7 .ex .item img.pc {
 		display: none;
 	}
@@ -1887,3 +1903,258 @@
 	}
 
 }
+
+
+.section15 {
+		width: 100%;
+	max-width: 1200px;
+	margin: 60px auto;
+	font-size: 0;
+}
+
+
+.section15 .title {
+	display: inline-block;
+	width: 120px;
+	vertical-align: top;
+}
+
+.section15 .title b {
+	font-size: 2.8rem;
+	color: #135fc6;
+}
+
+.section15 .title span {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #135fc6;
+}
+
+.section15 .tab-cont {
+	display: none;
+}
+
+.section15 .tab-cont:first-child {
+	display: block;
+}
+
+.section15 .cont {
+	position: relative;
+	display: inline-block;
+	width: 1080px;
+	padding: 30px 0;
+	vertical-align: top;
+	border-left: 1px solid #135fc6;
+	box-sizing: border-box;
+	font-size: 0;
+}
+
+.section3 .item:last-child .cont {
+	padding-bottom: 0;
+}
+
+.section15 .cont::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -8px;
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: #135fc6;
+	border-radius: 20px;
+	border: 3px solid #8eb5ea;
+}
+
+.section15 .cont dl {
+	margin-top: 10px;
+}
+
+.section15 .cont dl:first-child {
+	margin-top: 0;
+}
+
+.section15 .cont dt,
+.section15 .cont dd {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 180%;
+	font-size: 2rem;
+}
+
+.section15 .cont dt {
+	width: 15%;
+	padding-left: 10px;
+	box-sizing: border-box;
+	text-decoration: underline;
+	font-weight: 500;
+	color: #135fc6;
+}
+
+.section15 .cont dd {
+	width: 85%;
+	font-weight: 500;
+	color: #135fc6;
+}
+
+
+.section15 .cont dd > ul > li::before {
+	content: "";
+}
+
+.section15 .cont dd > ul > li > ul > li {
+	font-size: 2rem;
+}
+
+.section15 .cont dd > ul > li > ul > li::before {
+	content: "- ";
+}
+
+
+.section15 .cont dd > ul > li > ul > li > ul > li {
+	padding-left: 8px;
+}
+
+.section15 .cont dd > ul > li > ul > li > ul > li::before {
+	content: "· ";
+}
+
+
+
+/* ========== 연혁(section16) 전용 스타일 추가 ========== */
+
+.section16 {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+.section16 .t1 {
+    width: 1200px;
+    margin:80px 0 80px 0;
+    padding-bottom: 20px;
+    text-align: left;
+}
+}
+
+.section16 .t1 strong {
+	font-size: 3.6rem;
+	font-weight: 600;
+}
+	
+
+
+.section16 .intro {
+	position: relative;
+	padding-bottom: 90px;
+}
+
+
+.section16 .intro strong {
+	font-size: 6rem;
+	color: #2775DE;
+	font-weight: 900;
+	line-height: normal;
+}
+
+
+.section15 .intro::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -150px;
+	display: block;
+	width: 80px;
+	height: 80px;
+	background-image: image();
+	background-repeat: no-repeat;
+	border-radius: 80px;
+	border: 3px solid #8eb5ea;
+}
+
+
+.section16 .intro img {
+	position: absolute;
+	top: -20px;
+	right: 0;
+}
+
+/*
+.section16 .section16 .year-box 
+.section16 .year-box h3::before
+.section16 .year-box li
+.section16 .year-img
+ @media
+*/
+
+.section16 .year-box {
+	padding-bottom: 40px;
+	padding-top: 40px;
+	border-top: 1px solid #272727;
+	
+}
+
+
+.section16 .year-box h3 {
+    position: relative;
+    margin-bottom: 30px;
+    color: #2775DE;
+    display: flex;
+    align-items: center;
+}
+
+.section16 .year-box h3 strong {
+    font-size: 3.2rem;
+	font-weight: 900;
+}
+
+.section16 .year-box h3::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -10px;
+	display: block;
+	width: 23px;
+	height: 23px;
+	border-radius: 100px;
+	background: #8eb3e8;
+}
+
+
+.section16 .year-box li {
+	position: relative;
+	padding-left: 10px;
+	font-size: 2rem;
+	color: #666;
+	word-break: keep-all;
+}
+
+.section16 .year-box li span {
+  color: #2775de;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-right: 1.5rem;
+
+}
+
+.section16 .year-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+ @media screen and (min-width: 768px) {
+  .section16 .year-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    /* gap을 개별로 분리 */
+    column-gap: 2rem;
+    row-gap: 2rem;
+  }
+}
+

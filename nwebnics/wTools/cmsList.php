@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -14,7 +14,7 @@ $sqlStr1 = "SELECT COUNT(DISTINCT idx) FROM cmsList";
 $sqlStr2 = "SELECT * FROM cmsList";
 
 //$addSql .=" cmsType='1' AND";
-if($_GET[gField] && $_GET[gWord]) $addSql .=" $_GET[gField] like '%$_GET[gWord]%' AND";
+if($_GET['gField'] && $_GET['gWord']) $addSql .=" $_GET[gField] like '%$_GET[gWord]%' AND";
 
 //== 조건 질의어 생성
 if($addSql) {
@@ -23,8 +23,8 @@ if($addSql) {
 }
 
 //== 정렬필드와 차순결정
-if($_GET[aField]) $alignField=$_GET[aField]; else $alignField="idx";
-if($_GET[aType]) $alignType=$_GET[aType]; else $alignType="DESC";
+if($_GET['aField']) $alignField=$_GET['aField']; else $alignField="idx";
+if($_GET['aType']) $alignType=$_GET['aType']; else $alignType="DESC";
 $sqlStr2 .= " ORDER BY ".$alignField." ".$alignType;
 //== 다음 정렬 차순 결정
 if($alignType=="DESC") $alignType="ASC"; else if($alignType=="ASC") $alignType="DESC";
@@ -42,15 +42,15 @@ if(DB::isError($total)) die($total->getMessage());
 		$first = 1;
 		$last = 0;
 	}else {
-		$first = $num_per_page*($_GET[page]-1);
-		$last = $num_per_page*$_GET[page];
+		$first = $num_per_page*($_GET['page']-1);
+		$last = $num_per_page*$_GET['page'];
 		$next = $total - $last;
 		if($next > 0) $last -= 1; else $last = $total - 1;
 	}
 	//== 총 페이지수
 	$total_page = ceil($total/$num_per_page);
 	//== 일련번호 설정
-	$article_num = $total - $num_per_page*($_GET[page]-1);
+	$article_num = $total - $num_per_page*($_GET['page']-1);
 	//== 오늘 등록된 게시물
 	/*
 	$sqlStr = "SELECT COUNT(idx) FROM toyTbl WHERE signdate=now()";
@@ -63,7 +63,7 @@ if(DB::isError($total)) die($total->getMessage());
 	if(DB::isError($view)) die($view->getMessage());
 	//== 페이지 현황정보
 	$page_state="총:".$total."개";
-	if(!$_GET[keyword] && !$_GET[keyfield]) $page_state .= " 페이지:".$_GET[page]." / ".$total_page; else $page_state .= " 검색결과:".$_GET[page]." / ".$total_page;
+	if(!$_GET['keyword'] && !$_GET['keyfield']) $page_state .= " 페이지:".$_GET['page']." / ".$total_page; else $page_state .= " 검색결과:".$_GET['page']." / ".$total_page;
 	$paging = new paging(); $viewPaging=$paging->page_display($total,$num_per_page, $num_per_block,$next);
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
@@ -98,13 +98,13 @@ if(DB::isError($total)) die($total->getMessage());
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">콘텐츠 관리</h3>
@@ -139,25 +139,25 @@ if(DB::isError($total)) die($total->getMessage());
 										</tr>
 									</thead>
 									<tbody>
-									<?
+									<?php 
 									if(!$total) echo "<tr><td colspan=\"7\">현재 등록/검색된 콘텐츠 정보가 없습니다.</td></tr>";
 										for($i = $first; $i <= $last; $i++) {
 											foreach($view AS $key => $value) ${$key} = $value;
-											$linkOption="&idx=".$view[$i][idx]."&page=".$_GET[page];
+											$linkOption="&idx=".$view[$i]['idx']."&page=".$_GET['page'];
 											$link1="<a href=\"cmsForm.php?mode=edit".$linkOption."\">";
 											$link2="</a>";
-											if($view[$i][editDate]="0000-00-00") $eDate=strtr($view[$i][signDate],"-","."); else $eDate=strtr($view[$i][editDate],"-",".");
+											if($view[$i]['editDate']="0000-00-00") $eDate=strtr($view[$i]['signDate'],"-","."); else $eDate=strtr($view[$i]['editDate'],"-",".");
 									?>
 										<tr>
 											<td><?=$article_num;?></td>
-											<td><?=$link1.$cmsArr[$view[$i][cmsDivi]].$link2;?></td>
-											<td><?=$link1.$view[$i][cmsCode].$link2;?></td>
-											<td class="ListAlign"><?=$view[$i][cmsName].$link2;?></td>
+											<td><?=$link1.$cmsArr[$view[$i]['cmsDivi']].$link2;?></td>
+											<td><?=$link1.$view[$i]['cmsCode'].$link2;?></td>
+											<td class="ListAlign"><?=$view[$i]['cmsName'].$link2;?></td>
 											<td><?=$link1.$eDate.$link2;?></td>
-											<td><?=$link1.$cStatusArr[$view[$i][cStatus]].$link2;?></td>
+											<td><?=$link1.$cStatusArr[$view[$i]['cStatus']].$link2;?></td>
 											<td>[<a href="cmsForm.php?mode=edit<?=$linkOption;?>">수정</a>] [<a href="cmsExe.php?mode=del<?=$linkOption;?>" onClick="return confirm('삭제하시겠습니가?');">삭제</a>]</td>
 										</tr>
-									<?$article_num--; }?>
+									<?php $article_num--; }?>
 									</tbody>
 								</table>
 							</div>
@@ -168,10 +168,10 @@ if(DB::isError($total)) die($total->getMessage());
 										<fieldset class="searchFrm cf">
 											<legend>검색</legend>
 											<select name="gField" class="radiusS">
-												<option value="cmsName"<?if($_GET[gField]=='cmsName') echo " selected";?>>콘텐츠명</option>
-												<option value="uContents"<?if($_GET[gField]=='uContents') echo " selected";?>>콘텐츠 내용</option>
+												<option value="cmsName"<?php if($_GET['gField']=='cmsName') echo " selected";?>>콘텐츠명</option>
+												<option value="uContents"<?php if($_GET['gField']=='uContents') echo " selected";?>>콘텐츠 내용</option>
 											</select>
-											<input type="text" name="gWord" size="15" maxlength="255" title="검색 키워드 입력" value="<?=$_GET[gWord];?>" />
+											<input type="text" name="gWord" size="15" maxlength="255" title="검색 키워드 입력" value="<?=$_GET['gWord'];?>" />
 											<button type="submit" title="검색" value="검색" />검색</button>
 										</fieldset>
 									</form>
@@ -182,13 +182,13 @@ if(DB::isError($total)) die($total->getMessage());
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

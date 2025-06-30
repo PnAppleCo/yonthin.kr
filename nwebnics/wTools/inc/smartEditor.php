@@ -1,6 +1,6 @@
-												<?
+												<?php
 													echo "<div style=\"clear:both;\"><script type=\"text/javascript\" src=\"/nwebnics/htmlEditor/SE2.3.10/js/HuskyEZCreator.js\" charset=\"utf-8\"></script>";
-													echo "<textarea id=\"ucontents\" name=\"ucontents\" rows=\"10\" cols=\"100\" style=\"width:100%; height:500px; min-width:610px; display:none;\">".$view[ucontents]."</textarea></div>";
+													echo "<textarea id=\"ucontents\" name=\"ucontents\" rows=\"10\" cols=\"100\" style=\"width:100%; height:500px; min-width:610px; display:none;\">".$view['ucontents']."</textarea></div>";
 												?>
 												<script type="text/javascript">
 													var oEditors = [];

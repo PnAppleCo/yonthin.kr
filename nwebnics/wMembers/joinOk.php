@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin'
@@ -9,7 +9,7 @@ session_cache_limiter('nocache, must-revalidate');
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
 //== 작업모드 설정/체크
-if(!$_GET[mode]) {
+if(!$_GET['mode']) {
 	js_action(1,"작업모드를 찾을수 없습니다.","",-1);
 }else {
 	if($_GET[mode]==="edit") {

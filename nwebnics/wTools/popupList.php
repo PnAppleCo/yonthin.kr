@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -13,7 +13,7 @@ if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용�
 $sqlStr1 = "SELECT COUNT(DISTINCT idx) FROM wPopup";
 $sqlStr2 = "SELECT * FROM wPopup";
 
-if($_GET[gField] && $_GET[gWord]) $addSql .=" $_GET[gField] like '%$_GET[gWord]%' AND";
+if($_GET['gField'] && $_GET['gWord']) $addSql .=" $_GET[gField] like '%$_GET[gWord]%' AND";
 
 //== 조건 질의어 생성
 if($addSql) {
@@ -22,8 +22,8 @@ if($addSql) {
 }
 
 //== 정렬필드와 차순결정
-if($_GET[aField]) $alignField=$_GET[aField]; else $alignField="idx";
-if($_GET[aType]) $alignType=$_GET[aType]; else $alignType="DESC";
+if($_GET['aField']) $alignField=$_GET['aField']; else $alignField="idx";
+if($_GET['aType']) $alignType=$_GET['aType']; else $alignType="DESC";
 $sqlStr2 .= " ORDER BY ".$alignField." ".$alignType;
 //== 다음 정렬 차순 결정
 if($alignType=="DESC") $alignType="ASC"; else if($alignType=="ASC") $alignType="DESC";
@@ -36,8 +36,8 @@ if(DB::isError($total)) die($total->getMessage());
 		$first = 1;
 		$last = 0;
 	}else {
-		$first = $num_per_page*($_GET[page]-1);
-		$last = $num_per_page*$_GET[page];
+		$first = $num_per_page*($_GET['page']-1);
+		$last = $num_per_page*$_GET['page'];
 		$next = $total - $last;
 		if($next > 0) {
 			$last -= 1;
@@ -48,7 +48,7 @@ if(DB::isError($total)) die($total->getMessage());
 	//== 총 페이지수
 	$total_page = ceil($total/$num_per_page);
 	//== 일련번호 설정
-	$article_num = $total - $num_per_page*($_GET[page]-1);
+	$article_num = $total - $num_per_page*($_GET['page']-1);
 	//== 오늘 등록된 게시물
 	$sql_str = "SELECT COUNT(idx) FROM wPopup WHERE signDate=now()";
 	$today = $db->getOne($sql_str);
@@ -60,10 +60,10 @@ if(DB::isError($total)) die($total->getMessage());
 	if(DB::isError($view)) die($view->getMessage());
 	//== 페이지 현황정보
 	$page_state="&nbsp;전체 : ".$total." 오늘 : ".$today."&nbsp;";
-	if(!$_GET[keyword] && !$_GET[keyfield]) {
-		$page_state .= "Page : ".$_GET[page]." / ".$total_page;
+	if(!$_GET['keyword'] && !$_GET['keyfield']) {
+		$page_state .= "Page : ".$_GET['page']." / ".$total_page;
 	}else {
-		$page_state .= "검색결과 : ".$_GET[page]." / ".$total_page;
+		$page_state .= "검색결과 : ".$_GET['page']." / ".$total_page;
 	}
 	$paging = new paging(); $viewPaging=$paging->page_display($total,$num_per_page, $num_per_block,$next);
 ?>
@@ -99,13 +99,13 @@ if(DB::isError($total)) die($total->getMessage());
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">팝업창 관리</h3>
@@ -136,21 +136,21 @@ if(DB::isError($total)) die($total->getMessage());
 										</tr>
 									</thead>
 									<tbody>
-									<?
+									<?php 
 									if(!$total) echo "<tr><td colspan=\"6\">현재 등록/검색된 팝업이 없습니다.</td></tr>";
 										for($i = $first; $i <= $last; $i++) {
 											foreach($view AS $key => $value) ${$key} = $value;
-											$link_admin="<div>[<a href=\"popupForm.php?mode=edit&idx=".$view[$i][idx]."\" class=\"basic\">수정</a>][<a href=\"./popupExe.php?mode=del&idx=".$view[$i][idx]."&delfile=".$view[$i][filename0]."\" class=\"basic\" onclick=\"return confirm('정말 삭제하시겠습니까?');\">삭제</a>]</div>";
+											$link_admin="<div>[<a href=\"popupForm.php?mode=edit&idx=".$view[$i]['idx']."\" class=\"basic\">수정</a>][<a href=\"./popupExe.php?mode=del&idx=".$view[$i]['idx']."&delfile=".$view[$i]['filename0']."\" class=\"basic\" onclick=\"return confirm('정말 삭제하시겠습니까?');\">삭제</a>]</div>";
 											if($i==$last) $line_class="font_kr"; else $line_class="line_dotted";
 									?>
 										<tr>
 											<td><?=$article_num;?></td>
-											<td class="ListAlign"><?=$view[$i][popupTitle];?></td>
-											<td><?if($view[$i][popupType]==1) echo "팝업창"; else if($view[$i][popupType]==2) echo "레이어"; else if($view[$i][popupType]==3) echo "슬라이드";?></td>
-											<td><?=strtr($view[$i][startDate],"-",".").'~'.strtr($view[$i][stopDate],"-",".");?></td>
+											<td class="ListAlign"><?=$view[$i]['popupTitle'];?></td>
+											<td><?php if($view[$i]['popupType']==1) echo "팝업창"; else if($view[$i]['popupType']==2) echo "레이어"; else if($view[$i]['popupType']==3) echo "슬라이드";?></td>
+											<td><?=strtr($view[$i]['startDate'],"-",".").'~'.strtr($view[$i]['stopDate'],"-",".");?></td>
 											<td><?=$link_admin;?></td>
 										</tr>
-									<?$article_num--; }?>
+									<?php $article_num--; }?>
 									</tbody>
 								</table>
 							</div>
@@ -161,10 +161,10 @@ if(DB::isError($total)) die($total->getMessage());
 										<fieldset class="searchFrm cf">
 											<legend>검색</legend>
 											<select name="gField" class="radiusS">
-												<option value="popupTitle"<?if($_GET[gField]=='popupTitle') echo " selected";?>>팝업제목</option>
-												<option value="uContents"<?if($_GET[gField]=='uContents') echo " selected";?>>팝업내용</option>
+												<option value="popupTitle"<?php if($_GET['gField']=='popupTitle') echo " selected";?>>팝업제목</option>
+												<option value="uContents"<?php if($_GET['gField']=='uContents') echo " selected";?>>팝업내용</option>
 											</select>
-											<input type="text" name="gWord" size="15" maxlength="255" title="검색 키워드 입력" value="<?=$_GET[gWord];?>" />
+											<input type="text" name="gWord" size="15" maxlength="255" title="검색 키워드 입력" value="<?=$_GET['gWord'];?>" />
 											<button type="submit" title="검색" value="검색" />검색</button>
 										</fieldset>
 									</form>
@@ -174,13 +174,13 @@ if(DB::isError($total)) die($total->getMessage());
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

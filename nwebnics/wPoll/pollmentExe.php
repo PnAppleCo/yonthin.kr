@@ -1,4 +1,4 @@
-<?
+<?php
 //========================================================//
 //== last modify date : 2012. 05. 26
 //========================================================//
@@ -6,10 +6,10 @@
 include ("inc/configInc.php");
 
 //== 코멘트에 특수문자 처리
-$ucontents = addslashes($_POST[ucontents]);
+$ucontents = addslashes($_POST['ucontents']);
 
 //== 답변 등록 처리 ====================================================================================
-if($_GET[mode]==="add") {
+if($_GET['mode']==="add") {
 	//== 새로 올릴 게시물의 idx값
 	$rows=$db->getOne("SELECT MAX(idx) FROM wpollMent");
 	if(DB::isError($rows)) die($rows->getMessage());
@@ -20,13 +20,13 @@ if($_GET[mode]==="add") {
 
 
 //== 답변 수정 처리 ====================================================================================
-}else if($_GET[mode]==="edit" && $_GET[cidx]) {
-	if(!$_GET[idx]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+}else if($_GET['mode']==="edit" && $_GET['cidx']) {
+	if(!$_GET['idx']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 
 	$mSqlStr = "UPDATE wpollMent SET ucontents='$ucontents' WHERE idx='$_GET[cidx]'";
 
 //== 답변 삭제 처리 ====================================================================================
-}else if($_GET[mode]=="del" && $_GET[cidx]) {
+}else if($_GET['mode']=="del" && $_GET['cidx']) {
 	$mSqlStr = "DELETE FROM wpollMent WHERE idx='$_GET[cidx]' AND code='$_GET[code]'";
 
 }else { js_action(1,"작업 구분정보를 찾을수 없습니다.","",-1); }
@@ -43,6 +43,6 @@ if($_GET['mode']==="add") {
 $vfileName="pollView.php";
 
 $rst=$db->query($mSqlStr);
-if(DB::isError($rst)) die($rst->getMessage()); else redirect(1,$vfileName."?code=".$_GET[code]."&idx=".$_GET[idx]."&mnv=".$_GET[mnv],$p_ment,1);
+if(DB::isError($rst)) die($rst->getMessage()); else redirect(1,$vfileName."?code=".$_GET['code']."&idx=".$_GET['idx']."&mnv=".$_GET['mnv'],$p_ment,1);
 $db->disconnect();
 ?>

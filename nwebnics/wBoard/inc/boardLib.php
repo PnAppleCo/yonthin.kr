@@ -1,4 +1,4 @@
-<?
+<?php
 //========================================================================//
 //======================= 루트 환경설정파일 로드 =========================//
 //========================================================================//
@@ -9,7 +9,7 @@ $b_cfg_tb = array('wboardConfig', 'wBoard', 'wComment');
 
 //== 게시판 code 체크
 //if(!$_GET[code] && !$_POST[code]) js_action(1, "게시판의 CODE를 찾을수 없습니다.", "", -1);
-if($_GET[code]) $v_code=$_GET[code]; else if($_POST[code]) $v_code=$_POST[code]; else js_action(1, "게시판의 CODE를 찾을수 없습니다.", "", -1);
+if($_GET['code']) $v_code=$_GET['code']; else if($_POST['code']) $v_code=$_POST['code']; else js_action(1, "게시판의 CODE를 찾을수 없습니다.", "", -1);
 
 //== 게시판 등록 여부 체크
 if(Board_Regist_Check($v_code,$b_cfg_tb[0])==false) js_action(1, "등록되지 않은 게시판 입니다.","",-1);
@@ -18,14 +18,14 @@ if(Board_Regist_Check($v_code,$b_cfg_tb[0])==false) js_action(1, "등록되지 �
 $sql_str="SELECT * FROM ".$b_cfg_tb[0]." WHERE code='".$v_code."'";
 $board_info = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 if(DB::isError($board_info)) die($board_info->getMessage());
-$board_info[board_head] = stripslashes($board_info[board_head]);
-$board_info[board_tail] = stripslashes($board_info[board_tail]);
-$board_info[title_bar_text] = stripslashes($board_info[title_bar_text]);
-$board_info[meta_keyword] = stripslashes($board_info[meta_keyword]);
+$board_info['board_head'] = stripslashes($board_info['board_head']);
+$board_info['board_tail'] = stripslashes($board_info['board_tail']);
+$board_info['title_bar_text'] = stripslashes($board_info['title_bar_text']);
+$board_info['meta_keyword'] = stripslashes($board_info['meta_keyword']);
 
-//== 접근권한 설정
-//$allow_ip = array("109.2.91.135");
-//if(!in_array($_SERVER["REMOTE_ADDR"], $allow_ip)) { header('Location:/main.htm'); exit; }
+//== 접근권한 설정 [삭제필요]
+// $allow_ip = array("109.2.91.135");
+// if(!in_array($_SERVER["REMOTE_ADDR"], $allow_ip)) { header('Location:/main.htm'); exit; }
 
 //=========================================================================//
 //============================== 게시판 관련 함수 ===========================//
@@ -52,20 +52,21 @@ function comment_count($idx, $cfg_tb) {
 //== 공지글 상위 출력
 function noticeNotice($dbtable,$code, $tdCount) {
 		global $db,$board_info;
+		$rtn_rst = '';
 		$notice_sql_str = "SELECT * FROM $dbtable WHERE code='$code' AND notice = 1 ORDER BY idx DESC";
 		$notice_rst = $db->query($notice_sql_str);
 		if(DB::isError($notice_rst)) die($notice_rst->getMessage());
 
 		$Total_Count=0;
 		while($notice_view = $notice_rst->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$link_url="javascript:url_move('view', '".$_GET[code]."', '".$_GET[page]."', '".$notice_view[idx]."', '".$_GET[keyword]."', '".$_GET[s_1]."', '".$_GET[s_2]."', '".$_GET[s_3]."', '".$notice_view[secret]."');";																//== 링크 설정
+			$link_url="javascript:url_move('view', '".$_GET['code']."', '".$_GET['page']."', '".$notice_view['idx']."', '".$_GET['keyword']."', '".$_GET['s_1']."', '".$_GET['s_2']."', '".$_GET['s_3']."', '".$notice_view['secret']."');";																//== 링크 설정
 			$link_url1="<a href=\"$link_url\" class=\"basic\">";
 			$link_url2="</a>";
-			$notice_view[subject] = stripslashes($notice_view[subject]);//== 문자열 복구
-			$subject = han_cut($notice_view[subject], $board_info[subject_cut], "..");										//== 제목 줄임
-			$name = han_cut($notice_view[name], 8, "");																														//== 작성자 길이 줄임
-			if($notice_view[email]) $rEmail = "<a href=\"./sendmail.php?email=".base64_encode($notice_view[email])."\" target=\"mail_cipher\" class=\"basic\">".$name."</a>"; else $rEmail =  $name;																					//== 전자우편
-			$signdate=strtr($notice_view[signdate],"-",".");																													//== 작성일
+			$notice_view['subject'] = stripslashes($notice_view['subject']);//== 문자열 복구
+			$subject = han_cut($notice_view['subject'], $board_info['subject_cut'], "..");										//== 제목 줄임
+			$name = han_cut($notice_view['name'], 8, "");																														//== 작성자 길이 줄임
+			if($notice_view['email']) $rEmail = "<a href=\"./sendmail.php?email=".base64_encode($notice_view['email'])."\" target=\"mail_cipher\" class=\"basic\">".$name."</a>"; else $rEmail =  $name;																					//== 전자우편
+			$signdate=strtr($notice_view['signdate'],"-",".");																													//== 작성일
 			if($tdCount==4) {
 				$rtn_rst .= "<tr style=\"background-color:#FFEFE3;\">\n
 									<td><strong>Notice</strong></td>\n
@@ -79,10 +80,10 @@ function noticeNotice($dbtable,$code, $tdCount) {
 									<td class=\"ListAlign\">".$link_url1.$subject.$link_url2."</td>\n
 									<td>".$rEmail."</td>\n
 									<td>".$signdate."</td>\n
-									<td>".$notice_view[click]."</td>\n";
-									if($board_info[recommend] == 1) $rtn_rst .= "<td>".$notice_view[recommend]."</td>\n";
-									if($board_info[twinread] == 1) $rtn_rst .= "<td><input type=\"checkbox\" name=\"check[]\" value=\"".$notice_view[idx]."\"></td>\n";
-									if($board_info[ps_center]>0) $rtn_rst .= "<td>&nbsp;</td>\n";
+									<td>".$notice_view['click']."</td>\n";
+									if($board_info['recommend'] == 1) $rtn_rst .= "<td>".$notice_view['recommend']."</td>\n";
+									if($board_info['twinread'] == 1) $rtn_rst .= "<td><input type=\"checkbox\" name=\"check[]\" value=\"".$notice_view['idx']."\"></td>\n";
+									if($board_info['ps_center']>0) $rtn_rst .= "<td>&nbsp;</td>\n";
 				$rtn_rst .=  "</tr>";
 			}
 			$Total_Count++;
@@ -134,20 +135,20 @@ function Best_Img($link_url, $db_table, $code, $cut_subject, $popup, $css, $limi
 	echo "</td><tr>";
 	$i=1;
 	while($view = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$subject = stripslashes($view[subject]);
+		$subject = stripslashes($view['subject']);
 		$subject = htmlspecialchars($subject);
 		$subject = han_cut($subject, $cut_subject, "..");
 		//== 링크설정
 		if($popup === "Y") {
-			$link_1 = "<a href=\"javascript:win_pop('".$link_url."popupview.php?code=".$code."&idx=".$view[idx]."&secret=".$view[secret]."','notice_win',500,400,0,0,1,50,50)\" class=\"".$css."\">";
+			$link_1 = "<a href=\"javascript:win_pop('".$link_url."popupview.php?code=".$code."&idx=".$view['idx']."&secret=".$view['secret']."','notice_win',500,400,0,0,1,50,50)\" class=\"".$css."\">";
 		}else {
-			$link_1 = "<a href=\"".$link_url."view.php?code=".$code."&idx=".$view[idx]."&secret=".$view[secret]."\" class=\"".$css."\">";
+			$link_1 = "<a href=\"".$link_url."view.php?code=".$code."&idx=".$view['idx']."&secret=".$view['secret']."\" class=\"".$css."\">";
 		}
 		$link_2 = "</a>";
 		//== 이미지 추출
-		if($view[filename0]) {
-			$img_dir = $Site_Root_Path.$link_url."files/".$code."/".$view[filename0];
-			$now_dir = $link_url."files/".$code."/thumbnail/".$view[filename0];
+		if($view['filename0']) {
+			$img_dir = $Site_Root_Path.$link_url."files/".$code."/".$view['filename0'];
+			$now_dir = $link_url."files/".$code."/thumbnail/".$view['filename0'];
 			$img_size = getimagesize($img_dir);
 				if($img_size[0]>$width) $img_width=$width; else $img_width=$img_size[0];
 				if($img_size[1]>$height) $img_height=$height; else $img_height=$img_size[1];
@@ -157,10 +158,10 @@ function Best_Img($link_url, $db_table, $code, $cut_subject, $popup, $css, $limi
 		}
 		echo "<td width=\"\" align=\"left\" valign=\"top\">
 			<table width=\"$table_width\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-				<tr><td align=\"center\" class=\"font_kr\"><font color=\"#FF7E00\"><b>".$i."</b>위</font>&nbsp;<font color=\"#2D8F26\"><b>".$view[recommend]."</b>점</font></td></tr>
+				<tr><td align=\"center\" class=\"font_kr\"><font color=\"#FF7E00\"><b>".$i."</b>위</font>&nbsp;<font color=\"#2D8F26\"><b>".$view['recommend']."</b>점</font></td></tr>
 				<tr><td width=\"\" height=\"\" align=\"center\" valign=\"top\">".$o_img."</td></tr>
 				<tr><td align=\"center\">".$link_1.$subject.$link_2."</td></tr>
-				<tr><td align=\"center\">".$link_1.$view[name].$link_2."</td></tr>
+				<tr><td align=\"center\">".$link_1.$view['name'].$link_2."</td></tr>
 			</table></td>";
 		$i++;
 	}
@@ -179,16 +180,16 @@ function aDelete($itemidx) {
 	$dels = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
 	if(DB::isError($dels)) die($dels->getMessage());
 		for($i=0; $i<count($dels); $i++) {
-			if($dels[filename.$i]) {
-				$delete_file = "files/".$_GET[code]."/".$dels[filename.$i];
+			if($dels['filename'.$i]) {
+				$delete_file = "files/".$_GET['code']."/".$dels['filename'.$i];
 				if(is_file($delete_file)) unlink($delete_file);
-				$delete_file_thumbnail = "files/".$_GET[code]."/thumbnail/".$dels[filename.$i];
+				$delete_file_thumbnail = "files/".$_GET['code']."/thumbnail/".$dels['filename'.$i];
 				if(is_file($delete_file_thumbnail)) unlink($delete_file_thumbnail);
 			}
 		}
 
 	//== 에디터 파일 삭제
-	$imgFolder="b_".$_GET[code]."_".$itemidx;
+	$imgFolder="b_".$_GET['code']."_".$itemidx;
 	$delPath=$_SERVER["DOCUMENT_ROOT"]."/eUpload/".$imgFolder;
 	removeDir($delPath);
 

@@ -1,4 +1,4 @@
-<?
+<?PHP
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'jisuk'
@@ -12,13 +12,13 @@ session_cache_limiter('nocache, must-revalidate');
 include ("inc/levelCheck_Inc.php");
 
 //==실명인증
-if($board_info[real_name]>0 && member_session(1) == false && !$_POST[rst]) header('Location: ./userCheck.php?code='.$_GET[code].'&rst='.$_POST[rst].'');
+if($board_info['real_name']>0 && member_session(1) == false && !$_POST['rst']) header('Location: ./userCheck.php?code='.$_GET['code'].'&rst='.$_POST['rst'].'');
 
 //==스마트에디터 업로드 폴더 설정
 $maxIdx = $db->getOne("SELECT MAX(idx) FROM ".$b_cfg_tb[1]."");
 if(DB::isError($maxIdx)) die($maxIdx->getMessage());
 if($maxIdx<=0) $newIdx=1; else $newIdx=$maxIdx+1;
-$imgFolder="b_".$_GET[code]."_".$newIdx;
+$imgFolder="b_".$_GET['code']."_".$newIdx;
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -108,7 +108,7 @@ $imgFolder="b_".$_GET[code]."_".$newIdx;
 					<div id="contentsView">
 						<div id="contentsPrint">
 						<!-- 메인 콘텐츠 시작 -->
-						<?if($board_info[skin]) require "./skin/".$board_info[skin]."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
+						<?if($board_info['skin']) require "./skin/".$board_info['skin']."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
 						<!-- 메인 콘텐츠 종료 -->
 						</div>
 

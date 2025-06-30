@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin'
@@ -20,8 +20,8 @@ $rst_get=get_value(1);
 if($rst_get>1) {
 	$sql_str_1 .= " WHERE";
 	$sql_str_2 .= " WHERE";
-	if($_GET[use_price] && $_GET[use_term]) {
-		switch ($_GET[use_term]) {
+	if($_GET['use_price'] && $_GET['use_term']) {
+		switch ($_GET['use_term']) {
 			case(1) :
 				$sql_str_1 .= " year_1_price<$_GET[use_price] AND";
 				$sql_str_2 .= " year_1_price<$_GET[use_price] AND";
@@ -43,8 +43,8 @@ if($rst_get>1) {
 				$sql_str_2 .= " year_4_price<$_GET[use_price] AND";
 		}
 	}
-	if($_GET[service_speed]) {
-		if($_GET[service_speed]==21) {
+	if($_GET['service_speed']) {
+		if($_GET['service_speed']==21) {
 			$sql_str_1 .= " service_speed>$_GET[service_speed] AND";
 			$sql_str_2 .= " service_speed>$_GET[service_speed] AND";
 		}else {
@@ -65,8 +65,8 @@ if(DB::isError($total)) die($total->getMessage());
 		$first = 1;
 		$last = 0;
 	}else {
-		$first = $num_per_page*($_GET[page]-1);
-		$last = $num_per_page*$_GET[page];
+		$first = $num_per_page*($_GET['page']-1);
+		$last = $num_per_page*$_GET['page'];
 		$next = $total - $last;
 		if($next > 0) {
 			$last -= 1;
@@ -77,7 +77,7 @@ if(DB::isError($total)) die($total->getMessage());
 	//== 총 페이지수
 	$total_page = ceil($total/$num_per_page);
 	//== 일련번호 설정
-	$article_num = $total - $num_per_page*($_GET[page]-1);
+	$article_num = $total - $num_per_page*($_GET['page']-1);
 	//== 오늘 등록된 게시물
 	$sql_str = "SELECT COUNT(idx) FROM $b_cfg_tb[0] WHERE signdate=now()";
 	$today = $db->getOne($sql_str);
@@ -133,13 +133,13 @@ if(DB::isError($total)) die($total->getMessage());
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">게시판 관리</h3>
@@ -172,34 +172,34 @@ if(DB::isError($total)) die($total->getMessage());
 										</tr>
 									</thead>
 									<tbody>
-										<?
+										<?php 
 											if(!$total) echo "<tr><td colspan=\"7\">현재 등록/검색된 게시판이 없습니다.</td></tr>";
 											for($i = $first; $i <= $last; $i++) {
-												$signdate=strtr($view[$i][signdate],"-",".");
-												$p_isp_brand=$view[$i][isp_brand];
-												$p_made_com=$view[$i][made_com];
+												$signdate=strtr($view[$i]['signdate'],"-",".");
+												$p_isp_brand=$view[$i]['isp_brand'];
+												$p_made_com=$view[$i]['made_com'];
 												//== 링크설정
 												$get_link=get_value(2);
 												//== 전체게시물수
-												$total_art = $db->getOne("select count(idx) from $b_cfg_tb[1] where code='".$view[$i][code]."'");
+												$total_art = $db->getOne("select count(idx) from $b_cfg_tb[1] where code='".$view[$i]['code']."'");
 												if(DB::isError($total_art)) die($total_art->getMessage());
 												//== 금일게시물수
-												$now_art = $db->getOne("select count(idx) from $b_cfg_tb[1] where code='".$view[$i][code]."' and DATE_FORMAT(signdate, '%Y-%m-%d') = CURDATE()");
+												$now_art = $db->getOne("select count(idx) from $b_cfg_tb[1] where code='".$view[$i]['code']."' and DATE_FORMAT(signdate, '%Y-%m-%d') = CURDATE()");
 												if(DB::isError($now_art)) die($now_art->getMessage());
-												$link_first="<a href=\"../wBoard/list.php?code=".$view[$i][code]."\" target=\"_blank\">";
+												$link_first="<a href=\"../wBoard/list.php?code=".$view[$i]['code']."\" target=\"_blank\">";
 												$link_last="</a>";
-												if($view[$i][board_summary]) $board_summary_print=$view[$i][board_summary]; else $board_summary_print="&nbsp;";
+												if($view[$i]['board_summary']) $board_summary_print=$view[$i]['board_summary']; else $board_summary_print="&nbsp;";
 											?>
 										<tr>
 											<td><?=$article_num;?></td>
 											<td class="ListAlign"><?=$link_first.$board_summary_print.$link_first;?></td>
-											<td><?=$view[$i][code];?></td>
+											<td><?=$view[$i]['code'];?></td>
 											<td><?=$link_first.$now_art."/".$total_art.$link_last;?></td>
-											<td><?=$view[$i][skin];?></td>
-											<td><?=$view[$i][signdate];?></td>
-											<td>[<a href="./boardForm.php?mode=edit&idx=<?=$view[$i][idx];?>&page=<?=$_GET[page];?>" class="basic">수정</a>] [<a href="javascript:del(document.sForm,'del','<?=$view[$i][code];?>','<?=$view[$i][idx];?>');" class="basic">삭제</a>]</td>
+											<td><?=$view[$i]['skin'];?></td>
+											<td><?=$view[$i]['signdate'];?></td>
+											<td>[<a href="./boardForm.php?mode=edit&idx=<?=$view[$i]['idx'];?>&page=<?=$_GET['page'];?>" class="basic">수정</a>] [<a href="javascript:del(document.sForm,'del','<?=$view[$i]['code'];?>','<?=$view[$i]['idx'];?>');" class="basic">삭제</a>]</td>
 										</tr>
-										<?$article_num--; }?>
+										<?php $article_num--; }?>
 									</tbody>
 								</table>
 								<form name="sForm">
@@ -213,13 +213,13 @@ if(DB::isError($total)) die($total->getMessage());
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

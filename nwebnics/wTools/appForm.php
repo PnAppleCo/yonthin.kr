@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -9,14 +9,14 @@ include ("inc/configInc.php");
 
 if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용하세요.", 1);
 
-if($_GET[mode]==='edit') {
-	if(!$_GET[idx]) error_view(999, "IDX 정보를 찾을수 없습니다.","관리자에게 문의하시기 바랍니다.");
+if($_GET['mode']==='edit') {
+	if(!$_GET['idx']) error_view(999, "IDX 정보를 찾을수 없습니다.","관리자에게 문의하시기 바랍니다.");
 	$sqlStr="SELECT * FROM signTbl WHERE idx=$_GET[idx]";
 	$view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
 	if(DB::isError($view)) die($view->getMessage());
-	$pContents=stripslashes($view[uContents]);
-	if($view[filename0]) $addFile01=" <a href=\"/downLoad.php?downfile=".urlencode($appDir.$view[filename0])."\">".$view[filename0]."</a>";
-	if($view[filename1]) $addFile02=" <a href=\"/downLoad.php?downfile=".urlencode($appDir.$view[filename1])."\">".$view[filename1]."</a>";
+	$pContents=stripslashes($view['uContents']);
+	if($view['filename0']) $addFile01=" <a href=\"/downLoad.php?downfile=".urlencode($appDir.$view['filename0'])."\">".$view['filename0']."</a>";
+	if($view['filename1']) $addFile02=" <a href=\"/downLoad.php?downfile=".urlencode($appDir.$view['filename1'])."\">".$view['filename1']."</a>";
 }
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
@@ -119,13 +119,13 @@ if($_GET[mode]==='edit') {
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">종전평화 서명 관리</h3>
@@ -133,7 +133,7 @@ if($_GET[mode]==='edit') {
 						<div id="contentsBody">
 
 							<div class="wView">
-								<form name="setForm" method="post" action="/appExe.php?mode=<?=$_GET[mode];?>&idx=<?=$view[idx];?>&page<?=$_GET[page];?>" enctype="multipart/form-data">
+								<form name="setForm" method="post" action="/appExe.php?mode=<?=$_GET['mode'];?>&idx=<?=$view['idx'];?>&page<?=$_GET['page'];?>" enctype="multipart/form-data">
 									<fieldset>
 										<legend>신청자 관리</legend>
 											<h3 style="padding: 5px 0;">필수입력사항</h3>
@@ -146,18 +146,18 @@ if($_GET[mode]==='edit') {
 												<tbody>
 													<tr>
 														<th><label>성 명</label></th>
-														<td style="text-align:left;"><input type="text" name="sName" id="sName" size="20" maxlength="100" class="wTbox" value="<?=$view[sName];?>" placeholder="성명 입력" title="성명 입력" /></td>
+														<td style="text-align:left;"><input type="text" name="sName" id="sName" size="20" maxlength="100" class="wTbox" value="<?=$view['sName'];?>" placeholder="성명 입력" title="성명 입력" /></td>
 													</tr>
 													<tr>
 														<th><label>주 소</label></th>
 														<td style="text-align:left;">
-															<input type="text" name="aDdress" id="aDdress" size="30" class="wTbox" maxlength="100" value="<?=$view[aDdress];?>" placeholder="주소 입력" title="주소 입력" />
+															<input type="text" name="aDdress" id="aDdress" size="30" class="wTbox" maxlength="100" value="<?=$view['aDdress'];?>" placeholder="주소 입력" title="주소 입력" />
 														</td>
 													</tr>
 													<tr>
 														<th><label>응원한마디</label></th>
 														<td style="text-align:left;">
-															<input type="text" name="wordSupport" id="wordSupport" size="50" class="wTbox" maxlength="255" value="<?=$view[wordSupport];?>" placeholder="응원한마디 입력" title="응원한마디 입력" />
+															<input type="text" name="wordSupport" id="wordSupport" size="50" class="wTbox" maxlength="255" value="<?=$view['wordSupport'];?>" placeholder="응원한마디 입력" title="응원한마디 입력" />
 														</td>
 													</tr>
 												</tbody>
@@ -166,21 +166,21 @@ if($_GET[mode]==='edit') {
 								</form>
 							</div>
 							<div class="wdiv">
-								<?if($_GET[mode]==="add") $v_text="등 록"; else if($_GET[mode]==="edit") $v_text="수 정";?>
-								<input type="submit" value="<?=$v_text;?>" onClick="fCheck('<?=$_GET[mode];?>','<?=$view[idx];?>','<?=$_GET[page];?>'); return false;" class="button" />
+								<?php if($_GET['mode']==="add") $v_text="등 록"; else if($_GET['mode']==="edit") $v_text="수 정";?>
+								<input type="submit" value="<?=$v_text;?>" onClick="fCheck('<?=$_GET['mode'];?>','<?=$view['idx'];?>','<?=$_GET['page'];?>'); return false;" class="button" />
 								<input type="button" value="목 록" onclick="history.back();" class="button" />
 							</div>
 						</div>
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

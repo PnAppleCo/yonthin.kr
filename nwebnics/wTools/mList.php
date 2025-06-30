@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -14,25 +14,25 @@ $sqlStr1 = "SELECT COUNT(DISTINCT aT.idx) FROM wMember aT";
 $sqlStr2 = "SELECT aT.* FROM wMember aT";
 
 //== 회원검색 질의
-if($_GET[gmLevel]) $addSql .= " aT.ulevel='$_GET[gmLevel]' AND";
-if($_GET[gArea]) $addSql .= " aT.haddress1 LIKE '$_GET[gArea]%' AND";
-if($_GET[gField] && $_GET[gWord]) $addSql .=" aT.$_GET[gField] like '%$_GET[gWord]%' AND";
-if($_GET[start_date] && $_GET[stop_date]) $addSql .= " DATE_FORMAT(aT.signDate,'%Y-%m-%d') BETWEEN DATE_FORMAT('$_GET[start_date]','%Y-%m-%d') AND DATE_FORMAT('$_GET[stop_date]','%Y-%m-%d') AND";
-if($_GET[termMode]==1) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') = CURDATE() AND";
-if($_GET[termMode]==2) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') = (CURDATE() - INTERVAL 1 DAY) AND";
-if($_GET[termMode]==3) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') >= (CURRENT_DATE() - INTERVAL 7 DAY) AND";
-if($_GET[termMode]==4) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') >= (CURRENT_DATE() - INTERVAL 1 MONTH) AND";
-if($_GET[limitDate]>0) $addSql .= " DATE_FORMAT(aT.limitDate, '%Y-%m-%d') != '0000-00-00' AND";
-if($_GET[glogCount]) $addSql .= " aT.login>$_GET[glogCount] AND";
-if($_GET[greceiptEmail]>0) $addSql .= " aT.newsDm=1 AND";
-if($_GET[greceiptSms]>0) $addSql .= " aT.smsDm=1 AND";
-if($_GET[gbirthDay]) $addSql .= " DATE_FORMAT(aT.birthDay, '%m-%d')=DATE_FORMAT(CURDATE(), '%m-%d') AND";
-if($_GET[gokPoint]) $addSql .= " aT.point>$_GET[gokPoint] AND";
+if($_GET['gmLevel']) $addSql .= " aT.ulevel='$_GET[gmLevel]' AND";
+if($_GET['gArea']) $addSql .= " aT.haddress1 LIKE '$_GET[gArea]%' AND";
+if($_GET['gField'] && $_GET['gWord']) $addSql .=" aT.$_GET[gField] like '%$_GET[gWord]%' AND";
+if($_GET['start_date'] && $_GET['stop_date']) $addSql .= " DATE_FORMAT(aT.signDate,'%Y-%m-%d') BETWEEN DATE_FORMAT('$_GET[start_date]','%Y-%m-%d') AND DATE_FORMAT('$_GET[stop_date]','%Y-%m-%d') AND";
+if($_GET['termMode']==1) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') = CURDATE() AND";
+if($_GET['termMode']==2) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') = (CURDATE() - INTERVAL 1 DAY) AND";
+if($_GET['termMode']==3) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') >= (CURRENT_DATE() - INTERVAL 7 DAY) AND";
+if($_GET['termMode']==4) $addSql .= " DATE_FORMAT(aT.signDate, '%Y-%m-%d') >= (CURRENT_DATE() - INTERVAL 1 MONTH) AND";
+if($_GET['limitDate']>0) $addSql .= " DATE_FORMAT(aT.limitDate, '%Y-%m-%d') != '0000-00-00' AND";
+if($_GET['glogCount']) $addSql .= " aT.login>$_GET[glogCount] AND";
+if($_GET['greceiptEmail']>0) $addSql .= " aT.newsDm=1 AND";
+if($_GET['greceiptSms']>0) $addSql .= " aT.smsDm=1 AND";
+if($_GET['gbirthDay']) $addSql .= " DATE_FORMAT(aT.birthDay, '%m-%d')=DATE_FORMAT(CURDATE(), '%m-%d') AND";
+if($_GET['gokPoint']) $addSql .= " aT.point>$_GET[gokPoint] AND";
 
 //== 주문검색 질의
-if($_GET[shoptStart] && $_GET[shopStop]) $shopSql .= " DATE_FORMAT(bT.settle_date,'%Y-%m-%d') BETWEEN DATE_FORMAT('$_GET[startStart]','%Y-%m-%d') AND DATE_FORMAT('$_GET[shopStop]','%Y-%m-%d') AND";
-if($_GET[gbuyAmount]) $havingSql .= " SUM(bT.item_total_price)>$_GET[gbuyAmount] AND";
-if($_GET[gbuyCount]) $havingSql .= " COUNT(bT.idx)>$_GET[gbuyCount] AND";
+if($_GET['shoptStart'] && $_GET['shopStop']) $shopSql .= " DATE_FORMAT(bT.settle_date,'%Y-%m-%d') BETWEEN DATE_FORMAT('$_GET[startStart]','%Y-%m-%d') AND DATE_FORMAT('$_GET[shopStop]','%Y-%m-%d') AND";
+if($_GET['gbuyAmount']) $havingSql .= " SUM(bT.item_total_price)>$_GET[gbuyAmount] AND";
+if($_GET['gbuyCount']) $havingSql .= " COUNT(bT.idx)>$_GET[gbuyCount] AND";
 if($havingSql) $havingSql = " HAVING (".substr($havingSql,0,-3).") AND";
 
 //== 회원관련 조건문과 쇼핑관련 조건문 조합
@@ -53,8 +53,8 @@ if($addSql) {
 }
 
 //== 정렬필드와 차순결정
-if($_GET[aField]) $alignField=$_GET[aField]; else $alignField="idx";
-if($_GET[aType]) $alignType=$_GET[aType]; else $alignType="DESC";
+if($_GET['aField']) $alignField=$_GET['aField']; else $alignField="idx";
+if($_GET['aType']) $alignType=$_GET['aType']; else $alignType="DESC";
 $sqlStr2 .= " ORDER BY aT.".$alignField." ".$alignType;
 //== 다음 정렬 차순 결정
 if($alignType=="DESC") $alignType="ASC"; else if($alignType=="ASC") $alignType="DESC";
@@ -72,8 +72,8 @@ if(DB::isError($total)) die($total->getMessage());
 		$first = 1;
 		$last = 0;
 	}else {
-		$first = $num_per_page*($_GET[page]-1);
-		$last = $num_per_page*$_GET[page];
+		$first = $num_per_page*($_GET['page']-1);
+		$last = $num_per_page*$_GET['page'];
 		$next = $total - $last;
 		if($next > 0) {
 			$last -= 1;
@@ -84,7 +84,7 @@ if(DB::isError($total)) die($total->getMessage());
 	//== 총 페이지수
 	$total_page = ceil($total/$num_per_page);
 	//== 일련번호 설정
-	$article_num = $total - $num_per_page*($_GET[page]-1);
+	$article_num = $total - $num_per_page*($_GET['page']-1);
 	//== 오늘 등록된 게시물
 	$sql_str = "SELECT COUNT(idx) FROM wMember WHERE signDate=now()";
 	$today = $db->getOne($sql_str);
@@ -95,10 +95,10 @@ if(DB::isError($total)) die($total->getMessage());
 	if(DB::isError($view)) die($view->getMessage());
 	//== 페이지 현황정보
 	$page_state="&nbsp;전체 : ".$total." 오늘 : ".$today."&nbsp;";
-	if(!$_GET[keyword] && !$_GET[keyfield]) {
-		$page_state .= "페이지 : ".$_GET[page]." / ".$total_page;
+	if(!$_GET['keyword'] && !$_GET['keyfield']) {
+		$page_state .= "페이지 : ".$_GET['page']." / ".$total_page;
 	}else {
-		$page_state .= "검색결과 : ".$_GET[page]." / ".$total_page;
+		$page_state .= "검색결과 : ".$_GET['page']." / ".$total_page;
 	}
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
@@ -225,13 +225,13 @@ if(DB::isError($total)) die($total->getMessage());
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">회원 관리</h3>
@@ -256,9 +256,10 @@ if(DB::isError($total)) die($total->getMessage());
 													<li>
 														<select name="gmLevel" class="selectbox" title="회원등급">
 															<option value="">-회원등급-</option>
-															<?
+															<?php
+																$mLevel = $mLevel ?? []; // null 방지
 																for($i=1;$i<count($mLevel)+1;$i++) {
-																	if($_GET[gmLevel]==$i) $iselected=" selected"; else $iselected="";
+																	if($_GET['gmLevel']==$i) $iselected=" selected"; else $iselected="";
 																	echo "<option value=\"".$i."\"".$iselected.">".$mLevel[$i]."</option>";
 																}
 															?>
@@ -267,47 +268,47 @@ if(DB::isError($total)) die($total->getMessage());
 													<li>
 														<select name="sex" class="selectbox" title="성별">
 															<option value="">-성별-</option>
-															<option value="1"<?if($_GET[sex]=="1") echo " selected";?>>남</option>
-															<option value="2"<?if($_GET[sex]=="2") echo " selected";?>>여</option>
+															<option value="1"<?php if($_GET['sex']=="1") echo " selected";?>>남</option>
+															<option value="2"<?php if($_GET['sex']=="2") echo " selected";?>>여</option>
 														</select>
 													</li>
 													<li>
 														<select name="gArea" class="selectbox" title="지역">
 															<option value="">-지역-</option>
-															<option value="서울"<?if($_GET[gArea]==="서울") echo " selected";?>>서울</option>
-															<option value="부산"<?if($_GET[gArea]==="부산") echo " selected";?>>부산</option>
-															<option value="대구"<?if($_GET[gArea]==="대구") echo " selected";?>>대구</option>
-															<option value="인천"<?if($_GET[gArea]==="인천") echo " selected";?>>인천</option>
-															<option value="광주"<?if($_GET[gArea]==="광주") echo " selected";?>>광주</option>
-															<option value="대전"<?if($_GET[gArea]==="대전") echo " selected";?>>대전</option>
-															<option value="울산"<?if($_GET[gArea]==="울산") echo " selected";?>>울산</option>
-															<option value="경기"<?if($_GET[gArea]==="경기") echo " selected";?>>경기</option>
-															<option value="강원"<?if($_GET[gArea]==="강원") echo " selected";?>>강원</option>
-															<option value="충남"<?if($_GET[gArea]==="충남") echo " selected";?>>충남</option>
-															<option value="충북"<?if($_GET[gArea]==="충북") echo " selected";?>>충북</option>
-															<option value="경북"<?if($_GET[gArea]==="경북") echo " selected";?>>경북</option>
-															<option value="경남"<?if($_GET[gArea]==="경남") echo " selected";?>>경남</option>
-															<option value="전북"<?if($_GET[gArea]==="전북") echo " selected";?>>전북</option>
-															<option value="전남"<?if($_GET[gArea]==="전남") echo " selected";?>>전남</option>
-															<option value="제주"<?if($_GET[gArea]==="제주") echo " selected";?>>제주</option>
+															<option value="서울"<?php if($_GET['gArea']==="서울") echo " selected";?>>서울</option>
+															<option value="부산"<?php if($_GET['gArea']==="부산") echo " selected";?>>부산</option>
+															<option value="대구"<?php if($_GET['gArea']==="대구") echo " selected";?>>대구</option>
+															<option value="인천"<?php if($_GET['gArea']==="인천") echo " selected";?>>인천</option>
+															<option value="광주"<?php if($_GET['gArea']==="광주") echo " selected";?>>광주</option>
+															<option value="대전"<?php if($_GET['gArea']==="대전") echo " selected";?>>대전</option>
+															<option value="울산"<?php if($_GET['gArea']==="울산") echo " selected";?>>울산</option>
+															<option value="경기"<?php if($_GET['gArea']==="경기") echo " selected";?>>경기</option>
+															<option value="강원"<?php if($_GET['gArea']==="강원") echo " selected";?>>강원</option>
+															<option value="충남"<?php if($_GET['gArea']==="충남") echo " selected";?>>충남</option>
+															<option value="충북"<?php if($_GET['gArea']==="충북") echo " selected";?>>충북</option>
+															<option value="경북"<?php if($_GET['gArea']==="경북") echo " selected";?>>경북</option>
+															<option value="경남"<?php if($_GET['gArea']==="경남") echo " selected";?>>경남</option>
+															<option value="전북"<?php if($_GET['gArea']==="전북") echo " selected";?>>전북</option>
+															<option value="전남"<?php if($_GET['gArea']==="전남") echo " selected";?>>전남</option>
+															<option value="제주"<?php if($_GET['gArea']==="제주") echo " selected";?>>제주</option>
 														</select>
 													</li>
 													<li>
 														<select name="gField" class="selectbox" title="검색항목선택">
 															<option value="">-검색항목선택-</option>
-															<option value="mId"<?if($_GET[gField]=="mId") echo " selected";?>>아이디</option>
-															<option value="mName"<?if($_GET[gField]=="mName") echo " selected";?>>성 명</option>
-															<option value="haddress1"<?if($_GET[gField]=="haddress1") echo " selected";?>>주 소</option>
-															<option value="tel"<?if($_GET[gField]=="tel") echo " selected";?>>일반전화</option>
-															<option value="sel"<?if($_GET[gField]=="sel") echo " selected";?>>휴대전화</option>
-															<option value="email"<?if($_GET[gField]=="email") echo " selected";?>>전자우편</option>
+															<option value="mId"<?php if($_GET['gField']=="mId") echo " selected";?>>아이디</option>
+															<option value="mName"<?php if($_GET['gField']=="mName") echo " selected";?>>성 명</option>
+															<option value="haddress1"<?php if($_GET['gField']=="haddress1") echo " selected";?>>주 소</option>
+															<option value="tel"<?php if($_GET['gField']=="tel") echo " selected";?>>일반전화</option>
+															<option value="sel"<?php if($_GET['gField']=="sel") echo " selected";?>>휴대전화</option>
+															<option value="email"<?php if($_GET['gField']=="email") echo " selected";?>>전자우편</option>
 														</select>
 													</li>
 													<li>
-														<input type="text" name="gWord" size="20" maxlength="30" class="textbox" value="<?=$_GET[gWord];?>" title="검색 키워드 입력" />
+														<input type="text" name="gWord" size="20" maxlength="30" class="textbox" value="<?=$_GET['gWord'];?>" title="검색 키워드 입력" />
 													</li>
 													<li>
-														<input type="hidden" name="detailCheck" value="<?=$_GET[detailCheck];?>" /><input type="hidden" name="shopCheck" value="<?=$_GET[shopCheck];?>" />
+														<input type="hidden" name="detailCheck" value="<?=$_GET['detailCheck'];?>" /><input type="hidden" name="shopCheck" value="<?=$_GET['shopCheck'];?>" />
 													</li>
 												</ul>
 											</td>
@@ -317,13 +318,13 @@ if(DB::isError($total)) die($total->getMessage());
 										<tr>
 											<th>기간검색</th>
 											<td>
-												<input type="text" name="start_date" id="start_date" size="12" maxlength="10" value="<?=$_GET[start_date];?>" class="textbox" title="검색 시작날짜 선택" /> ~
-												<input type="text" name="stop_date" id="stop_date" size="12" maxlength="10" value="<?=$_GET[stop_date];?>" class="textbox" title="검색 종료날짜 선택" />
-												<a href="<?=$_SERVER[PHP_SELF];?>?termMode=1" title="오늘 기준 검색">오늘</a>
-												<a href="<?=$_SERVER[PHP_SELF];?>?termMode=2" title="어제 기준 검색">어제</a>
-												<a href="<?=$_SERVER[PHP_SELF];?>?termMode=3" title="일주일 기준 검색">1주일</a>
-												<a href="<?=$_SERVER[PHP_SELF];?>?termMode=4" title="1개월 기준 검색">1개월</a>
-												<input type="checkbox" name="limitDate" value="1" class="align_left_middle"<?if($_GET[limitDate]>0) echo " checked";?> />접수제한
+												<input type="text" name="start_date" id="start_date" size="12" maxlength="10" value="<?=$_GET['start_date'];?>" class="textbox" title="검색 시작날짜 선택" /> ~
+												<input type="text" name="stop_date" id="stop_date" size="12" maxlength="10" value="<?=$_GET['stop_date'];?>" class="textbox" title="검색 종료날짜 선택" />
+												<a href="<?=$_SERVER['PHP_SELF'];?>?termMode=1" title="오늘 기준 검색">오늘</a>
+												<a href="<?=$_SERVER['PHP_SELF'];?>?termMode=2" title="어제 기준 검색">어제</a>
+												<a href="<?=$_SERVER['PHP_SELF'];?>?termMode=3" title="일주일 기준 검색">1주일</a>
+												<a href="<?=$_SERVER['PHP_SELF'];?>?termMode=4" title="1개월 기준 검색">1개월</a>
+												<input type="checkbox" name="limitDate" value="1" class="align_left_middle"<?php if($_GET['limitDate']>0) echo " checked";?> />접수제한
 											</td>
 										</tr>
 									</tbody>
@@ -352,25 +353,25 @@ if(DB::isError($total)) die($total->getMessage());
 									<thead>
 										<tr>
 											<th scope="col"><input type="checkbox" name="allSbox" onclick="allSelect();" title="선택"></th>
-											<th scope="col"><a href="<?=$_SERVER[PHP_SELF];?>?aField=mName&aType=<?=$alignType;?>" class="boardBold" title="성명순 정렬">성 명</a></th>
-											<th scope="col"><a href="<?=$_SERVER[PHP_SELF];?>?aField=mId&aType=<?=$alignType;?>" class="boardBold" title="아이디순 정렬">아이디</a></th>
+											<th scope="col"><a href="<?=$_SERVER['PHP_SELF'];?>?aField=mName&aType=<?=$alignType;?>" class="boardBold" title="성명순 정렬">성 명</a></th>
+											<th scope="col"><a href="<?=$_SERVER['PHP_SELF'];?>?aField=mId&aType=<?=$alignType;?>" class="boardBold" title="아이디순 정렬">아이디</a></th>
 											<th scope="col">주 소</th>
-											<th scope="col"><a href="<?=$_SERVER[PHP_SELF];?>?aField=login&aType=<?=$alignType;?>" class="boardBold" title="방문순 정렬">방 문</a></th>
-											<th scope="col"><a href="<?=$_SERVER[PHP_SELF];?>?aField=ulevel&aType=<?=$alignType;?>" class="boardBold" title="등급순 정렬">등 급</a></th>
+											<th scope="col"><a href="<?=$_SERVER['PHP_SELF'];?>?aField=login&aType=<?=$alignType;?>" class="boardBold" title="방문순 정렬">방 문</a></th>
+											<th scope="col"><a href="<?=$_SERVER['PHP_SELF'];?>?aField=ulevel&aType=<?=$alignType;?>" class="boardBold" title="등급순 정렬">등 급</a></th>
 											<th scope="col">연락처</th>
-											<th scope="col"><a href="<?=$_SERVER[PHP_SELF];?>?aField=signDate&aType=<?=$alignType;?>" class="boardBold" title="가입일순 정렬">가입일</a></th>
+											<th scope="col"><a href="<?=$_SERVER['PHP_SELF'];?>?aField=signDate&aType=<?=$alignType;?>" class="boardBold" title="가입일순 정렬">가입일</a></th>
 										</tr>
 									</thead>
 									<tbody>
-										<?
+										<?php 
 										if(!$total) echo "<tr><td colspan=\"9\">현재 등록/검색된 회원이 없습니다.</td></tr>";
 
 										for($i = $first; $i <= $last; $i++) {
-											$link1="<a href=\"mView.php?page=".$_GET[page]."&keyword=".$_GET[keyword]."&keyfield=".$_GET[keyfield]."&idx=".$view[$i][idx]."\" class=\"basic\">";
+											$link1="<a href=\"mView.php?page=".$_GET['page']."&keyword=".$_GET['keyword']."&keyfield=".$_GET['keyfield']."&idx=".$view[$i]['idx']."\" class=\"basic\">";
 											$link2="</a>";
 											//== useSms 아직 미설정
 											if($smsCorp>0) {
-												$smsLink="javascript:void(window.open('/webnics/WebnicsSms/smsForm.php?rid=".$view[$i][id]."', 'smsForm', 'width=220, height=290, status=0, resizable=0, scrollbars=0, 1, 1'));";
+												$smsLink="javascript:void(window.open('/webnics/WebnicsSms/smsForm.php?rid=".$view[$i]['id']."', 'smsForm', 'width=220, height=290, status=0, resizable=0, scrollbars=0, 1, 1'));";
 												$allSms="javascript:allSms();";
 											}else {
 												$smsLink="javascript:alert('SMS는 유료서비스입니다.');";
@@ -378,36 +379,36 @@ if(DB::isError($total)) die($total->getMessage());
 											}
 										?>
 										<tr>
-											<td><input type="checkbox" name="sBox[]" value="<?=$view[$i][idx];?>"></td>
-											<td><?=$link1.$view[$i][mName].$link2;?></td>
-											<td><?=$link1.$view[$i][mId].$link2;?></td>
-											<td class="ListAlign"><?=$view[$i][haddress1];?></td>
-											<td><?=number_format($view[$i][login]);?></td>
-											<td><?=$mLevel[$view[$i][ulevel]];?></td>
-											<td><?=$view[$i][selNum];?></td>
-											<td><?=strtr($view[$i][signDate],"-",".");?></td>
-											<?if($siteType==2) echo "<td><a href=\"javascript:void(window.open('./buyDetail.php?mName=".$view[$i][name]."&mId=".$view[$i][id]."','buyDetail','width=500,height=500'));\"><img src=\"./img/shopping.gif\" width=\"30\" height=\"14\" align=\"absmiddle\" border=\"0\" alt=\"구매내역\"></a> <a href=\"javascript:void(window.open('./pointDetail.php?mName=".$view[$i][name]."&mId=".$view[$i][id]."','saveDetail','width=500,height=500'));\"><img src=\"./img/point.gif\" width=\"30\" height=\"14\" align=\"absmiddle\" border=\"0\" alt=\"적립내역\"></a></td>";?>
+											<td><input type="checkbox" name="sBox[]" value="<?=$view[$i]['idx'];?>"></td>
+											<td><?=$link1.$view[$i]['mName'].$link2;?></td>
+											<td><?=$link1.$view[$i]['mId'].$link2;?></td>
+											<td class="ListAlign"><?=$view[$i]['haddress1'];?></td>
+											<td><?=number_format($view[$i]['login']);?></td>
+											<td><?=$mLevel[$view[$i]['ulevel']];?></td>
+											<td><?=$view[$i]['selNum'];?></td>
+											<td><?=strtr($view[$i]['signDate'],"-",".");?></td>
+											<?php if($siteType==2) echo "<td><a href=\"javascript:void(window.open('./buyDetail.php?mName=".$view[$i]['name']."&mId=".$view[$i]['id']."','buyDetail','width=500,height=500'));\"><img src=\"./img/shopping.gif\" width=\"30\" height=\"14\" align=\"absmiddle\" border=\"0\" alt=\"구매내역\"></a> <a href=\"javascript:void(window.open('./pointDetail.php?mName=".$view[$i]['name']."&mId=".$view[$i]['id']."','saveDetail','width=500,height=500'));\"><img src=\"./img/point.gif\" width=\"30\" height=\"14\" align=\"absmiddle\" border=\"0\" alt=\"적립내역\"></a></td>";?>
 										</tr>
-										<?$article_num--; }?>
+										<?php $article_num--; }?>
 									</tbody>
 								</table>
 							</div>
 
 							<div id="boardTail">
 								<span class="float_left">[<a href="<?=$allSms;?>">선택SMS</a>]</span>
-								<span class="float_right"><?$paging = new paging(); $view_paging=$paging->page_display($total,$num_per_page, $num_per_block,$next); echo $view_paging;?></span>
+								<span class="float_right"><?php $paging = new paging(); $view_paging=$paging->page_display($total,$num_per_page, $num_per_block,$next); echo $view_paging;?></span>
 							</div>
 						</div>
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

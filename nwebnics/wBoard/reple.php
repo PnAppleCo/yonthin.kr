@@ -1,4 +1,4 @@
-<?
+<?PHP
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'jisuk'
@@ -8,8 +8,8 @@
 include ("inc/boardLib.php");
 
 //== 게시판 code 체크
-if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
-if(!$_GET[idx]) js_action(1,"답변할 글의 idx를 찾을수 없습니다.","",-1);
+if(!$_GET['code']) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
+if(!$_GET['idx']) js_action(1,"답변할 글의 idx를 찾을수 없습니다.","",-1);
 
 //== 접근 권한 설정
 include ("inc/levelCheck_Inc.php");
@@ -20,16 +20,20 @@ $view = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 if(DB::isError($view)) die($view->getMessage());
 
 //== 제목과 내용의 문자열 원상복구
-$view[subject] = stripslashes($view[subject]);
-$view[ucontents] = stripslashes($view[ucontents]);
+$view['subject'] = stripslashes($view['subject']);
+$view['ucontents'] = stripslashes($view['ucontents']);
 
 //== 중복되는 "[RE]"를 제거 +//
-$view[subject] = eregi_replace("^\[RE\] ", "",$view[subject]);
+// PHP82 변환
+// $view['subject'] = eregi_replace("^\[RE\] ", "",$view['subject']);
+$view['subject'] = str_replace("^\[RE\] ", "",$view['subject']);
 
 //== 원글과 답변글을 구분하기 위해 원글의 각 줄앞에 콜론(:)을 추가하여 출력
-$view[ucontents] = ":" . $view[ucontents];
-$view[ucontents] = eregi_replace("\n", "\n:", $view[ucontents]);
-$view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
+$view['ucontents'] = ":" . $view['ucontents'];
+// PHP82 변환
+// $view['ucontents'] = eregi_replace("\n", "\n:", $view['ucontents']);
+$view['ucontents'] = str_replace("\n", "\n:", $view['ucontents']);
+$view['ucontents'] = $view['name'] . "님의 글입니다.\n\n" . $view['ucontents'];
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -103,7 +107,7 @@ $view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
+			<?PHP include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 
 			<hr/>
@@ -113,7 +117,7 @@ $view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
 				<div id="contentsArea">
 
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?PHP include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->
@@ -124,7 +128,7 @@ $view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
 						</div>
 						<div id="contentsPrint">
 						<!-- 메인 콘텐츠 시작 -->
-						<?if($board_info[skin]) require "./skin/".$board_info[skin]."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
+						<?PHP if($board_info['skin']) require "./skin/".$board_info['skin']."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
 						<!-- 메인 콘텐츠 종료 -->
 						</div>
 
@@ -138,7 +142,7 @@ $view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?PHP include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 
@@ -147,4 +151,4 @@ $view[ucontents] = $view[name] . "님의 글입니다.\n\n" . $view[ucontents];
 		</div>
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?PHP addCount(); $db->disconnect();?>

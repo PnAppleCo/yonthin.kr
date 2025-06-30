@@ -1,4 +1,4 @@
-<?
+<?php 
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
@@ -10,13 +10,13 @@ include ("inc/configInc.php");
 set_time_limit(0);
 
 //== 메일발송기본정보
-if($_POST[senderName]) $senderName=$_POST[senderName]; else $senderName="애니타로";
-if($_POST[senderMail]) $senderMail=$_POST[senderMail]; else $senderMail="anytarot@anytarot.co.kr";
+if($_POST['senderName']) $senderName=$_POST['senderName']; else $senderName="애니타로";
+if($_POST['senderMail']) $senderMail=$_POST['senderMail']; else $senderMail="anytarot@anytarot.co.kr";
 
 //== 메일 발송회원 구분
-switch ($_POST[mailType]) {
+switch ($_POST['mailType']) {
 	case 1 :
-		$sqlStr = "SELECT name,email FROM cs_member WHERE userid='".$_POST[receiverId]."' AND name='".$_POST[receiverName]."' AND email='".$_POST[receiverEmail]."'";
+		$sqlStr = "SELECT name,email FROM cs_member WHERE userid='".$_POST['receiverId']."' AND name='".$_POST['receiverName']."' AND email='".$_POST['receiverEmail']."'";
 		$sqlCount = "SELECT COUNT(idx) FROM cs_member";
 	break;
 	case 2 :
@@ -30,10 +30,10 @@ switch ($_POST[mailType]) {
 	case 4 :
 		$sqlStr = "SELECT name,email FROM cs_member WHERE";
 		$sqlCount = "SELECT COUNT(idx) FROM cs_member WHERE";
-		if($_POST[sex]) $addStr .= " sex=".$_POST[sex]." AND";
-		if($_POST[level]) $addStr .= " level=".$_POST[level]." AND";
-		if($_POST[birthDay]) $addStr .= " SUBSTRING(jumin1,3,2)=DATE_FORMAT(CURDATE(),'%m') AND";
-		if($_POST[joinDay]) $addStr .= " DATE_FORMAT(signdate,'%m')=DATE_FORMAT(CURDATE(),'%m') AND";
+		if($_POST['sex']) $addStr .= " sex=".$_POST['sex']." AND";
+		if($_POST['level']) $addStr .= " level=".$_POST['level']." AND";
+		if($_POST['birthDay']) $addStr .= " SUBSTRING(jumin1,3,2)=DATE_FORMAT(CURDATE(),'%m') AND";
+		if($_POST['joinDay']) $addStr .= " DATE_FORMAT(signdate,'%m')=DATE_FORMAT(CURDATE(),'%m') AND";
 		if($addStr) { $sqlStr .= substr($addStr,0,-3); $sqlCount .= substr($addStr,0,-3); }
 	break;
 }
@@ -52,7 +52,7 @@ if($vTotal<=0) {
 	if(DB::isError($rst)) die($rst->getMessage());
 	$sendTotal=1;
 	while($mem_info = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
-		send_mail(1, $mem_info[email], $mem_info[name], $senderMail, $senderName, $_POST[mailSubject], $_POST[mailContents], "", "");
+		send_mail(1, $mem_info['email'], $mem_info['name'], $senderMail, $senderName, $_POST['mailSubject'], $_POST['mailContents'], "", "");
 		$sendTotal++;
 		if(($sendTotal % 100) == 0) sleep(3);
 	}

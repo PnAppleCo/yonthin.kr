@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -8,21 +8,21 @@
 include ("inc/configInc.php");
 
 if(member_session(1) == true) {
-	if(!$_GET[idx] && !$_GET[mid]) error_view(999, "필수정보를 찾을 수 없습니다..","재확인후 이용하세요.");
+	if(!$_GET['idx'] && !$_GET['mid']) error_view(999, "필수정보를 찾을 수 없습니다..","재확인후 이용하세요.");
 	$sqlStr="SELECT * FROM wMember";
-	if($_GET[idx]) $addStr .= " idx=$_GET[idx] AND";
-	if($_GET[mid]) $addStr .= " mId='$_GET[mid]' AND";
+	if($_GET['idx']) $addStr .= " idx=$_GET[idx] AND";
+	if($_GET['mid']) $addStr .= " mId='$_GET[mid]' AND";
 	if($addStr) $sqlStr .= " WHERE".substr($addStr,0,-3);
 }else { redirect(1, "/nwebnics/wTools/", "관리자 로그인후 이용하세요.", 1); }
 $view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
 if(DB::isError($view)) die($view->getMessage());
 if(!$view) error_view(999, "죄송합니다!. 일치하는 정보를 찾을수 없습니다.","올바른 방법으로 이용하세요.");
-$view[adminMemo]=htmlspecialchars($view[adminMemo]);
-$view[adminMemo]=nl2br($view[adminMemo]);
-$arrEmail=explode("@",$view[email]);
-$arrTel=explode("-",$view[telNum]);
-$arrSel=explode("-",$view[selNum]);
-$v_birth=explode("-",$view[birthDay]);
+$view['adminMemo']=htmlspecialchars($view['adminMemo']);
+$view['adminMemo']=nl2br($view['adminMemo']);
+$arrEmail=explode("@",$view['email']);
+$arrTel=explode("-",$view['telNum']);
+$arrSel=explode("-",$view['selNum']);
+$v_birth=explode("-",$view['birthDay']);
 
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
@@ -135,13 +135,13 @@ $v_birth=explode("-",$view[birthDay]);
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">회원 관리</h3>
@@ -163,17 +163,17 @@ $v_birth=explode("-",$view[birthDay]);
 												<tbody>
 													<tr>
 														<th><label for="mId">아 이 디</label></th>
-														<td ><input type="text" name="mId" size="15" maxlength="12" value="<?=$view[mId];?>" class="wTbox" title="아이디입력"> <a href="javascript:dupl_id_check(1)" title="아이디 중복확인">중복확인</a> 4~12자 이하</td>
+														<td ><input type="text" name="mId" size="15" maxlength="12" value="<?=$view['mId'];?>" class="wTbox" title="아이디입력"> <a href="javascript:dupl_id_check(1)" title="아이디 중복확인">중복확인</a> 4~12자 이하</td>
 														<th><label for="nickname">성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;별</label></th>
 														<td>
-															<input type="radio" name="sex" value="1"<?if($view[sex]=='1') echo " checked";?> class="align_left_middle" />남 <input type="radio" name="sex"<?if($view[sex]=='2') echo " checked";?> value="2" class="align_left_middle" />여
+															<input type="radio" name="sex" value="1"<?php if($view['sex']=='1') echo " checked";?> class="align_left_middle" />남 <input type="radio" name="sex"<?php if($view['sex']=='2') echo " checked";?> value="2" class="align_left_middle" />여
 														</td>
 													</tr>
 													<tr>
 														<th><label for="mName">성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명</label></th>
-														<td><input type="text" name="mName" size="15" maxlength="16" value="<?=$view[mName];?>" class="wTbox" title="성명입력"></td>
+														<td><input type="text" name="mName" size="15" maxlength="16" value="<?=$view['mName'];?>" class="wTbox" title="성명입력"></td>
 														<th><label for="nickname">별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명</label></th>
-														<td><input type="text" name="nickName" size="15" maxlength="16" value="<?=$view[nickName];?>" class="wTbox" title="별명입력"></td>
+														<td><input type="text" name="nickName" size="15" maxlength="16" value="<?=$view['nickName'];?>" class="wTbox" title="별명입력"></td>
 													</tr>
 													<tr>
 														<th><label for="password1">비밀번호</label></th>
@@ -187,12 +187,12 @@ $v_birth=explode("-",$view[birthDay]);
 														<td colspan="3">
 															<select name="iQuestion" class="wSbox" title="비밀번호찾기 질문 선택">
 																<option value="">선 택</option>
-																<?for($j=0; $j<count($findpassArr); $j++) {
-																	if($view[iQuestion] == $j) $pStatus=" selected"; else $pStatus="";
+																<?php for($j=0; $j<count($findpassArr); $j++) {
+																	if($view['iQuestion'] == $j) $pStatus=" selected"; else $pStatus="";
 																	echo "<option value=\"".$j."\" ".$pStatus.">".$findpassArr[$j]."</option>";
 																}?>
 															</select>
-															<input type="text" name="iAnswer" size="25" maxlength="255" value="<?=$view[iAnswer];?>" class="wTbox" title="답변 입력"><br />
+															<input type="text" name="iAnswer" size="25" maxlength="255" value="<?=$view['iAnswer'];?>" class="wTbox" title="답변 입력"><br />
 															비밀번호를 잊으신 경우 위에 작성하시는 질문과 답을 이용하여 본인확인 후 비밀번호를 재발급받게 되므로, 꼭 기억하시기 바랍니다.
 														</td>
 													</tr>
@@ -202,26 +202,26 @@ $v_birth=explode("-",$view[birthDay]);
 														<td colspan="3">
 															<select name="birthYear" class="wSbox" title="년도선택">
 																<option value="" selected>선 택</option>
-																<?for($i=date('Y'); $i>=1912; $i--) {
+																<?php for($i=date('Y'); $i>=1912; $i--) {
 																	if($v_birth[0]==$i) $yStatus=" selected"; else $yStatus="";
 																	echo "<option value=\"".$i."\" ".$yStatus.">".$i."</option>";
 																}?>
 															</select>
 															<select name="birthMonth" class="wSbox" title="월선택">
 																<option value="" selected>선 택</option>
-																<?for($i=1; $i<=12; $i++) {
+																<?php for($i=1; $i<=12; $i++) {
 																	if($v_birth[1]==$i) $mStatus=" selected"; else $mStatus="";
 																	echo "<option value=\"".$i."\" ".$mStatus.">".$i."</option>";
 																}?>
 															</select>
 															<select name="birthDay" class="wSbox" title="일선택">
 																<option value="" selected>선 택</option>
-																<?for($i=1; $i<=31; $i++) {
+																<?php for($i=1; $i<=31; $i++) {
 																	if($v_birth[2]==$i) $dStatus=" selected"; else $dStatus="";
 																	echo "<option value=\"".$i."\" ".$dStatus.">".$i."</option>";
 																}?>
 															</select>
-															<input type="radio" name="solu" value="1"<?if($view[solu]==1 || $_GET[mode]=="add") echo " checked";?> class="align_right_middle">양력&nbsp;<input type="radio" name="solu" value="2"<?if($view[solu]==2) echo " checked";?> class="align_right_middle">음력
+															<input type="radio" name="solu" value="1"<?php if($view['solu']==1 || $_GET['mode']=="add") echo " checked";?> class="align_right_middle">양력&nbsp;<input type="radio" name="solu" value="2"<?php if($view['solu']==2) echo " checked";?> class="align_right_middle">음력
 														</td>
 													</tr>
 													<tr>
@@ -249,15 +249,15 @@ $v_birth=explode("-",$view[birthDay]);
 																<option value="shinbiro.com">shinbiro.com</option>
 																<option value="yahoo.com">yahoo.com</option>
 																<option value="yahoo.co.kr">yahoo.co.kr</option>
-															</select> 메일수신<input type="checkbox" name="newsDm" value="1" <?if($view[newsDm]==1) echo " checked";?> title="메인수신여부" class="align_right_middle">
+															</select> 메일수신<input type="checkbox" name="newsDm" value="1" <?php if($view['newsDm']==1) echo " checked";?> title="메인수신여부" class="align_right_middle">
 														</td>
 													</tr>
 													<tr>
 														<th><label for="hzipcode1">주 소 지</label></th>
 														<td colspan="3">
-															<div><input type="text" id="zipcode" name="zipcode" size="5" maxlength="5" value="<?=$view[zipcode];?>" class="wTbox" readonly title="우편번호"><span onClick="DaumPostcode('1');" style="cursor:pointer;">주소찾기</span></div>
-															<div><input type="text" id="haddress1" name="haddress1" size="45" maxlength="60" value="<?=$view[haddress1];?>" class="wTbox" title="주소 입력">
-															<input type="text" id="haddress2" name="haddress2" size="30" maxlength="30" value="<?=$view[haddress2];?>" class="wTbox" title="나머지 상세주소 입력"></div>
+															<div><input type="text" id="zipcode" name="zipcode" size="5" maxlength="5" value="<?=$view['zipcode'];?>" class="wTbox" readonly title="우편번호"><span onClick="DaumPostcode('1');" style="cursor:pointer;">주소찾기</span></div>
+															<div><input type="text" id="haddress1" name="haddress1" size="45" maxlength="60" value="<?=$view['haddress1'];?>" class="wTbox" title="주소 입력">
+															<input type="text" id="haddress2" name="haddress2" size="30" maxlength="30" value="<?=$view['haddress2'];?>" class="wTbox" title="나머지 상세주소 입력"></div>
 														</td>
 													</tr>
 													<tr>
@@ -265,101 +265,62 @@ $v_birth=explode("-",$view[birthDay]);
 														<td>
 															<select name="telNum01" class="wSbox" title="일반전화 앞자리 선택">
 																<option value="" selected>선택</option>
-																<option value="02"<?if($arrTel[0]=="02") echo " selected";?>>02</option>
-																<option value="031"<?if($arrTel[0]=="031") echo " selected";?>>031</option>
-																<option value="032"<?if($arrTel[0]=="032") echo " selected";?>>032</option>
-																<option value="033"<?if($arrTel[0]=="033") echo " selected";?>>033</option>
-																<option value="041"<?if($arrTel[0]=="041") echo " selected";?>>041</option>
-																<option value="042"<?if($arrTel[0]=="042") echo " selected";?>>042</option>
-																<option value="043"<?if($arrTel[0]=="043") echo " selected";?>>043</option>
-																<option value="051"<?if($arrTel[0]=="051") echo " selected";?>>051</option>
-																<option value="052"<?if($arrTel[0]=="052") echo " selected";?>>052</option>
-																<option value="053"<?if($arrTel[0]=="053") echo " selected";?>>053</option>
-																<option value="054"<?if($arrTel[0]=="054") echo " selected";?>>054</option>
-																<option value="055"<?if($arrTel[0]=="055") echo " selected";?>>055</option>
-																<option value="061"<?if($arrTel[0]=="061") echo " selected";?>>061</option>
-																<option value="062"<?if($arrTel[0]=="062") echo " selected";?>>062</option>
-																<option value="063"<?if($arrTel[0]=="063") echo " selected";?>>063</option>
-																<option value="064"<?if($arrTel[0]=="064") echo " selected";?>>064</option>
-																<option value="070"<?if($arrTel[0]=="070") echo " selected";?>>070</option>
+																<option value="02"<?php if($arrTel[0]=="02") echo " selected";?>>02</option>
+																<option value="031"<?php if($arrTel[0]=="031") echo " selected";?>>031</option>
+																<option value="032"<?php if($arrTel[0]=="032") echo " selected";?>>032</option>
+																<option value="033"<?php if($arrTel[0]=="033") echo " selected";?>>033</option>
+																<option value="041"<?php if($arrTel[0]=="041") echo " selected";?>>041</option>
+																<option value="042"<?php if($arrTel[0]=="042") echo " selected";?>>042</option>
+																<option value="043"<?php if($arrTel[0]=="043") echo " selected";?>>043</option>
+																<option value="051"<?php if($arrTel[0]=="051") echo " selected";?>>051</option>
+																<option value="052"<?php if($arrTel[0]=="052") echo " selected";?>>052</option>
+																<option value="053"<?php if($arrTel[0]=="053") echo " selected";?>>053</option>
+																<option value="054"<?php if($arrTel[0]=="054") echo " selected";?>>054</option>
+																<option value="055"<?php if($arrTel[0]=="055") echo " selected";?>>055</option>
+																<option value="061"<?php if($arrTel[0]=="061") echo " selected";?>>061</option>
+																<option value="062"<?php if($arrTel[0]=="062") echo " selected";?>>062</option>
+																<option value="063"<?php if($arrTel[0]=="063") echo " selected";?>>063</option>
+																<option value="064"<?php if($arrTel[0]=="064") echo " selected";?>>064</option>
+																<option value="070"<?php if($arrTel[0]=="070") echo " selected";?>>070</option>
 															</select>-<input type="text" name="telNum02" size="5" maxlength="4" value="<?=$arrTel[1];?>" class="wTbox" title="일반전화 가운데자리 입력">-<input type="text" name="telNum03" size="5" maxlength="4" value="<?=$arrTel[2];?>" class="wTbox" title="일반전화 끝자리 입력">
 														</td>
 														<th><label for="selNum01">휴대전화</label></th>
 														<td width="" class="line_solid">
 															<select name="selNum01" class="wSbox" title="휴대전화 앞자리 입력">
 																<option value="" selected>선택</option>
-																<option value="010"<?if($arrSel[0]=="010") echo " selected";?>>010</option>
-																<option value="011"<?if($arrSel[0]=="011") echo " selected";?>>011</option>
-																<option value="016"<?if($arrSel[0]=="016") echo " selected";?>>016</option>
-																<option value="017"<?if($arrSel[0]=="017") echo " selected";?>>017</option>
-																<option value="018"<?if($arrSel[0]=="018") echo " selected";?>>018</option>
-																<option value="019"<?if($arrSel[0]=="019") echo " selected";?>>019</option>
+																<option value="010"<?php if($arrSel[0]=="010") echo " selected";?>>010</option>
+																<option value="011"<?php if($arrSel[0]=="011") echo " selected";?>>011</option>
+																<option value="016"<?php if($arrSel[0]=="016") echo " selected";?>>016</option>
+																<option value="017"<?php if($arrSel[0]=="017") echo " selected";?>>017</option>
+																<option value="018"<?php if($arrSel[0]=="018") echo " selected";?>>018</option>
+																<option value="019"<?php if($arrSel[0]=="019") echo " selected";?>>019</option>
 															</select>-<input type="text" name="selNum02" size="5" maxlength="4" value="<?=$arrSel[1];?>" class="wTbox" title="휴대전화 가운데 자리 입력">-<input type="text" name="selNum03" size="5" maxlength="4" value="<?=$arrSel[2];?>" class="wTbox" title="휴대전화 끝 자리 입력">
 														</td>
 													</tr>
-													<!--
-													<tr>
-														<th><label for="route">가입경로</label></th>
-														<td>
-															<select name="route" class="wSbox" title="가입경로 선택">
-																<option value="" selected >-- 선 택 --</option>
-																<option value="1"<?if($view[route]==1) echo " selected";?>>검색엔진</option>
-																<option value="2"<?if($view[route]==2) echo " selected";?>>신문광고</option>
-																<option value="3"<?if($view[route]==3) echo " selected";?>>주변소개</option>
-																<option value="4"<?if($view[route]==4) echo " selected";?>>기타광고</option>
-																<option value="5"<?if($view[route]==5) echo " selected";?>>기타경로</option>
-															</select>
-														</td>
-														<th><label for="uJob">직&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업</label></th>
-														<td>
-															<select name="uJob" class="wSbox" title="직업 선택">
-																<option value="" selected >--- 선 택 ---</option>
-																<option value="1"<?if($view[uJob]==1) echo " selected";?>>주 부</option>
-																<option value="2"<?if($view[uJob]==2) echo " selected";?>>학 생</option>
-																<option value="3"<?if($view[uJob]==3) echo " selected";?>>상 업</option>
-																<option value="4"<?if($view[uJob]==4) echo " selected";?>>공무원</option>
-																<option value="5"<?if($view[uJob]==5) echo " selected";?>>농/수/임업</option>
-																<option value="6"<?if($view[uJob]==6) echo " selected";?>>회사원</option>
-																<option value="7"<?if($view[uJob]==7) echo " selected";?>>교 육</option>
-																<option value="8"<?if($view[uJob]==8) echo " selected";?>>의료/법률</option>
-																<option value="9"<?if($view[uJob]==9) echo " selected";?>>예 술</option>
-																<option value="10"<?if($view[uJob]==10) echo " selected";?>>유통업</option>
-																<option value="11"<?if($view[uJob]==11) echo " selected";?>>금융/증권/보험</option>
-																<option value="12"<?if($view[uJob]==12) echo " selected";?>>서비스업</option>
-																<option value="13"<?if($view[uJob]==13) echo " selected";?>>컴퓨터/인터넷</option>
-																<option value="14"<?if($view[uJob]==14) echo " selected";?>>군 인</option>
-																<option value="15"<?if($view[uJob]==15) echo " selected";?>>언 론</option>
-																<option value="16"<?if($view[uJob]==16) echo " selected";?>>운송업</option>
-																<option value="17"<?if($view[uJob]==17) echo " selected";?>>제조업</option>
-																<option value="18"<?if($view[uJob]==18) echo " selected";?>>건설업</option>
-																<option value="19"<?if($view[uJob]==19) echo " selected";?>>무 직</option>
-																<option value="20"<?if($view[uJob]==20) echo " selected";?>>기 타</option>
-															</select>
-														</td>
-													</tr>
-													-->
 													<tr>
 														<th><label for="password1">회원등급</label></th>
 														<td>
 															<select name="ulevel" class="wSbox">
-																<?for($i=1; $i<=count($mLevel); $i++) {
-																		if($view[ulevel]==$i) $lCheck=" selected"; else $lCheck="";
+																<?php
+																	$mLevel = $mLevel ?? []; // null 방지 
+																	for($i=1; $i<=count($mLevel); $i++) {
+																		if($view['ulevel']==$i) $lCheck=" selected"; else $lCheck="";
 																		echo "<option value=\"$i\"$lCheck>".$mLevel[$i]."</option>\n";
 																	}?>
 															</select>
 														</td>
 														<th><label for="login">방문횟수</label></th>
-														<td><input type="text" name="login" size="10" maxlength="10" class="wTbox" value="<?=$view[login];?>" title="로그인 횟수 입력" />회</td>
+														<td><input type="text" name="login" size="10" maxlength="10" class="wTbox" value="<?=$view['login'];?>" title="로그인 횟수 입력" />회</td>
 													</tr>
 													<tr>
 														<th>가입일자</th>
-														<td><?=strtr($view[signDate],"-",".");?></td>
+														<td><?=strtr($view['signDate'],"-",".");?></td>
 														<th>마지막 로그인</th>
-														<td><?=strtr($view[lastLogin],"-",".");?></td>
+														<td><?=strtr($view['lastLogin'],"-",".");?></td>
 													</tr>
 													<tr>
 														<th><label for="password1">관리자 메모</label></th>
-														<td colspan="3"><textarea name="adminMemo" rows="10" class="wTarea"><?=$view[adminMemo];?></textarea></td>
+														<td colspan="3"><textarea name="adminMemo" rows="10" class="wTarea"><?=$view['adminMemo'];?></textarea></td>
 													</tr>
 												</tbody>
 											</table>
@@ -367,8 +328,8 @@ $v_birth=explode("-",$view[birthDay]);
 								</form>
 							</div>
 							<div class="align_center_middle" style="padding-top:10px;">
-								<input type="button" value="정보수정" onClick="move_url('','edit','<?=$view[idx];?>','<?=$_GET[page];?>');" class="wBtn" title="정보수정" />&nbsp;&nbsp;
-								<input type="button" value="회원삭제" onclick="move_url('<?=$view[mName];?>','del','<?=$view[idx];?>','<?=$_GET[page];?>');" class="button" title="회원삭제" />&nbsp;&nbsp;
+								<input type="button" value="정보수정" onClick="move_url('','edit','<?=$view['idx'];?>','<?=$_GET['page'];?>');" class="wBtn" title="정보수정" />&nbsp;&nbsp;
+								<input type="button" value="회원삭제" onclick="move_url('<?=$view['mName'];?>','del','<?=$view['idx'];?>','<?=$_GET['page'];?>');" class="button" title="회원삭제" />&nbsp;&nbsp;
 								<input type="button" value="뒤로이동" onclick="javascript:history.back();" class="button" title="뒤로이동" />
 							</div>
 						</div>

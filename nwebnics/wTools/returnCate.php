@@ -13,7 +13,7 @@ if(isset($_GET['rCate']) && $_GET['rCate']!=0) {
 	$result = $db->query($sqlStr);
 	if(DB::isError($result)) die($result->getMessage());
 	while($view = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$returnData .= $view[cateName].':'.$view[cate].';';
+		$returnData .= $view['cateName'].':'.$view['cate'].';';
 	}
 	$rstCate=substr($returnData,0,-1);
 	if($rstCate) echo $rstCate; else echo "미등록";

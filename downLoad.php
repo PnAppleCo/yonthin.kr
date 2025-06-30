@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
@@ -44,15 +44,15 @@ switch($extension) {																																												//== 아직 미�
 }
 
 if(file_exists($filepath)) {
-	if(preg_match('/(msie)[ \/]([\w.]+)/', $_SERVER[HTTP_USER_AGENT])) {
-		if(strstr($_SERVER[HTTP_USER_AGENT], "MSIE 5.5")) {
+	if(preg_match('/(msie)[ \/]([\w.]+)/', $_SERVER['HTTP_USER_AGENT'])) {
+		if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) {
 			//== 파일명 앤코드 전엔 6.0에서도 필요 한듯한데.( 한글일경우 )
 			Header("Cache-Control: cache, must-revalidate"); //== 바로열기
 			Header("Content-Type: doesn/matter");
 			Header("Content-disposition: attachment; filename=$realname");
 			Header("Content-Length: ".filesize($filepath));
 			Header("Content-Transfer-Encoding: binary");
-		}else if(strstr($_SERVER[HTTP_USER_AGENT], "MSIE 6.0")) {
+		}else if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 6.0")) {
 			Header("Cache-Control: cache, must-revalidate"); //== 바로열기
 			Header("Content-type: application/x-msdownload");
 			Header("Content-Disposition: attachment; filename=$realname");

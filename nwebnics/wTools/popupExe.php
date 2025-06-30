@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -55,7 +55,7 @@ for($i=0;$i<sizeof($name_count)-1;$i++) {
 
 //== 팝업창 등록 처리 ====================================================================================
 
-if($_GET[mode]==="add") {
+if($_GET['mode']==="add") {
 	//== 새로 등록할 팝업창의 고유번호 생성
 	$max_idx = $db->getOne("SELECT MAX(idx) FROM wPopup");
 	if(DB::isError($max_idx)) die($max_idx->getMessage());
@@ -64,51 +64,51 @@ if($_GET[mode]==="add") {
 
 //== 팝업창 수정 처리 ====================================================================================
 
-}else if($_GET[mode]==="edit") {
-	if(!$_GET[idx]) js_action(1,"idx정보를 찾을수 없습니다.","",-1);
+}else if($_GET['mode']==="edit") {
+	if(!$_GET['idx']) js_action(1,"idx정보를 찾을수 없습니다.","",-1);
 	//== 첨부파일 수정/삭제
 	for($i=0; $i<5; $i++) {
 		if($filename[$i]) {																			//== 수정
-			$delFile = $_SERVER['DOCUMENT_ROOT'].$popupDir.$_POST[upFile][$i];
+			$delFile = $_SERVER['DOCUMENT_ROOT'].$popupDir.$_POST['upFile'][$i];
 			if(is_file($delFile)==true) unlink($delFile);
-			$delThubFile = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$_POST[upFile][$i];
+			$delThubFile = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$_POST['upFile'][$i];
 			if(is_file($delThubFile)==true) unlink($delThubFile);
 		}else {
-			$filename[$i]=$_POST[upFile][$i];
+			$filename[$i]=$_POST['upFile'][$i];
 		}
-		if($_POST[fChk.$i]=="chk") {											//== 삭제
-			$delete_file = $_SERVER['DOCUMENT_ROOT'].$popupDir.$_POST[upFile][$i];
+		if($_POST['fChk'.$i]=="chk") {											//== 삭제
+			$delete_file = $_SERVER['DOCUMENT_ROOT'].$popupDir.$_POST['upFile'][$i];
 			if(is_file($delete_file)==true) unlink($delete_file);
-			$delete_file_thumbnail = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$_POST[upFile][$i];
+			$delete_file_thumbnail = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$_POST['upFile'][$i];
 			if(is_file($delete_file_thumbnail)==true) unlink($delete_file_thumbnail);
 			$filename[$i]="";
 		}
 	}
 
-	$mSqlStr = "UPDATE wPopup SET popupTitle='$_POST[popupTitle]', popupType='$_POST[popupType]', startDate='$_POST[startDate]', stopDate='$_POST[stopDate]', popWidth='$_POST[popWidth]', popHeight='$_POST[popHeight]', locationTop='$_POST[locationTop]', locationLeft='$_POST[locationLeft]', linkUrl='$_POST[linkUrl]', linkTarget='$_POST[linkTarget]', scrollbar='$_POST[scrollbar]', ingTime='$_POST[ingTime]', filename0='$filename[0]', filename1='$filename[1]', uContents='$_POST[uContents]' WHERE idx=".$_GET[idx]."";
+	$mSqlStr = "UPDATE wPopup SET popupTitle='$_POST[popupTitle]', popupType='$_POST[popupType]', startDate='$_POST[startDate]', stopDate='$_POST[stopDate]', popWidth='$_POST[popWidth]', popHeight='$_POST[popHeight]', locationTop='$_POST[locationTop]', locationLeft='$_POST[locationLeft]', linkUrl='$_POST[linkUrl]', linkTarget='$_POST[linkTarget]', scrollbar='$_POST[scrollbar]', ingTime='$_POST[ingTime]', filename0='$filename[0]', filename1='$filename[1]', uContents='$_POST[uContents]' WHERE idx=".$_GET['idx']."";
 
 //== 팝업창 삭제 처리 ====================================================================================
 
-}else if($_GET[mode]==="del") {
-	if(!$_GET[idx]) js_action(1,"idx정보를 찾을수 없습니다.","",-1);
+}else if($_GET['mode']==="del") {
+	if(!$_GET['idx']) js_action(1,"idx정보를 찾을수 없습니다.","",-1);
 	//== 등록된 첨부파일 삭제
 	$add_del = "SELECT filename0,filename1 FROM wPopup WHERE idx=$_GET[idx]";
 	$rows = $db->getRow($add_del,DB_FETCHMODE_ASSOC);
 	if(DB::isError($rows)) die($rows->getMessage());
 	for($i=0; $i<=count($rows); $i++) {
-		if($rows[filename.$i]) {
-				$delete_file = $_SERVER['DOCUMENT_ROOT'].$popupDir.$rows[filename.$i];
+		if($rows['filename'.$i]) {
+				$delete_file = $_SERVER['DOCUMENT_ROOT'].$popupDir.$rows['filename'.$i];
 				if(is_file($delete_file)) unlink($delete_file);
-				$delete_file_tumbnail = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$rows[filename.$i];
+				$delete_file_tumbnail = $_SERVER['DOCUMENT_ROOT'].$popupDir."thumbnail/".$rows['filename'.$i];
 				if(is_file($delete_file_tumbnail)) unlink($delete_file_tumbnail);
 		}
 	}
 	//== 에디터 파일 삭제
-	$imgFolder="popup_".$_GET[idx];
+	$imgFolder="popup_".$_GET['idx'];
 	$delPath=$_SERVER["DOCUMENT_ROOT"].$editorDir.$imgFolder;
 	removeDir($delPath);
 
-	$mSqlStr= "DELETE FROM wPopup WHERE idx=".$_GET[idx]."";
+	$mSqlStr= "DELETE FROM wPopup WHERE idx=".$_GET['idx']."";
 
 }else {
 	js_action(1,"작업정보를 찾을수 없습니다.","",-1);
@@ -116,17 +116,17 @@ if($_GET[mode]==="add") {
 
 //== 질의 작업 처리 =====================================================================================
 
-if($_GET[mode]=="add") {
+if($_GET['mode']=="add") {
 	$p_ment="팝업을 등록중입니다. 완료후 이동하겠습니다.";
-}else if($_GET[mode]=="edit") {
+}else if($_GET['mode']=="edit") {
 	$p_ment="팝업을 수정중입니다. 완료후 이동하겠습니다.";
-}else if($_GET[mode]=="del") {
+}else if($_GET['mode']=="del") {
 	$p_ment="팝업을 삭제중입니다. 완료후 이동하겠습니다.";
 }else {
 	$p_ment="예기치 못한 상황이 발생하였습니다.";
 }
 
 $rst=$db->query($mSqlStr);
-if(DB::isError($rst)) die($rst->getMessage()); else redirect(1, "popupList.php?edit_idx=".$_GET[idx]."&page=".$_GET[page], $p_ment, 1);
+if(DB::isError($rst)) die($rst->getMessage()); else redirect(1, "popupList.php?edit_idx=".$_GET['idx']."&page=".$_GET['page'], $p_ment, 1);
 $db->disconnect();
 ?>

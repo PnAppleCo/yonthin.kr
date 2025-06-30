@@ -1,23 +1,23 @@
-<?
+<?php
 //========================================================//
 //== last modify date : 2012. 05. 26
 //========================================================//
 //== 게시판 기본정보 로드
 include ("inc/configInc.php");
 
-if(!$_GET[code]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
-if(!$_GET[idx]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+if(!$_GET['code']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+if(!$_GET['idx']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 
 $sqlStr="SELECT *, (vote0 + vote1 + vote2 + vote3 + vote4 + vote5 + vote6 + vote7 + vote8 + vote9) AS tcnt FROM wPoll WHERE idx=$_GET[idx]";
 $view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
 if(DB::isError($view)) die($view->getMessage());
-$sContents=stripslashes($view[sContents]);
+$sContents=stripslashes($view['sContents']);
 //== 조회수 증가
 $rst=$db->query("UPDATE wPoll SET click = click+1 WHERE idx=$_GET[idx]");
 if(DB::isError($rst)) die($rst->getMessage());
 
 $jsLink="'$view[code]','$view[idx]','$_GET[page]','$_GET[mnv]'";
-if(member_session(1) == true || (login_session() == true && !strcmp($view[wUserid],$_SESSION[my_id]))) {
+if(member_session(1) == true || (login_session() == true && !strcmp($view['wUserid'],$_SESSION['my_id']))) {
 	$delLink_js="addChk(document.pollForm,'del',$jsLink); return false;";
 	$editLink_js="addChk(document.pollForm,'edit',$jsLink); return false;";
 }else {
@@ -36,8 +36,8 @@ if($_COOKIE['voteok'] == $_SESSION[my_id].$view[idx]) {
 }
 */
 if(login_session()) {
-	if($_COOKIE['voteok'] == $_SESSION[my_id].$view[idx]) {
-		$btnName="<img src=\"/img/comm/poll_app_finish.gif\" alt=\"투표완료\" onClick=\"alert('".$_SESSION[my_name]."님은 이미 투표하셨습니다.');\" />";
+	if($_COOKIE['voteok'] == $_SESSION['my_id'].$view['idx']) {
+		$btnName="<img src=\"/img/comm/poll_app_finish.gif\" alt=\"투표완료\" onClick=\"alert('".$_SESSION['my_name']."님은 이미 투표하셨습니다.');\" />";
 	}else {
 		$btnName="<img src=\"/img/comm/poll_app.gif\" alt=\"투표하기\" onClick=\"addChk(document.pollForm,'vote',".$jsLink."); return false;\" />";
 	}
@@ -45,7 +45,7 @@ if(login_session()) {
 		$btnName="<img src=\"/img/comm/poll_app_login.gif\" alt=\"로그인후 투표하세요.\" onClick=\"alert('로그인후 투표하세요.');\" />";
 }
 
-if($_GET[code]=="discuss" && $view[endDate]) $vendate="종료일 : ".strtr($view[endDate],"-",".");
+if($_GET['code']=="discuss" && $view['endDate']) $vendate="종료일 : ".strtr($view['endDate'],"-",".");
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
@@ -95,13 +95,13 @@ if($_GET[code]=="discuss" && $view[endDate]) $vendate="종료일 : ".strtr($view
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<p id="siteDepth"><?=$Site_Path;?></p>
@@ -120,12 +120,12 @@ if($_GET[code]=="discuss" && $view[endDate]) $vendate="종료일 : ".strtr($view
 											<col width="50%" />
 										</colgroup>
 										<thead>
-											<th colspan="2" style="text-align:center;"><?=$view[sSubject];?></th>
+											<th colspan="2" style="text-align:center;"><?=$view['sSubject'];?></th>
 										</thead>
 										<tbody>
 											<tr>
 												<td><?//if($view[wName]) echo $view[wName]."[".$view[wUserid]."]";?></td>
-												<td style="text-align:right; padding-right:5px;">조회 <?=$view[click];?> 등록일 <?=strtr($view[signDate],"-",".");;?> <?=$vendate;?></td>
+												<td style="text-align:right; padding-right:5px;">조회 <?=$view['click'];?> 등록일 <?=strtr($view['signDate'],"-",".");;?> <?=$vendate;?></td>
 											</tr>
 											<tr>
 												<td colspan="2" style="vertical-align:top;"><?=$sContents;?></td>
@@ -142,15 +142,15 @@ if($_GET[code]=="discuss" && $view[endDate]) $vendate="종료일 : ".strtr($view
 														<tbody>
 														<?
 															for($i=0; $i<10; $i++) {
-																if($view[censitem.$i]) {
-																	echo "<tr><td><input type=\"radio\" name=\"vote\" value=\"".$i."\" style=\"vertical-align:middle;\" /></td><td>".$view[censitem.$i]."</td>";
-																	echo "<td><img src=\"/img/comm/bar.gif\" width=\"".totalAve(1, $view[tcnt],$view[vote.$i])."\" height=\"10\" /> 총".$view[vote.$i]."명 [".number_format(totalAve(1, $view[tcnt],$view[vote.$i]))."%]</td></tr>";
+																if($view['censitem'.$i]) {
+																	echo "<tr><td><input type=\"radio\" name=\"vote\" value=\"".$i."\" style=\"vertical-align:middle;\" /></td><td>".$view['censitem'.$i]."</td>";
+																	echo "<td><img src=\"/img/comm/bar.gif\" width=\"".totalAve(1, $view['tcnt'],$view['vote'.$i])."\" height=\"10\" /> 총".$view['vote'.$i]."명 [".number_format(totalAve(1, $view['tcnt'],$view['vote'.$i]))."%]</td></tr>";
 																}
 															}
 														?>
 														</tbody>
 													</table>
-													<?if($view[sNum]>0) {?>
+													<?if($view['sNum']>0) {?>
 													<div style="padding:5px 0 5px 0; text-align:center;"><a href="javascript:<?=$onLink;?>"><?=$btnName;?></a></div>
 													<?}?>
 												</td>
@@ -179,13 +179,13 @@ if($_GET[code]=="discuss" && $view[endDate]) $vendate="종료일 : ".strtr($view
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

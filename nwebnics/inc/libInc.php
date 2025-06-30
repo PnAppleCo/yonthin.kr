@@ -1,4 +1,4 @@
-<?
+<?php
 //================================================================================================//
 //====================================== 공통 함수 부분 ===========================================//
 //================================================================================================//
@@ -26,6 +26,7 @@ function session_starting($idx,$id,$name,$nickname, $level,$user_ip) {
 	$_SESSION['my_nick'] = $nickname;
 	$_SESSION['my_level'] = $level;
 	$_SESSION['my_ip'] = $user_ip;
+
 }
 
 //== 세션 종료 함수
@@ -65,6 +66,7 @@ function getmicrotime(){
 function redirect($mode, $gourl, $ment="", $delay=0) {
 	global $_SERVER;
 	$R_Head="<html>\n<head>\n<title>::: 작업이동중 :::</title>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/css.css\" /><style>body { background:#FFFFFF }</style>\n";
+
 	switch ($mode) {
 		case 1 :		//= 프로그레스바 없는 리다이렉트
 			echo $R_Head."<meta http-equiv='Refresh' content='".$delay."; url=".$gourl."'></head><body><p class=\"loadingAlign\"><img src=\"/img/comm/loading.gif\"> <span  style=\"color:#000;\">".$ment."</span></p></body></html>";
@@ -115,7 +117,7 @@ function error_view($Error_No, $Msg1, $Msg2) {
 	global $_SERVER;
 	//== 오류코드 999번은 사용자 지정이고 999이하는 고정 오류코드
 	//require $Site_Root_Path."/webnics/inc/Error_Code.php";
-	require $_SERVER[DOCUMENT_ROOT]."/nwebnics/inc/errorCode.php";
+	require $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/errorCode.php";
 	echo "
 	<html>
 	<head>
@@ -187,6 +189,7 @@ function userEnvInfo() {
 
 //== 데이터의 크기를 구하는 함수
 function file_view($rst_type,$savedir,$filename) {
+	$rst_all = "";
 	//== 파일의 크기를 구함
 	$filepath=$savedir."/".$filename;
 		$file_exe = substr($filename,-3);
@@ -271,6 +274,7 @@ function file_view($rst_type,$savedir,$filename) {
 	$unit=array("Bytes", "Kb", "Mb", "Gb");
 		for ($i=0; $size>=1024; $size=$size/1024, $i++);
 		$rst_all .= "".$filename." ".sprintf("%0.{$i}f$unit[$i]", $size);
+		
 	if($rst_type==1) return $rst_img; else return $rst_img.$rst_all;
 }
 
@@ -296,7 +300,7 @@ function send_mail($type, $to, $to_name, $from, $from_name, $subject, $comment, 
 function now_filename($now_path) {
 	if(!strpos("http",$now_path)) {
 		$url = parse_url($now_path);
-		$now_path = $url[path];
+		$now_path = $url['path'];
 	}
 		$self_path = explode("/", $now_path);
 		$org_path = count($self_path);
@@ -309,81 +313,177 @@ function now_filename($now_path) {
 	return $ok_path;
 }
 
-//== 광고 스팸 등의 불량 단어 추출을 위한 함수
-function content_check($content,$mode) {
-$refuse_word = array("만원", "돈", "성인", "광고", "섹스", "전문가", "학원", "포트폴리오", "배당금", "홍보", "보지", "허락", "정액", "야동", "대행");
-for($i=0; $i<count($refuse_word); $i++)
-	if(preg_match("/(".$refuse_word[$i].")/i", $content)) $find_word++;
-	if($mode == "one") {
-		if($find_word >= 2) return true;
-	}else if($mode == "two") {
-		if($find_word >= 5) return true;
-	}else {
-		if($find_word >= 10) return true;
-	}
+// PHP82 변환
+//== 광고 스팸 등의 불량 단어 추출을 위한 함수    
+// function content_check($content,$mode) {
+// $refuse_word = array("만원", "돈", "성인", "광고", "섹스", "전문가", "학원", "포트폴리오", "배당금", "홍보", "보지", "허락", "정액", "야동", "대행");
+// for($i=0; $i<count($refuse_word); $i++)
+// 	if(preg_match("/(".$refuse_word[$i].")/i", $content)) $find_word++;
+// 	if($mode == "one") {
+// 		if($find_word >= 2) return true;
+// 	}else if($mode == "two") {
+// 		if($find_word >= 5) return true;
+// 	}else {
+// 		if($find_word >= 10) return true;
+// 	}
+// }
+function content_check(string $content, string $mode): bool {
+    $refuse_word = ["만원", "돈", "성인", "광고", "섹스", "전문가", "학원","포트폴리오", "배당금", "홍보", "보지", "허락", "정액", "야동", "대행"];
+    $find_word = 0;
+
+    foreach ($refuse_word as $word) {
+        // 특수문자 안전 처리
+        if (preg_match('/' . preg_quote($word, '/') . '/iu', $content)) $find_word++;
+    }
+
+    // 모드별 기준 판단
+    if ($mode === "one" && $find_word >= 2) {
+        return true;
+    } elseif ($mode === "two" && $find_word >= 5) {
+        return true;
+    } elseif ($find_word >= 10) { // default case
+        return true;
+    }
+
+    return false;
 }
 
+// PHP82 변환
 //== 페이징 클래스
-class paging {
-	function page_display($total,$num_per_page, $num_per_block,$next) {
-			$view_val=$this->val_reset();
-			$total_page = ceil($total/$num_per_page);										//== 총페이지수
-			$total_block = ceil($total_page/$num_per_block);					//== 총 블럭수
-			$block = ceil($_GET[page]/$num_per_block);							//== 현재의 블럭
-			$first_page = ($block-1)*$num_per_block;										//== 처음페이지
-			$last_page = $block*$num_per_block;													//== 마지막페이지
-			if($total_block <= $block) $last_page = $total_page;				//== 전체 블럭
-			$link1 = "<a href=".$_SERVER[PHP_SELF];
-			$link2 = ">";
-		//== 이전 10개
-		if($block > 1) {
-			$move_page = $first_page;
-			$prev_page10 = "<a href=".$_SERVER[PHP_SELF]."?page=".$move_page.$view_val." class=\"bt first\">처음</a>";
-			$prev_page10="";
-		}
-		//== 이전페이지
-		if($_GET[page] > 1) {
-			$page_num = $_GET[page] - 1;
-			$prev_page = "<a href=".$_SERVER[PHP_SELF]."?page=".$page_num.$view_val." class=\"bt prev\">이전</a>";
-		}else {
-			$prev_page = "<a class=\"bt prev\">이전</a>";
-		}
-		//== 직접이동페이지
-		for($direct_page = $first_page+1; $direct_page <= $last_page; $direct_page++) {
-			if($_GET[page] == $direct_page) {
-				$now_page .= "<a href=\"#\" class=\"num on\">". $direct_page ."</a>";
-			} else {
-				$now_page .= "<a href=".$_SERVER[PHP_SELF]."?page=".$direct_page.$view_val." class=\"num\">".$direct_page."</a>";
-			}
-		}
-		//== 이후페이지
-		if($next > 0) {
-			$page_num = $_GET[page] + 1;
-			$next_page = "<a href=".$_SERVER[PHP_SELF]."?page=".$page_num.$view_val." class=\"bt next\">다음</a>";
-		}else {
-			$next_page = "<a class=\"bt next\">다음</a>";
-		}
-		//== 이후10개
-		if($block < $total_block) {
-		$move_page = $last_page + 1;
-			$next_page10 = "<a href=".$_SERVER[PHP_SELF]."?page=".$move_page.$view_val." class=\"bt last\"></a>";
-		$next_page10="";
-		}
-		$paging = $prev_page10.$prev_page.$now_page.$next_page.$next_page10;
-		return $paging;
-	}
+// class paging {
+// 	function page_display($total,$num_per_page, $num_per_block,$next) {
+// 			$view_val=$this->val_reset();
+// 			$total_page = ceil($total/$num_per_page);										//== 총페이지수
+// 			$total_block = ceil($total_page/$num_per_block);					//== 총 블럭수
+// 			$block = ceil($_GET['page']/$num_per_block);							//== 현재의 블럭
+// 			$first_page = ($block-1)*$num_per_block;										//== 처음페이지
+// 			$last_page = $block*$num_per_block;													//== 마지막페이지
+// 			if($total_block <= $block) $last_page = $total_page;				//== 전체 블럭
+// 			$link1 = "<a href=".$_SERVER['PHP_SELF'];
+// 			$link2 = ">";
+// 		//== 이전 10개
+// 		if($block > 1) {
+// 			$move_page = $first_page;
+// 			$prev_page10 = "<a href=".$_SERVER['PHP_SELF']."?page=".$move_page.$view_val." class=\"bt first\">처음</a>";
+// 			$prev_page10="";
+// 		}
+// 		//== 이전페이지
+// 		if($_GET['page'] > 1) {
+// 			$page_num = $_GET['page'] - 1;
+// 			$prev_page = "<a href=".$_SERVER['PHP_SELF']."?page=".$page_num.$view_val." class=\"bt prev\">이전</a>";
+// 		}else {
+// 			$prev_page = "<a class=\"bt prev\">이전</a>";
+// 		}
+// 		//== 직접이동페이지
+// 		for($direct_page = $first_page+1; $direct_page <= $last_page; $direct_page++) {
+// 			if($_GET['page'] == $direct_page) {
+// 				$now_page .= "<a href=\"#\" class=\"num on\">". $direct_page ."</a>";
+// 			} else {
+// 				$now_page .= "<a href=".$_SERVER['PHP_SELF']."?page=".$direct_page.$view_val." class=\"num\">".$direct_page."</a>";
+// 			}
+// 		}
+// 		//== 이후페이지
+// 		if($next > 0) {
+// 			$page_num = $_GET['page'] + 1;
+// 			$next_page = "<a href=".$_SERVER['PHP_SELF']."?page=".$page_num.$view_val." class=\"bt next\">다음</a>";
+// 		}else {
+// 			$next_page = "<a class=\"bt next\">다음</a>";
+// 		}
+// 		//== 이후10개
+// 		if($block < $total_block) {
+// 		$move_page = $last_page + 1;
+// 			$next_page10 = "<a href=".$_SERVER['PHP_SELF']."?page=".$move_page.$view_val." class=\"bt last\"></a>";
+// 		$next_page10="";
+// 		}
+// 		$paging = $prev_page10.$prev_page.$now_page.$next_page.$next_page10;
+// 		return $paging;
+// 	}
 
-	//== 전달해야할 총변수를 자동전달이 가능하도록 대입
-	function val_reset() {
-		global $_GET;
-		foreach($_GET AS $key=>$val) if($key != "page" && $val != NULL) $r_var .= "&".$key."=".urlencode($val);
-		return $r_var;
-	}
+// 	//== 전달해야할 총변수를 자동전달이 가능하도록 대입
+// 	function val_reset() {
+// 		global $_GET;
+// 		foreach($_GET AS $key=>$val) if($key != "page" && $val != NULL) $r_var .= "&".$key."=".urlencode($val);
+// 		return $r_var;
+// 	}
+	
+// }
+class paging {
+
+    public function page_display(int $total, int $num_per_page, int $num_per_block, int $next): string {
+        $view_val = $this->val_reset();
+
+        $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+        $total_page = (int)ceil($total / $num_per_page);             // 총 페이지 수
+        $total_block = (int)ceil($total_page / $num_per_block);      // 총 블록 수
+        $block = (int)ceil($current_page / $num_per_block);          // 현재 블록
+        $first_page = ($block - 1) * $num_per_block;                 // 블록의 첫 페이지
+        $last_page = $block * $num_per_block;                        // 블록의 마지막 페이지
+        if ($last_page > $total_page) $last_page = $total_page;
+
+        $prev_page10 = '';
+        $prev_page = '';
+        $next_page = '';
+        $next_page10 = '';
+        $now_page = '';
+
+        $self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
+
+        // 이전 10페이지
+        if ($block > 1) {
+            $move_page = $first_page;
+            $prev_page10 = "<a href=\"{$self}?page={$move_page}{$view_val}\" class=\"bt first\">처음</a>";
+        }
+
+        // 이전 페이지
+        if ($current_page > 1) {
+            $page_num = $current_page - 1;
+            $prev_page = "<a href=\"{$self}?page={$page_num}{$view_val}\" class=\"bt prev\">이전</a>";
+        } else {
+            $prev_page = "<a class=\"bt prev\">이전</a>";
+        }
+
+        // 직접 이동 페이지 번호
+        for ($direct_page = $first_page + 1; $direct_page <= $last_page; $direct_page++) {
+            if ($current_page === $direct_page) {
+                $now_page .= "<a href=\"#\" class=\"num on\">{$direct_page}</a>";
+            } else {
+                $now_page .= "<a href=\"{$self}?page={$direct_page}{$view_val}\" class=\"num\">{$direct_page}</a>";
+            }
+        }
+
+        // 다음 페이지
+        if ($next > 0 && $current_page < $total_page) {
+            $page_num = $current_page + 1;
+            $next_page = "<a href=\"{$self}?page={$page_num}{$view_val}\" class=\"bt next\">다음</a>";
+        } else {
+            $next_page = "<a class=\"bt next\">다음</a>";
+        }
+
+        // 다음 10페이지
+        if ($block < $total_block) {
+            $move_page = $last_page + 1;
+            $next_page10 = "<a href=\"{$self}?page={$move_page}{$view_val}\" class=\"bt last\">마지막</a>";
+        }
+
+        return $prev_page10 . $prev_page . $now_page . $next_page . $next_page10;
+    }
+
+    // GET 파라미터 중 page 제외하고 재구성
+    public function val_reset(): string {
+        $r_var = '';
+        foreach ($_GET as $key => $val) {
+            if ($key !== 'page' && $val !== null && $val !== '') {
+                $r_var .= '&' . urlencode($key) . '=' . urlencode($val);
+            }
+        }
+        return $r_var;
+    }
 }
 
-	//== 유동적인 GET 데이터 조인
+//== 유동적인 GET 데이터 조인
 function get_value($mode=0, $del_var='') {
 	global $_GET;
+	$link_get = '';
 	$del_var=explode("/", $del_var);
 	for($i=0; $i<count($del_var); $i++) unset($_GET[$del_var[$i]]);			//== 데이터가 변경되는 변수 파괴
 	$i=0;
@@ -397,6 +497,7 @@ function get_value($mode=0, $del_var='') {
 //== 파일 업로드 함수(공백과 동일한 파일로인해 이름이 변경된경우 DB에 입력되는 데이터와 저장되파일이름이 다름 수정요망)
 function file_upload($filename, $filetype, $filesize, $filetmp, $fileerror, $upload_max_size,$updir,$only_img) {
 	global $_SERVER;
+	$data = "";
 	//== 업로드파일의 갯수를 구해 갯수만큼 루프로 돌리며 업로드
 	for($i=0;$i<sizeof($filename);$i++) {
 		//== 이미지만을 업로드할 경우 체크함수 (php4.3.0 이상에서 동작하는 함수인데 현재버전 4.3.2버전에는 동작안함)
@@ -501,26 +602,61 @@ function age_check($jumin1, $jumin2, $mode, $adult_age=19) {
 	}
 }
 
+// PHP82 변환
 //== 중복없는 난수 생성 함수(char->대표문자 place->날짜를 제외한 난수자릿수)
-function not_duple_rand($r_char,$place) {
-//$rand_num=date("ymdHis").abs(microtime()); //=> 이와같이 날짜를 포함한 시분초까지 검출후 마이크로시간을 합해도 중복이 안됨 참고 바람
-		$serial_make = "0123456789";
-			srand((double)microtime()*1000000);
-				for($i=0; $i<$place; $i++){
-					$serial .= $serial_make[rand()%strlen($serial_make)];
-					uniqid($serial);
-				}
-				$rand_num=$r_char.date('y').date('m').date('d').$serial;
-			return $rand_num;
+// function not_duple_rand($r_char,$place) {
+// //$rand_num=date("ymdHis").abs(microtime()); //=> 이와같이 날짜를 포함한 시분초까지 검출후 마이크로시간을 합해도 중복이 안됨 참고 바람
+// 		$serial_make = "0123456789";
+// 			srand((double)microtime()*1000000);
+// 				for($i=0; $i<$place; $i++){
+// 					$serial .= $serial_make[rand()%strlen($serial_make)];
+// 					uniqid($serial);
+// 				}
+// 				$rand_num=$r_char.date('y').date('m').date('d').$serial;
+// 			return $rand_num;
+// }
+function not_duple_rand(string $r_char, int $place): string {
+    $serial_make = '0123456789';
+    $serial = '';
+
+    for ($i = 0; $i < $place; $i++) {
+        $rand_index = random_int(0, strlen($serial_make) - 1);
+        $serial .= $serial_make[$rand_index];
+    }
+
+    // 날짜 기반 프리픽스 (예: YMDD)
+    $date_part = date('ymd'); // 년월일
+
+    // 최종 랜덤 문자열
+    return $r_char . $date_part . $serial;
 }
 
+// PHP82 변환
 //== 아이디 등의 중복체크
-function duple_check($dbconn,$table_name,$compare_data,$check_data) {
-	$query = "select count($compare_data) from $table_name where $compare_data = '$check_data'";
-	$result = mysql_query($query);
-		if(!$result) error_view("질의문에 다음과 같은 오류가 있습니다.","","ok");
-		$rows = mysql_result($result,0,0);
-		return $rows;
+// function duple_check($dbconn,$table_name,$compare_data,$check_data) {
+// 	$query = "select count($compare_data) from $table_name where $compare_data = '$check_data'";
+// 	$result = mysql_query($query);
+// 		if(!$result) error_view("질의문에 다음과 같은 오류가 있습니다.","","ok");
+// 		$rows = mysql_result($result,0,0);
+// 		return $rows;
+// }
+function duple_check(mysqli $dbconn, string $table_name, string $compare_data, string $check_data): int {
+    // 쿼리 준비 (SQL Injection 방지)
+    $query = "SELECT COUNT(*) FROM `$table_name` WHERE `$compare_data` = ?";
+    
+    $stmt = $dbconn->prepare($query);
+    if (!$stmt) {
+        error_view("질의문에 다음과 같은 오류가 있습니다.", $dbconn->error, "ok");
+        return 0;
+    }
+
+    $stmt->bind_param('s', $check_data);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    return $count;
 }
 
 //== 입력된 月의 日수를 구함
@@ -535,36 +671,36 @@ function get_total_days($year,$month) {
 function show_calendar() {
 	global $_GET;
 	//== 주어진 날짜가 없을경우 오늘날짜 지정
-	if(!$_GET[year] || !$_GET[month]) {
-		$_GET[year] = date('Y');
-		$_GET[month] = date('m');
+	if(!$_GET['year'] || !$_GET['month']) {
+		$_GET['year'] = date('Y');
+		$_GET['month'] = date('m');
 	}
 	//== 시작주와 마지막 날짜 계산
-	$first_week = date('w', mktime(0,0,0,$_GET[month],1,$_GET[year]));
-	$last_day = date('t', mktime(0,0,0, $_GET[month],1,$_GET[year]));
+	$first_week = date('w', mktime(0,0,0,$_GET['month'],1,$_GET['year']));
+	$last_day = date('t', mktime(0,0,0, $_GET['month'],1,$_GET['year']));
 	//== 전체일수를 계산
-	$total_days=get_total_days($_GET[year],$_GET[month]);
+	$total_days=get_total_days($_GET['year'],$_GET['month']);
 
 	//== 이전의 년/월 구하기
-	$month_p = $_GET[month]-1;
+	$month_p = $_GET['month']-1;
 	if($month_p < 1) {
 		$month_p=12;
-		$year_p=$_GET[year]-1;
+		$year_p=$_GET['year']-1;
 	}else {
-		$year_p=$_GET[year];
+		$year_p=$_GET['year'];
 	}
 	//== 이후의 년/월 구하기
-	$month_n = $_GET[month] + 1;
+	$month_n = $_GET['month'] + 1;
 	if($month_n > 12) {
 		$month_n=1;
-		$year_n=$_GET[year]+1;
+		$year_n=$_GET['year']+1;
 	}else {
-		$year_n=$_GET[year];
+		$year_n=$_GET['year'];
 	}
 	$prev_link="<a href=\"$_SERVER[PHP_SELF]?year=$year_p&month=$month_p\"><img src=\"./img/prev_month.gif\" border=\"0\" alt=\"이전달\"></a>";
 	$next_link="<a href=\"$_SERVER[PHP_SELF]?year=$year_n&month=$month_n\"><img src=\"./img/next_month.gif\" border=\"0\" alt=\"다음달\"></a>";
 	//== 달력의 기본 정보 출력
-	$view_title=$_GET[year]."년 ".$_GET[month]."월 ";
+	$view_title=$_GET['year']."년 ".$_GET['month']."월 ";
 	echo "<table width=\"100%\" height=\"\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"2\">
 	<tr>
 		<td width=\"100%\" height=\"\" align=\"center\" class=\"\">
@@ -620,24 +756,61 @@ function show_calendar() {
 	echo "</tr></table></td></tr></table>";
 }
 
+// PHP82 변환
 //== 회원 권한 뽐기
-function member_level_view($id,$divi) {
-	global $db_conn;
-	if($divi==="s") {
-		$dbtable="s_members";
-	}else {
-		$dbtable="t_members";
-	}
-	$query = "select power_level from $dbtable where id = '$id'";
-	$result = mysql_query($query);
-		if(!$result) error_view("질의문에 다음과 같은 오류가 있습니다.","","ok");
-		$rows = mysql_result($result,0,0);
-		return $rows;
+// function member_level_view($id,$divi) {
+// 	global $db_conn;
+// 	if($divi==="s") {
+// 		$dbtable="s_members";
+// 	}else {
+// 		$dbtable="t_members";
+// 	}
+// 	$query = "select power_level from $dbtable where id = '$id'";
+// 	$result = mysql_query($query);
+// 		if(!$result) error_view("질의문에 다음과 같은 오류가 있습니다.","","ok");
+// 		$rows = mysql_result($result,0,0);
+// 		return $rows;
+// }
+function member_level_view(string $id, string $divi): ?int {
+    global $db_conn;
+
+    // 테이블명 하드코딩(화이트리스트) — 외부 입력은 위험하므로 권장
+    $dbtable = ($divi === "s") ? "s_members" : "t_members";
+
+    // Prepare 문 사용 (SQL Injection 방지)
+    $query = "SELECT power_level FROM `$dbtable` WHERE id = ?";
+    $stmt = $db_conn->prepare($query);
+    if (!$stmt) {
+        error_view("질의문에 다음과 같은 오류가 있습니다.", $db_conn->error, "ok");
+        return null;
+    }
+
+	$power_level = '';
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $stmt->bind_result($power_level);
+    $fetch_result = $stmt->fetch();
+    $stmt->close();
+
+    if ($fetch_result) {
+        return $power_level;
+    } else {
+        return null;  // 결과가 없으면 null 반환
+    }
 }
 
+// PHP82 변환
 //== E-mail 주소가 올바른지 검사
-function ismail( $str ) {
-	if( eregi("([a-z0-9\_\-\.]+)@([a-z0-9\_\-\.]+)", $str) ) return $str; else return '';
+// function ismail( $str ) {
+// 	if( eregi("([a-z0-9\_\-\.]+)@([a-z0-9\_\-\.]+)", $str) ) return $str; else return '';
+// }
+function ismail(string $str): string {
+    // 대소문자 구분 없이 이메일 패턴 검사
+    if (preg_match('/^[a-z0-9_\-\.]+@[a-z0-9_\-\.]+\.[a-z]{2,}$/i', $str)) {
+        return $str;
+    } else {
+        return '';
+    }
 }
 
 function thumbnail($src_img_path,$dst_img_path,$filename,$want_width,$want_height) {
@@ -701,6 +874,7 @@ function thumbnail($src_img_path,$dst_img_path,$filename,$want_width,$want_heigh
 
 //== 게시판의 스킨선택
 function Dir_View($Dir_Path, $Error_Ment) {
+	$rtn = '';
 	if(is_dir($Dir_Path)) {
 		if($dir_handle = opendir($Dir_Path)) {
 			while (($file = readdir($dir_handle)) !== false) {
@@ -714,40 +888,67 @@ function Dir_View($Dir_Path, $Error_Ment) {
 	return substr($rtn,0,-1);
 }
 
+// PHP82 변환
 //== 오늘 날짜 출력(삭제 아래로 대체)
-function Now_Date() {
-	$now_date=date(Y.".".m.".".d);
-	switch (date(w)) {
-		case (0) :
-			$week_name="일";
-		break;
-		case (1) :
-			$week_name="월";
-		break;
-		case (2) :
-			$week_name="화";
-		break;
-		case (3) :
-			$week_name="수";
-		break;
-		case (4) :
-			$week_name="목";
-		break;
-		case (5) :
-			$week_name="금";
-		break;
-		case (6) :
-			$week_name="토";
-		break;
-	}
-	return $now_date."[".$week_name."]";
+// function Now_Date() {
+// 	$now_date=date(Y.".".m.".".d);
+// 	switch (date(w)) {
+// 		case (0) :
+// 			$week_name="일";
+// 		break;
+// 		case (1) :
+// 			$week_name="월";
+// 		break;
+// 		case (2) :
+// 			$week_name="화";
+// 		break;
+// 		case (3) :
+// 			$week_name="수";
+// 		break;
+// 		case (4) :
+// 			$week_name="목";
+// 		break;
+// 		case (5) :
+// 			$week_name="금";
+// 		break;
+// 		case (6) :
+// 			$week_name="토";
+// 		break;
+// 	}
+// 	return $now_date."[".$week_name."]";
+// }
+function Now_Date(): string {
+    // 날짜 형식: YYYY.MM.DD
+    $now_date = date('Y.m.d');
+
+    // 요일 배열
+    $week_names = ["일", "월", "화", "수", "목", "금", "토"];
+
+    // 요일 숫자 (0=일요일 ~ 6=토요일)
+    $w = (int)date('w');
+
+    // 해당 요일 한글 가져오기
+    $week_name = $week_names[$w] ?? '';
+
+    return $now_date . "[" . $week_name . "]";
 }
 
+// PHP82 변환
 //==  선택된 날자의 요일
-function getWeekName($putDate) {
-	if($putDate) $inDate=$putDate; else $putDate=date();
-	$weekName = array("일","월","화","수","목","금","토");
-	return ($weekName[date('w', strtotime($inDate))]);
+// function getWeekName($putDate) {
+// 	if($putDate) $inDate=$putDate; else $putDate=date();
+// 	$weekName = array("일","월","화","수","목","금","토");
+// 	return ($weekName[date('w', strtotime($inDate))]);
+// }
+function getWeekName(?string $putDate = null): string {
+    // 입력값 없으면 오늘 날짜 (Y-m-d 형식)
+    $inDate = $putDate ?? date('Y-m-d');
+
+    $weekName = ["일", "월", "화", "수", "목", "금", "토"];
+
+    $w = (int)date('w', strtotime($inDate));
+
+    return $weekName[$w];
 }
 
 //== 몇번째 주일지 체크
@@ -771,39 +972,96 @@ function Get_Date($years, $months, $days) {
 
 //== 자동 회원 가입 방지 시작 ================================================================================================
 
+// PHP82 변환
 //== 중복없는 난수 생성(회원가입 자동 방지)
-function No_Duple_Str($char_length) {
-	$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-		srand((double)microtime()*1000000);
-		$i=0;
-		//== 중복없이 입력된 숫자만큼 난수 생성
-		do {
-			$serial = $serial_make[rand()%strlen($serial_make)];
-			if(strchr($rst_srl, $serial) == false) {
-				$rst_srl .= $serial;
-				$i++;
-			}
-		} while ($i<$char_length);
-		uniqid($rst_srl);
-	return $rst_srl;
+// function No_Duple_Str($char_length) {
+// 	$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+// 		srand((double)microtime()*1000000);
+// 		$i=0;
+// 		//== 중복없이 입력된 숫자만큼 난수 생성
+// 		do {
+// 			$serial = $serial_make[rand()%strlen($serial_make)];
+// 			if(strchr($rst_srl, $serial) == false) {
+// 				$rst_srl .= $serial;
+// 				$i++;
+// 			}
+// 		} while ($i<$char_length);
+// 		uniqid($rst_srl);
+// 	return $rst_srl;
+// }
+function No_Duple_Str(int $char_length): string {
+    $serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+    $rst_srl = "";
+
+    $max_index = strlen($serial_make) - 1;
+
+    while (strlen($rst_srl) < $char_length) {
+        $rand_index = random_int(0, $max_index);
+        $serial = $serial_make[$rand_index];
+
+        if (strpos($rst_srl, $serial) === false) {
+            $rst_srl .= $serial;
+        }
+    }
+
+    return $rst_srl;
 }
 
+// PHP82 변환
 // 자동가입 방지
-function Not_Aoto_Join($t_num=10, $r_num=5) {
-	$rst=No_Duple_Str($t_num);																																//== 난수 생성
-	for($i=0;$i<strlen($rst);$i++) $arr_rst[$i]=$rst[$i];																//== 생성된 난수를 배열에 저장
-	$rand_rst=array_rand($arr_rst, $r_num);																											//== 배열에 저장된 난수에서 다시 5개 임의 추출하여 배열에 저장
-	foreach($rand_rst AS $key => $value) $arr_select .= $arr_rst[$value];	//== 추출된 5개의 난수를 문자열로 변환
-	//== 전체 문자열중 임의 추출된 문자열을 비교하여 구분색상적용
-	for($i=0;$i<strlen($rst);$i++) {
-		if(strchr($arr_select, $arr_rst[$i]) == false) {
-			$view_string .=$arr_rst[$i];
-		}else {
-			$view_string .= "<font color=\"#2626C2\"><b>".$arr_rst[$i]."</b></font>";
-			$md_str .= $arr_rst[$i];
-		}
-	}
-	return $view_string.":".base64_encode($md_str);
+// function Not_Aoto_Join($t_num=10, $r_num=5) {
+// 	$rst=No_Duple_Str($t_num);																																//== 난수 생성
+// 	for($i=0;$i<strlen($rst);$i++) $arr_rst[$i]=$rst[$i];																//== 생성된 난수를 배열에 저장
+// 	$rand_rst=array_rand($arr_rst, $r_num);																											//== 배열에 저장된 난수에서 다시 5개 임의 추출하여 배열에 저장
+// 	foreach($rand_rst AS $key => $value) $arr_select .= $arr_rst[$value];	//== 추출된 5개의 난수를 문자열로 변환
+// 	//== 전체 문자열중 임의 추출된 문자열을 비교하여 구분색상적용
+// 	for($i=0;$i<strlen($rst);$i++) {
+// 		if(strchr($arr_select, $arr_rst[$i]) == false) {
+// 			$view_string .=$arr_rst[$i];
+// 		}else {
+// 			$view_string .= "<font color=\"#2626C2\"><b>".$arr_rst[$i]."</b></font>";
+// 			$md_str .= $arr_rst[$i];
+// 		}
+// 	}
+// 	return $view_string.":".base64_encode($md_str);
+// }
+function Not_Aoto_Join(int $t_num = 10, int $r_num = 5): string {
+    $rst = No_Duple_Str($t_num);  // 난수 생성
+
+    // 난수 문자열을 배열로 변환
+    $arr_rst = str_split($rst);
+
+    // r_num이 배열 길이보다 크면 전체 배열 크기로 조정
+    $r_num = min($r_num, count($arr_rst));
+
+    // 배열에서 r_num개 임의 추출 (키 배열 반환)
+    $rand_keys = array_rand($arr_rst, $r_num);
+
+    // array_rand이 1개일 경우 정수 반환이므로 배열로 통일
+    if (!is_array($rand_keys)) {
+        $rand_keys = [$rand_keys];
+    }
+
+    // 선택된 문자들 문자열로 변환
+    $arr_select = '';
+    foreach ($rand_keys as $key) {
+        $arr_select .= $arr_rst[$key];
+    }
+
+    $view_string = '';
+    $md_str = '';
+
+    // 전체 문자열을 돌면서 선택된 문자면 색상 적용
+    foreach ($arr_rst as $char) {
+        if (strpos($arr_select, $char) === false) {
+            $view_string .= $char;
+        } else {
+            $view_string .= '<font color="#2626C2"><b>' . $char . '</b></font>';
+            $md_str .= $char;
+        }
+    }
+
+    return $view_string . ":" . base64_encode($md_str);
 }
 //== 자동 회원 가입 방지 종료 ================================================================================================
 
@@ -830,7 +1088,7 @@ function addCount() {
 	//== 첫 접속일 경우 정보 등록
 	if($userStatus<=0) {
 		$uEnv=userEnvInfo();
-		$msqlStr = "INSERT INTO wStatics(siteCode, pageUrl, refererUrl, visitDate, visitTime, user_ip, userOs, userAgent) VALUES ('".$_GET[code]."', '".getenv('REQUEST_URI')."', '".$_SERVER[REFERER]."', CURDATE(), CURTIME(), '".getenv('REMOTE_ADDR')."', '$uEnv[platform]', '$uEnv[name]')";
+		$msqlStr = "INSERT INTO wStatics(siteCode, pageUrl, refererUrl, visitDate, visitTime, user_ip, userOs, userAgent) VALUES ('".$_GET['code']."', '".getenv('REQUEST_URI')."', '".$_SERVER['HTTP_REFERER']."', CURDATE(), CURTIME(), '".getenv('REMOTE_ADDR')."', '$uEnv[platform]', '$uEnv[name]')";
 		$rst=$db->query($msqlStr);
 		if(DB::isError($rst)) die($rst->getMessage());
 	}
@@ -839,17 +1097,18 @@ function addCount() {
 //== 영문주소 변환
 function Zipcode_Change_Eng() {
 	global $db,$_GET,$_POST;
-	$zipcode=$_POST[hzipcode1].$_POST[hzipcode2];
+	$eng_address = '';
+	$zipcode=$_POST['hzipcode1'].$_POST['hzipcode2'];
 	$sql_str="SELECT * FROM Zipcode_Eng WHERE zipcode='$zipcode'";
 	$view = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 	if(DB::isError($view)) die($view->getMessage());
-	$zipcode1=substr($view[zipcode],0,-3);
-	$zipcode2=substr($view[zipcode],-3);
-	$eng_address .= $zipcode1."-".$zipcode2." ".$_POST[haddress2].",";
-	if($view[etc]) $eng_address .= " ".$view[etc].",";
-	if($view[bunji]) $eng_address .= " ".$view[bunji].",";
-	if($view[ri]) $eng_address .= " ".$view[ri].",";
-	$eng_address .= $view[dong].", ".$view[gugun].", ".$view[sido].", Korea";
+	$zipcode1=substr($view['zipcode'],0,-3);
+	$zipcode2=substr($view['zipcode'],-3);
+	$eng_address .= $zipcode1."-".$zipcode2." ".$_POST['haddress2'].",";
+	if($view['etc']) $eng_address .= " ".$view['etc'].",";
+	if($view['bunji']) $eng_address .= " ".$view['bunji'].",";
+	if($view['ri']) $eng_address .= " ".$view['ri'].",";
+	$eng_address .= $view['dong'].", ".$view['gugun'].", ".$view['sido'].", Korea";
 	return $eng_address;
 }
 
@@ -953,15 +1212,40 @@ function isMobile(){
 	return $mobile_browser;
 }
 
-function delAll($dir) {
-	$d = @dir($dir);
-	while ($entry = $d->read()) {
-		if ($entry == "." || $entry == "..") continue;
-		if(is_dir($entry)) delete_all($entry);
-		else unlink($dir."/".$entry);
-	}
-	// 해당디렉토리도 삭제할 경우에는 아래 주석처리를 해제합니다.
-	unlink($dir);
+// PHP82 변환
+// function delAll($dir) {
+// 	$d = @dir($dir);
+// 	while ($entry = $d->read()) {
+// 		if ($entry == "." || $entry == "..") continue;
+// 		if(is_dir($entry)) delete_all($entry);
+// 		else unlink($dir."/".$entry);
+// 	}
+// 	// 해당디렉토리도 삭제할 경우에는 아래 주석처리를 해제합니다.
+// 	unlink($dir);
+// }
+function delAll(string $dir): void {
+    // 디렉토리 열기
+    $d = @dir($dir);
+    if (!$d) return;
+
+    while (($entry = $d->read()) !== false) {
+        if ($entry === '.' || $entry === '..') continue;
+
+        $path = $dir . DIRECTORY_SEPARATOR . $entry;
+
+        if (is_dir($path)) {
+            // 재귀 호출로 하위 디렉토리 삭제
+            delAll($path);
+        } else {
+            // 파일 삭제
+            @unlink($path);
+        }
+    }
+
+    $d->close();
+
+    // 디렉토리 자체 삭제
+    @rmdir($dir);  // unlink() → rmdir()로 변경
 }
 
 //== 디렉토리 및 하위 파일 삭제
@@ -1065,12 +1349,13 @@ function ipAllow(){
 
 function boardCode($code) {
 	global $db;
+	$optionList = '';
 		$sqlStr = "SELECT * FROM wboardConfig ORDER BY idx ASC";
 		$result = $db->query($sqlStr);
 		if(DB::isError($result)) die($result->getMessage());
 		while($view = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if($view[code]==$code) $codeChk=" selected"; else $codeChk="";
-			$optionList .= "<option value=\"".$view[code]."\"".$codeChk.">".$view[board_summary]."</option>";
+			if($view['code']==$code) $codeChk=" selected"; else $codeChk="";
+			$optionList .= "<option value=\"".$view['code']."\"".$codeChk.">".$view['board_summary']."</option>";
 		}
 		return $optionList;
 }

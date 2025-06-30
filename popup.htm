@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
@@ -40,7 +40,7 @@ if(DB::isError($view)) die($view->getMessage());
 	</head>
 	<body>
 		<div id="popupContents">
-		<?
+		<?php
 		if($view[filename0]) {
 			$e_name=explode('.',$view[filename0]);
 			if($e_name[1]=='JPG' || $e_name[1]=='jpg' || $e_name[1]=='jpeg' || $e_name[1]=='gif' || $e_name[1]=='bmp' || $e_name[1]=='PNG' || $e_name[1]=='png' || $e_name[1]=='JPG') {
@@ -59,7 +59,7 @@ if(DB::isError($view)) die($view->getMessage());
 		?>
 		</div>
 		<div id="popupBottom">
-			<form name="checkForm"><?if($view[ingTime]>0) echo "<span class=\"float_left\"><input type=\"checkbox\" name=\"pClose\" onClick=\"closePop('wpo".$view[idx]."');\" class=\"align_left_middle\" /> 하루만 보기</span>";?> <span class="float_right">[<a href="javascript:window.close();">닫기</a>]</span></form>
+			<form name="checkForm"><?php if($view[ingTime]>0) echo "<span class=\"float_left\"><input type=\"checkbox\" name=\"pClose\" onClick=\"closePop('wpo".$view[idx]."');\" class=\"align_left_middle\" /> 하루만 보기</span>";?> <span class="float_right">[<a href="javascript:window.close();">닫기</a>]</span></form>
 		</div>
 </body>
 </html>

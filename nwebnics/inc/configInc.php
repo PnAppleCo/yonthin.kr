@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
@@ -36,7 +36,7 @@ $compayIdx=4;
 $compayMType=4;
 
 //== 기본환경 설정파일 로드
-include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/commonConfig.php";
+// include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/commonConfig.php";    // 타사이트자료
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/libInc.php";
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/mainviewInc.php";
 
@@ -52,12 +52,13 @@ $wtoolType="2";
 //== 세션 환경설정 ========================================//
 //========================================================//
 session_save_path($_SERVER["DOCUMENT_ROOT"]."/nwebnics/sessionDir/");
-ini_set("session.cache_expire", 60);																		//= 세션 유효시간 : 분
-ini_set("session.gc_maxlifetime", 3600);																//= 세션 가비지 컬렉션(로그인시 세션지속 시간) : 초
+ini_set("session.cache_expire", 60);											//= 세션 유효시간 : 분
+ini_set("session.gc_maxlifetime", 3600);										//= 세션 가비지 컬렉션(로그인시 세션지속 시간) : 초
 ini_set('memory_limit',-1);
 ini_set("display_errors", 1);
 //error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-@error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING ^ E_STRICT);
+//error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING ^ E_STRICT);
+error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING);
 //session_cache_limiter('nocache, must-revalidate');
 session_start();
 
@@ -77,20 +78,26 @@ require_once('dbInfo.php');
 
 //== PEAR DB DSN 설정
 $dsn_str = db_type."://".db_user.":".db_pass."@".db_host.":".db_port."/".db_name;
+
 $db = DB::connect($dsn_str);
-if(DB::isError($db)) die($db->getMessage());
-mysql_query("set names utf8");
+if(DB::isError($db)) {
+	echo($dsn_str);
+	die($db->getMessage());
+}
+//mysql_query("set names utf8");
+$db->query("SET NAMES 'utf8mb4'");
 
 //============================================= Navigation Set ================================================//
 $gnb_Arr = array(1=>"회사소개",2=>"참여하기",3=>"사업소개",4=>"체험시리즈",5=>"커뮤니티",6=>"이용안내");
 $lnb_Arr = array (
-								1=>array(1=>"청년독립지원청 소개", 2=>"Contact", 3=>"", 4=>"", 5=>"", 6=>""),
+								1=>array(1=>"청년독립지원청 소개", 2=>"Contact", 3=>"연혁", 4=>"", 5=>"", 6=>""),
 								2=>array(1=>"자립과 의존 체크리스트", 2=>"", 3=>"", 4=>"", 5=>"", 6=>""),
 								3=>array(1=>"청년체험", 2=>"맞춤교육", 3=>"자산형성지원사업", 4=>"", 5=>"", 6=>""),
 								4=>array(1=>"온라인 자기성찰형 지출관리", 2=>"경제 금융 지식 학습", 3=>"", 4=>"", 5=>"", 6=>""),
 								5=>array(1=>"공지사항", 2=>"청년독립미션", 3=>"", 4=>"", 5=>"", 6=>""),
 								6=>array(1=>"개인정보처리방침", 2=>"", 3=>"")
 								);
+
 $cnb_Arr = array (
 								1=>array(
 											1=>array(1=>""),
@@ -135,8 +142,15 @@ $cnb_Arr = array (
 											3=>array(1=>""),
 											4=>array(1=>"")
 											),
-								);
-$gnbPath=explode("_",$_GET[code]);
+);
+
+// PHP82 변환
+// $gnbPath=explode("_",$_GET["code"]);
+if (isset($_GET["code"])) { 
+    $gnbPath = explode("_", $_GET["code"]);
+} else {
+    $gnbPath = [];
+}
 
 //============================================= Contents Set ================================================//
 switch ($gnbPath[0]) {
@@ -150,17 +164,17 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[3]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="COMPANY";																																																										//== 영문소개
 	break;
 
-	case ('2'):
+	case ("2"):
 		$Title_Txt=$siteName." > ".$gnb_Arr[2]." > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];																															//== 타이틀바
 		$Description_Txt="";																														//== 사이트설명
 		$Keywords_Txt="";																								//== 검색키워드
@@ -169,12 +183,12 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="BUSINESS";																																																										//== 영문소개
 	break;
@@ -188,12 +202,12 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="PRODUCTS";																																																										//== 영문소개
 	break;
@@ -207,12 +221,12 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="Data Room";																																																										//== 영문소개
 	break;
@@ -226,12 +240,12 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="CUSTOMER SERVICE";																																																										//== 영문소개
 	break;
@@ -245,12 +259,12 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";																				//== 콘텐츠 호출
 		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
 		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
 		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
 		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 		$subTitleTxt="USE GUIDE";																																																										//== 영문소개
 	break;
@@ -264,16 +278,17 @@ switch ($gnbPath[0]) {
 		$Left_Inc_File="/inc/lnb_menuInc.htm";																																																		//== 좌측 호출
 		$Right_Inc_File="";																																																																//== 우측 호출
 		$Foot_Inc_File="/inc/footInc.htm";																																																						//== 하단 호출
-		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";																				//== 콘텐츠 호출
-		$Site_Path="HOME > ".$gnb_Arr[$gnbPath[0]];																	//== 위치 네비게이션
-		if($gnbPath[1]) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		if($gnbPath[2]) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
-		if($gnbPath[2]) $cTitle=$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]; else $cTitle=$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
-		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.gif";																				//== 콘텐츠 타이틀
+		$Contents_File="/contents/".str_pad($gnbPath[0],2,'0',0)."/".isset($_GET['code']).".htm";																				//== 콘텐츠 호출
+		$Site_Path="HOME > ".isset($gnb_Arr[$gnbPath[0]]);																	//== 위치 네비게이션
+		if(isset($gnbPath[1])) $Site_Path .= " > ".$lnb_Arr[$gnbPath[0]][$gnbPath[1]];
+		if(isset($gnbPath[2])) $Site_Path .= " > ".$cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]];
+		if(isset($gnbPath[2])) $cTitle=isset($cnb_Arr[$gnbPath[0]][$gnbPath[1]][$gnbPath[2]]); else $cTitle=isset($lnb_Arr[$gnbPath[0]][$gnbPath[1]]);
+		$Title_Bar_Image="/img/".str_pad($gnbPath[0],2,'0',0)."/".isset($_GET['code'])."_title.gif";																				//== 콘텐츠 타이틀
 		$Access_Level=0;																																																																	//== 접근권한
 }
 
 //== SNS 공유
 $snsUrl="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $snsImage="http://".$_SERVER['HTTP_HOST']."/img/comm/og.png";
+
 ?>

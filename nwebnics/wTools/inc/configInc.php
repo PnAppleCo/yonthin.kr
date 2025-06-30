@@ -1,7 +1,7 @@
-<?
+<?php
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
-//== 접근권한 설정
+//== 접근권한 설정 [삭제]
 //$allow_ip = array("109.2.91.135");
 //if(!in_array($_SERVER["REMOTE_ADDR"], $allow_ip)) { header('Location:/main.htm'); exit; }
 //== 타이틀바
@@ -19,7 +19,7 @@ $Right_Inc_File="";
 $Foot_Inc_File="/nwebnics/wTools/inc/footInc.htm";
 
 //== 첫 페이지 설정
-if(!$_GET[page]) $_GET[page] = 1;
+if(!$_GET['page']) $_GET['page'] = 1;
 //== 페이지수 설정
 $num_per_page=20;
 //== 블럭당 페이지수 설정

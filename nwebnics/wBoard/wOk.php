@@ -1,4 +1,4 @@
-<?
+<?PHP
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
@@ -8,7 +8,7 @@
 include ("inc/boardLib.php");
 
 //== 게시판 code 체크
-if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
+if(!$_GET['code']) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]> <html class="no-js ie6 oldie" lang="<?=$languageSet;?>"> <![endif]-->
@@ -54,11 +54,11 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 			<li><a href="#footer-quick">카피라이터 바로가기</a></li>
 		</ul>
 		<div id="layoutWrap">
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
+			<?PHP include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
 			<div id="contents">
 				<div id="contentsView">
 					<p class="tHead"><span><?=$Site_Path;?></span></p>
-					<p class="tTitle"><img src="<?="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code]."_title.jpg";?>" class="img_respons" alt="타이틀" /></p>
+					<p class="tTitle"><img src="<?="/img/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_title.jpg";?>" class="img_respons" alt="타이틀" /></p>
 
 						<!-- 메인 콘텐츠 시작 -->
 						<div style="width:90%; margin:0 auto; min-height:50%; max-height:100%; padding:50px 0 80px 0; vertical-align:middle; text-align:center;">
@@ -76,7 +76,7 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 					<img src="/img/comm/quick_right.gif" class="img_respons" alt="상담예약" />
 				</div>
 			</div>
-			<footer><?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?></footer>
+			<footer><?PHP include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?></footer>
 		</div>
 
 		<script>
@@ -86,4 +86,4 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 		</script>
 	</body>
 </html>
-<?$db->disconnect();?>
+<PHP $db->disconnect();?>

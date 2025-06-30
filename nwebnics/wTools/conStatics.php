@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danha'
@@ -9,9 +9,9 @@ include ("inc/configInc.php");
 
 if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용하세요.", 1);
 
-if($_GET[sYear]) $nYear=$_GET[sYear]; else $nYear=date('Y');
-if($_GET[sMonth]) $nMonth = $_GET[sMonth]; else $nMonth = "";
-if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
+if($_GET['sYear']) $nYear=$_GET['sYear']; else $nYear=date('Y');
+if($_GET['sMonth']) $nMonth = $_GET['sMonth']; else $nMonth = "";
+if($_GET['sDay']) $nDay = $_GET['sDay']; else $nDay = "";
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
@@ -87,13 +87,13 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">상담 통합 정보</h3>
@@ -101,35 +101,35 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 						<div id="contentsBody">
 
 							<div style="text-align:center;">
-								<form name="sForm" action="<?$_SERVER[PHP_SELF];?>" method="get">
+								<form name="sForm" action="<?php $_SERVER['PHP_SELF'];?>" method="get">
 									<fieldset>
 										<legend>교육 신청자 관리</legend>
 										<span style="font-size:1.2em; font-weight:bold;">기준년도</span>
 										<select name="sYear" class="wSbox">
 											<!-- <option value="">- 년도 -</option> -->
-											<?for($i=2014; $i<=date('Y'); $i++) {
+											<?php for($i=2014; $i<=date('Y'); $i++) {
 													if($nYear==$i) $iCheck=" selected"; else $iCheck="";
 													echo "<option value=\"".$i."\"".$iCheck.">".$i."</option>\n";
 												}?>
 										</select>
 										<select name="sMonth" class="wSbox">
 											<option value="">- 월 -</option>
-											<?for($i=1; $i<=12; $i++) {
+											<?php for($i=1; $i<=12; $i++) {
 													if($nMonth==$i) $iCheck=" selected"; else $iCheck="";
 													echo "<option value=\"".$i."\"".$iCheck.">".$i."</option>\n";
 												}?>
 										</select>
 										<select name="sDay" class="wSbox">
 											<option value="">- 일 -</option>
-											<?for($i=1; $i<=31; $i++) {
+											<?php for($i=1; $i<=31; $i++) {
 													if($nDay==$i) $iCheck=" selected"; else $iCheck="";
 													echo "<option value=\"".$i."\"".$iCheck.">".$i."</option>\n";
 												}?>
 										</select>
 										<select name="counselSsam" class="wSbox">
 											<option value="">상담자</option>
-											<?for($i=1; $i<=count($ssamArr); $i++) {
-													if($_GET[counselSsam]==$ssamArr[$i]) $iCheck=" selected"; else $iCheck="";
+											<?php for($i=1; $i<=count($ssamArr); $i++) {
+													if($_GET['counselSsam']==$ssamArr[$i]) $iCheck=" selected"; else $iCheck="";
 													echo "<option value=\"".$ssamArr[$i]."\"".$iCheck.">".$ssamArr[$i]."</option>\n";
 												}?>
 										</select>
@@ -172,35 +172,35 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 									<tbody>
 										<tr>
 											<th>전화</th>
-											<td id="aa11"><?=conHistory('aa11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa12"><?=conHistory('aa12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa13"><?=conHistory('aa13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa14"><?=conHistory('aa14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa15"><?=conHistory('aa15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa16"><?=conHistory('aa16', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="aa17"><?=conHistory('aa17', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="aa11"><?=conHistory('aa11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa12"><?=conHistory('aa12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa13"><?=conHistory('aa13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa14"><?=conHistory('aa14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa15"><?=conHistory('aa15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa16"><?=conHistory('aa16', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="aa17"><?=conHistory('aa17', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="aa_col_total"></td>
 										</tr>
 										<tr>
 											<th>온라인</th>
-											<td id="ab11"><?=conHistory('ab11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab12"><?=conHistory('ab12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab13"><?=conHistory('ab13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab14"><?=conHistory('ab14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab15"><?=conHistory('ab15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab16"><?=conHistory('ab16', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ab17"><?=conHistory('ab17', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ab11"><?=conHistory('ab11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab12"><?=conHistory('ab12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab13"><?=conHistory('ab13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab14"><?=conHistory('ab14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab15"><?=conHistory('ab15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab16"><?=conHistory('ab16', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ab17"><?=conHistory('ab17', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="ab_col_total"></td>
 										</tr>
 										<tr>
 											<th>방문</th>
-											<td id="ac11"><?=conHistory('ac11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac12"><?=conHistory('ac12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac13"><?=conHistory('ac13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac14"><?=conHistory('ac14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac15"><?=conHistory('ac15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac16"><?=conHistory('ac16', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ac17"><?=conHistory('ac17', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ac11"><?=conHistory('ac11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac12"><?=conHistory('ac12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac13"><?=conHistory('ac13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac14"><?=conHistory('ac14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac15"><?=conHistory('ac15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac16"><?=conHistory('ac16', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ac17"><?=conHistory('ac17', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="ac_col_total"></td>
 										</tr>
 										<tr>
@@ -251,35 +251,35 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 									<tbody>
 										<tr>
 											<th>전화</th>
-											<td id="ba11"><?=conHistory('ba11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ba12"><?=conHistory('ba12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ba13"><?=conHistory('ba13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ba14"><?=conHistory('ba14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="ba15"><?=conHistory('ba15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ba11"><?=conHistory('ba11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ba12"><?=conHistory('ba12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ba13"><?=conHistory('ba13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ba14"><?=conHistory('ba14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="ba15"><?=conHistory('ba15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="ba_col_total"></td>
-											<td id="ca11"><?=conHistory('ca11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ca11"><?=conHistory('ca11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="ca_col_total"></td>
 										</tr>
 										<tr>
 											<th>온라인</th>
-											<td id="bb11"><?=conHistory('bb11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bb12"><?=conHistory('bb12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bb13"><?=conHistory('bb13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bb14"><?=conHistory('bb14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bb15"><?=conHistory('bb15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="bb11"><?=conHistory('bb11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bb12"><?=conHistory('bb12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bb13"><?=conHistory('bb13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bb14"><?=conHistory('bb14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bb15"><?=conHistory('bb15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="bb_col_total"></td>
-											<td id="ca12"><?=conHistory('ca12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ca12"><?=conHistory('ca12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="cb_col_total"></td>
 										</tr>
 										<tr>
 											<th>방문</th>
-											<td id="bc11"><?=conHistory('bc11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bc12"><?=conHistory('bc12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bc13"><?=conHistory('bc13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bc14"><?=conHistory('bc14', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="bc15"><?=conHistory('bc15', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="bc11"><?=conHistory('bc11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bc12"><?=conHistory('bc12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bc13"><?=conHistory('bc13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bc14"><?=conHistory('bc14', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="bc15"><?=conHistory('bc15', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="bc_col_total"></td>
-											<td id="ca13"><?=conHistory('ca13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="ca13"><?=conHistory('ca13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="cc_col_total"></td>
 										</tr>
 										<tr>
@@ -318,23 +318,23 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 									<tbody>
 										<tr>
 											<th>전화</th>
-											<td id="da11"><?=conHistory('da11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="da12"><?=conHistory('db11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="da13"><?=conHistory('dc11', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="da11"><?=conHistory('da11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="da12"><?=conHistory('db11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="da13"><?=conHistory('dc11', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="da_col_total"></td>
 										</tr>
 										<tr>
 											<th>온라인</th>
-											<td id="db11"><?=conHistory('da12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="db12"><?=conHistory('db12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="db13"><?=conHistory('dc12', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="db11"><?=conHistory('da12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="db12"><?=conHistory('db12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="db13"><?=conHistory('dc12', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="db_col_total"></td>
 										</tr>
 										<tr>
 											<th>방문</th>
-											<td id="dc11"><?=conHistory('da13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="dc12"><?=conHistory('db13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
-											<td id="dc13"><?=conHistory('dc13', $nYear, $nMonth, $nDay, $_GET[counselSsam]);?></td>
+											<td id="dc11"><?=conHistory('da13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="dc12"><?=conHistory('db13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
+											<td id="dc13"><?=conHistory('dc13', $nYear, $nMonth, $nDay, $_GET['counselSsam']);?></td>
 											<td class="tdbg1" id="dc_col_total"></td>
 										</tr>
 										<tr>
@@ -352,13 +352,13 @@ if($_GET[sDay]) $nDay = $_GET[sDay]; else $nDay = "";
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

@@ -1,12 +1,12 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
 //== last modify date : 2011. 03. 02
 //==================================================================
 //== 코멘트 모드[0:비회원, 1:회원]
-$ucontents_info[boardprivate]=0;
-if(($ucontents_info[boardprivate]>0) && (login_session()==false)) {
+$ucontents_info['boardprivate']=0;
+if(($ucontents_info['boardprivate']>0) && (login_session()==false)) {
 	$submit_event="javascript:alert('로그인후 작성하실 수 있습니다.');";
 	$box_status=" disabled";
 } else {
@@ -20,21 +20,21 @@ if(DB::isError($rst)) die ($rst->getMessage());
 	$k = 0;
 	while($c_view = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
 		//== 내용 복구
-		$c_view[ucontents] = stripslashes($c_view[ucontents]);
+		$c_view['ucontents'] = stripslashes($c_view['ucontents']);
 		//== 내용에 태그를 허용하지 않을 경우
-		if(!$c_view[html] >0) $c_view[ucontents] = htmlspecialchars($c_view[ucontents]);
+		if(!$c_view['html'] >0) $c_view['ucontents'] = htmlspecialchars($c_view['ucontents']);
 		//== 내용 개행처리
-		$c_view[ucontents] = nl2br($c_view[ucontents]);
+		$c_view['ucontents'] = nl2br($c_view['ucontents']);
 		//== 등록일
-		$old_date=explode(" ", $c_view[signdate]);
+		$old_date=explode(" ", $c_view['signdate']);
 		$v_time=explode(":", $old_date[1]);
 		$v_date=strtr($old_date[0],"-",".")." ".$v_time[0].":".$v_time[1];
-		$v_char_img="char".$c_view[char_img].".gif";
-		$t_user_ip=explode('.',$c_view[user_ip]);
+		$v_char_img="char".$c_view['char_img'].".gif";
+		$t_user_ip=explode('.',$c_view['user_ip']);
 		$v_user_ip=$t_user_ip[0].'.'.$t_user_ip[1].'.xx.'.$t_user_ip[3];
 		//== 코멘트삭제 : 관리자와 회원 코멘트(회원자신이 작성한코멘트)는 비번입력생략
-		if(member_session(1,1) == true || (login_session() == true && !strcmp($c_view[mem_id],$_SESSION[my_id]))) {
-			$v_link="<a href=\"javascript:url_move('ucontents', '".$_GET[code]."', '".$view[idx]."', '".$c_view[idx]."', '".$c_view[mem_id]."');\"><img src=\"/img/board/i_delete.gif\"></a>";
+		if(member_session(1,1) == true || (login_session() == true && !strcmp($c_view['mem_id'],$_SESSION['my_id']))) {
+			$v_link="<a href=\"javascript:url_move('ucontents', '".$_GET['code']."', '".$view['idx']."', '".$c_view['idx']."', '".$c_view['mem_id']."');\"><img src=\"/img/board/i_delete.gif\"></a>";
 		}else {
 			$v_link="<a href=\"javascript:formShow('cDForm$k');\"><img src=\"/img/board/i_delete.gif\" title=\"코멘트 삭제\"></a>";
 		}
@@ -49,14 +49,14 @@ if(DB::isError($rst)) die ($rst->getMessage());
 					</td>
 				</tr>
 				<tr>
-					<td colspan=\"2\" style=\"text-align:left;\"><div style=\"margin-left:15px; padding:3px; background-color:#F7F7F7;\">".$c_view[ucontents]."</div></td>
+					<td colspan=\"2\" style=\"text-align:left;\"><div style=\"margin-left:15px; padding:3px; background-color:#F7F7F7;\">".$c_view['ucontents']."</div></td>
 				</tr>";
 		$k++;
 	}
 
 //== 글입력 제한 구성
-if($board_info[comment_limit]>0) {
-	$V_Span = "<span id=\"v_byte\">0</span>/".$board_info[comment_limit]."까지";
+if($board_info['comment_limit']>0) {
+	$V_Span = "<span id=\"v_byte\">0</span>/".$board_info['comment_limit']."까지";
 	$V_OnKeyup = " onKeyUp=\"check_msglen('reple','v_byte',$board_info[comment_limit]);\"";
 }else {
 	$V_Span = "글자수제한없음";
@@ -146,7 +146,7 @@ function getucontentsVisible(obj) {
 }
 //-->
 </script>
-<?if($k>0) {?>
+<?php if($k>0) {?>
 <div style="padding-top:2px;"><span class="tblLeft">총 <font style="font-weight:bold; color:#F4710E;"><?=$k;?></font>개의 댓글이 있습니다.</span><span class="tblRight"><img src="/img/board/btn_comment_hide.gif" onclick="getucontentsVisible(this);" style="cursor:pointer;" title="댓글보기"></span></div>
 
 <div style="clear:both;" id="ucontents_Layer">
@@ -159,7 +159,7 @@ function getucontentsVisible(obj) {
 		<tbody><?=$o_ucontents;?></tbody>
 	</table>
 </div>
-<?}?>
+<?php }?>
 <div style="clear:both;">
 	<form name="signform">
 	<table class="commentTbl" summary="댓글 등록">
@@ -170,7 +170,7 @@ function getucontentsVisible(obj) {
 			<col width="10%" />
 		</colgroup>
 		<tbody>
-			<?if($board_info[private_board]>0) echo ""; else echo $No_Member_Info_Form;?>
+			<?php if($board_info['private_board']>0) echo ""; else echo $No_Member_Info_Form;?>
 		</tbody>
 	</table>
 	</form>

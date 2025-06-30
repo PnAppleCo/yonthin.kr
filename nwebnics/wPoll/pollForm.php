@@ -1,4 +1,4 @@
-<?
+<?php
 //========================================================//
 //== last modify date : 2012. 05. 26
 //========================================================//
@@ -7,14 +7,14 @@ include ("inc/configInc.php");
 
 if(login_session() == false) redirect(1, "/", "회원 로그인후 이용하세요.", 1);
 
-if(!$_GET[code]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+if(!$_GET['code']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 
-if($_GET[mode]=='edit') {
-	if(!$_GET[idx]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+if($_GET['mode']=='edit') {
+	if(!$_GET['idx']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 	$sqlStr="SELECT * FROM wPoll WHERE idx=$_GET[idx]";
 	$view = $db->getRow($sqlStr,DB_FETCHMODE_ASSOC);
 	if(DB::isError($view)) die($view->getMessage());
-	$sContents=stripslashes($view[sContents]);
+	$sContents=stripslashes($view['sContents']);
 }
 
 ?>
@@ -169,13 +169,13 @@ if($_GET[mode]=='edit') {
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<p id="siteDepth"><?=$Site_Path;?></p>
@@ -201,20 +201,20 @@ if($_GET[mode]=='edit') {
 										<tbody>
 											<tr>
 												<th>설문제목</th>
-												<td colspan="3"><input type="text" name="sSubject" size="70" maxlength="255" class="textbox"<?if($view[sSubject]) echo " value=\"$view[sSubject]\"";?>></td>
+												<td colspan="3"><input type="text" name="sSubject" size="70" maxlength="255" class="textbox"<?php if($view['sSubject']) echo " value=\"$view[sSubject]\"";?>></td>
 											</tr>
 											<tr>
 												<th>글작성자</th>
-												<td><input type="text" name="wName" size="15" maxlength="20" class="textbox"<?if($view[wName]) echo " value=\"".$view[wName]."\"";?><?if($_GET[mode]=="add") echo " value=\"".$_SESSION[my_name]."\"";?> readonly></td>
+												<td><input type="text" name="wName" size="15" maxlength="20" class="textbox"<?php if($view['wName']) echo " value=\"".$view['wName']."\"";?><?php if($_GET['mode']=="add") echo " value=\"".$_SESSION['my_name']."\"";?> readonly></td>
 												<th>종 료 일</th>
 												<td>
-													<input type="text" name="endDate" id="endDate" size="15" value="<?if($view[endDate]!="0000-00-00") echo $view[endDate];?>" class="textbox">
+													<input type="text" name="endDate" id="endDate" size="15" value="<?php if($view['endDate']!="0000-00-00") echo $view['endDate'];?>" class="textbox">
 												</td>
 											</tr>
 											<tr>
 												<th>내 용</th>
 												<td colspan="3">
-												<?
+												<?php
 													include("../htmlEditor/fckeditor2/fckeditor.php");
 													$oFCKeditor = new FCKeditor('sContents');
 													$oFCKeditor->BasePath='../htmlEditor/fckeditor2/';
@@ -228,28 +228,28 @@ if($_GET[mode]=='edit') {
 											<tr>
 												<th>설문항목</th>
 												<td colspan="3">
-													<?if($_GET[mode]=="add") {?>
+													<?php if($_GET['mode']=="add") {?>
 													<select name="sNum" class="selectbox" onchange="qRoof(this.value);">
 														<option value="">선택:</option>
-														<option value="2"<?if($view[sNum]=="2") echo " selected";?>>2</option>
-														<option value="3"<?if($view[sNum]=="2") echo " selected";?>>3</option>
-														<option value="4"<?if($view[sNum]=="3") echo " selected";?>>4</option>
-														<option value="5"<?if($view[sNum]=="4") echo " selected";?>>5</option>
-														<option value="6"<?if($view[sNum]=="5") echo " selected";?>>6</option>
-														<option value="7"<?if($view[sNum]=="6") echo " selected";?>>7</option>
-														<option value="8"<?if($view[sNum]=="7") echo " selected";?>>8</option>
-														<option value="9"<?if($view[sNum]=="8") echo " selected";?>>9</option>
-														<option value="10"<?if($view[sNum]=="9") echo " selected";?>>10</option>
+														<option value="2"<?if($view['sNum']=="2") echo " selected";?>>2</option>
+														<option value="3"<?if($view['sNum']=="2") echo " selected";?>>3</option>
+														<option value="4"<?if($view['sNum']=="3") echo " selected";?>>4</option>
+														<option value="5"<?if($view['sNum']=="4") echo " selected";?>>5</option>
+														<option value="6"<?if($view['sNum']=="5") echo " selected";?>>6</option>
+														<option value="7"<?if($view['sNum']=="6") echo " selected";?>>7</option>
+														<option value="8"<?if($view['sNum']=="7") echo " selected";?>>8</option>
+														<option value="9"<?if($view['sNum']=="8") echo " selected";?>>9</option>
+														<option value="10"<?if($view['sNum']=="9") echo " selected";?>>10</option>
 													</select>
 													<?}?>
 													<table id="optcont<?=$i;?>" width="100%" border="0" cellspacing="0" cellpadding="1">
 														<tr>
 															<td style="border:none;">
-																<?
-																if($_GET[mode]=="edit") {
+																<?php
+																if($_GET['mode']=="edit") {
 																for($k=0; $k<10; $k++) {?>
-																<div><input type="textbox" name="censitem[]" size="48" maxlength="255" class="textbox" value="<?=$view[censitem.$k];?>" /></div>
-																<?}}?>
+																<div><input type="textbox" name="censitem[]" size="48" maxlength="255" class="textbox" value="<?=$view['censitem'.$k];?>" /></div>
+																<?php }}?>
 															</td>
 														</tr>
 													</table>
@@ -258,28 +258,28 @@ if($_GET[mode]=='edit') {
 										</tbody>
 									</table>
 									<div style="padding:5px; text-align:right;">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename0];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename1];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename2];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename3];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename4];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename5];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename6];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename7];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename8];?>">
-										<input type="hidden" name="upFile[]" value="<?=$view[filename9];?>">
-										<input type="hidden" name="code" value="<?=$_GET[code];?>">
-										<?
-											if($_GET[mode]=="add") {
+										<input type="hidden" name="upFile[]" value="<?=$view['filename0'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename1'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename2'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename3'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename4'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename5'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename6'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename7'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename8'];?>">
+										<input type="hidden" name="upFile[]" value="<?=$view['filename9'];?>">
+										<input type="hidden" name="code" value="<?=$_GET['code'];?>">
+										<?php
+											if($_GET['mode']=="add") {
 												$v_img="i_write";
 												$v_text="등 록";
-											}else if($_GET[mode]=="edit") {
+											}else if($_GET['mode']=="edit") {
 												$v_img="i_modify";
 												$v_text="수 정";
-												echo "<input type=\"hidden\" name=\"sNum\" value=\"".$view[sNum]."\">";
+												echo "<input type=\"hidden\" name=\"sNum\" value=\"".$view['sNum']."\">";
 											}
 										?>
-										<img src="/img/comm/<?=$v_img;?>.gif" onClick="addChk(document.pollForm,'<?=$_GET[code];?>','<?=$_GET[mode];?>','<?=$view[idx];?>','<?=$_GET[page];?>','<?=$_GET[mnv];?>'); return false;" alt="<?=$v_text;?>" style="cursor:pointer;" />
+										<img src="/img/comm/<?=$v_img;?>.gif" onClick="addChk(document.pollForm,'<?=$_GET['code'];?>','<?=$_GET['mode'];?>','<?=$view['idx'];?>','<?=$_GET['page'];?>','<?=$_GET['mnv'];?>'); return false;" alt="<?=$v_text;?>" style="cursor:pointer;" />
 									</div>
 								</fieldset>
 							</form>
@@ -288,13 +288,13 @@ if($_GET[mode]=='edit') {
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File){include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);} ?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect(); ?>

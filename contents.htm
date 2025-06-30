@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
@@ -8,7 +8,7 @@
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
 //== 콘텐츠 로드
-if(!$_GET[code]) js_action(1,"중요정보를 찾을 수 없습니다. 관리자에게 문의하세요.","",-1);
+if(!$_GET['code']) js_action(1,"중요정보를 찾을 수 없습니다. 관리자에게 문의하세요.","",-1);
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -99,7 +99,7 @@ if(!$_GET[code]) js_action(1,"중요정보를 찾을 수 없습니다. 관리자
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 			<hr/>
 
@@ -109,14 +109,16 @@ if(!$_GET[code]) js_action(1,"중요정보를 찾을 수 없습니다. 관리자
 				<div id="contentsArea">
 
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?@include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->
 					<div id="contentsView">
 						<div id="contentsPrint">
-							<?$loadFile=$_SERVER["DOCUMENT_ROOT"]."/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET[code].".htm";
-								if(file_exists($loadFile)) { include_once($loadFile); }else { include_once($_SERVER["DOCUMENT_ROOT"]."/inc/no_File.htm"); }?>
+							<?php
+								$loadFile=$_SERVER["DOCUMENT_ROOT"]."/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code'].".htm";
+								if(file_exists($loadFile)) { include_once($loadFile); }else { include_once($_SERVER["DOCUMENT_ROOT"]."/inc/no_File.htm"); }
+							?>
 						</div>
 
 					</div>
@@ -128,7 +130,7 @@ if(!$_GET[code]) js_action(1,"중요정보를 찾을 수 없습니다. 관리자
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 		<div id="gotop" class="gotop">
@@ -137,4 +139,4 @@ if(!$_GET[code]) js_action(1,"중요정보를 찾을 수 없습니다. 관리자
 
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount(); $db->disconnect();?>

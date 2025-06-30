@@ -1,4 +1,4 @@
-<?
+<?PHP
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
@@ -8,7 +8,7 @@
 include ("inc/boardLib.php");
 
 //== 게시판 code 체크
-if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
+if(!$_GET['code']) js_action(1, "게시판코드를 찾을수 없습니다.", "/", -1);
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$languageSet;?>" lang="<?=$languageSet;?>">
@@ -52,13 +52,13 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?PHP if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?PHP if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<p id="siteDepth"><?=$Site_Path;?></p>
@@ -83,7 +83,7 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 									<form name="sirenForm" method="post">
 										<input type="hidden" name="id" value="KUN001"><!--회원사 아이디-->
 										<input type="hidden" name="reqNum" value="2381"><!--요청번호(영문,숫자 혼합 30자 이내, 대소문자 구분)-->
-										<input type="hidden" name="retUrl" value = "http://www.gmbo.kr/nwebnics/wBoard/write.php?code=<?=$_GET[code];?>">
+										<input type="hidden" name="retUrl" value = "http://www.gmbo.kr/nwebnics/wBoard/write.php?code=<?=$_GET['code'];?>">
 									</form>
 								</div>
 								<div id="i-pin">
@@ -99,13 +99,13 @@ if(!$_GET[code]) js_action(1, "게시판코드를 찾을수 없습니다.", "/",
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?PHP if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?PHP if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?PHP $db->disconnect();?>

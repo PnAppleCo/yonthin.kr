@@ -1,11 +1,20 @@
-<? //== 선택메뉴 활성화
-for($dep1=1; $dep1<10; $dep1++ ) if($gnbPath[1] == $dep1) $dep1style{$dep1} = "on"; else $dep1style{$dep1} = "";
-for($dep2=1; $dep2<10; $dep2++ ) if($gnbPath[2] == $dep2) $dep2style{$dep2} = "dep2style"; else $dep2style{$dep2} = "";
+<?php
+// PHP82 변환
+//== 선택메뉴 활성화
+//for($dep1=1; $dep1<10; $dep1++ ) if($gnbPath[1] == $dep1) $dep1style{$dep1} = "on"; else $dep1style{$dep1} = "";
+//for($dep2=1; $dep2<10; $dep2++ ) if($gnbPath[2] == $dep2) $dep2style{$dep2} = "dep2style"; else $dep2style{$dep2} = "";
+for ($dep1 = 1; $dep1 < 10; $dep1++) {
+    $dep1style[$dep1] = ($gnbPath[1] == $dep1) ? "on" : "";
+}
+
+for ($dep2 = 1; $dep2 < 10; $dep2++) {
+    $dep2style[$dep2] = ($gnbPath[2] == $dep2) ? "dep2style" : "";
+}
 ?>
 
 <div id="lnbWrap">
 	<ul class="lnb">
-		<?
+		<?php
 		if(!$gnbPath[0]) $gnbPath[0]="08";	//== 기본값 설정
 		include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc_".sprintf("%02d", $gnbPath[0]).".htm";
 		?>

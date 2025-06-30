@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
@@ -10,21 +10,21 @@ include ("inc/staticsInc.php");
 
 if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용하세요.", 1);
 
-if(isset($_GET[nYear])) $vYear=$_GET[nYear]; else $vYear=date('Y');
-if(isset($_GET[nMonth])) $vMonth=$_GET[nMonth]; else $vMonth=date('m');
-if(isset($_GET[nDay])) $vDay=$_GET[nDay]; else $vDay=date('d');
+if(isset($_GET['nYear'])) $vYear=$_GET['nYear']; else $vYear=date('Y');
+if(isset($_GET['nMonth'])) $vMonth=$_GET['nMonth']; else $vMonth=date('m');
+if(isset($_GET['nDay'])) $vDay=$_GET['nDay']; else $vDay=date('d');
 
 //============================================================= 검색 질의 ===============================================================//
 $sqlStr = "SELECT COUNT(idx) AS vCount, idx, siteCode, pageUrl, visitDate FROM wStatics";
 
-if($_GET[nYear] && $_GET[nMonth]) {
-	$sDate=$_GET[nYear]."-".sprintf('%02d',$_GET[nMonth]);
+if($_GET['nYear'] && $_GET['nMonth']) {
+	$sDate=$_GET['nYear']."-".sprintf('%02d',$_GET['nMonth']);
 	$addSql .= " DATE_FORMAT(visitDate,'%Y-%m') = '".$sDate."' AND";
-}else if($_GET[nYear] && !$_GET[nMonth]) {
-	$sDate=$_GET[nYear];
+}else if($_GET['nYear'] && !$_GET['nMonth']) {
+	$sDate=$_GET['nYear'];
 	$addSql .= " DATE_FORMAT(visitDate,'%Y') = '".$sDate."' AND";
-}else if(!$_GET[nYear] && $_GET[nMonth]) {
-	$sDate=sprintf('%02d',$_GET[nMonth]);
+}else if(!$_GET['nYear'] && $_GET['nMonth']) {
+	$sDate=sprintf('%02d',$_GET['nMonth']);
 	$addSql .= " DATE_FORMAT(visitDate,'%m') = '".$sDate."' AND";
 }
 
@@ -70,13 +70,13 @@ if(DB::isError($result)) die($result->getMessage());
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">페이지뷰</h3>
@@ -84,7 +84,7 @@ if(DB::isError($result)) die($result->getMessage());
 						<div id="contentsBody">
 
 							<div style="margin-bottom:10px;">
-								<form name="dForm" method="GET" action="<?=$_SERVER[PHP_SELF];?>">
+								<form name="dForm" method="GET" action="<?=$_SERVER['PHP_SELF'];?>">
 									<table class="offLineTbl" summary="페이지뷰 검색">
 										<caption>페이지뷰 검색</caption>
 										<colgroup>
@@ -95,16 +95,16 @@ if(DB::isError($result)) die($result->getMessage());
 											<td>
 												<select name="nYear" class="selectbox">
 													<option value="">--년--</option>
-														<?for($i=2016; $i<=date('Y'); $i++) {
-																if(isset($_GET[nYear])) $yearS=$_GET[nYear];
+														<?php for($i=2016; $i<=date('Y'); $i++) {
+																if(isset($_GET['nYear'])) $yearS=$_GET['nYear'];
 																if($yearS==$i) $ySelected=" selected"; else $ySelected="";
 																echo "<option value=\"$i\"".$ySelected.">$i</option>";
 															}?>
 												</select>
 												<select name="nMonth" class="selectbox">
 													<option value="">--월--</option>
-														<?for($i=1; $i<=12;$i++) {
-																if(isset($_GET[nMonth])) $monthS=$_GET[nMonth];
+														<?php for($i=1; $i<=12;$i++) {
+																if(isset($_GET['nMonth'])) $monthS=$_GET['nMonth'];
 																if($monthS==$i) $mSelected=" selected"; else $mSelected="";
 																echo "<option value=\"".sprintf('%02d',$i)."\"".$mSelected.">$i</option>";
 															}?>
@@ -135,27 +135,27 @@ if(DB::isError($result)) die($result->getMessage());
 										</tr>
 									</thead>
 									<tbody>
-									<?
+									<?php
 										$i=1;
 										while($view = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 											if(!$view) echo "<tr><td colspan=\"7\">현재 등록/검색된 페이지뷰 정보가 없습니다.</td></tr>";
-											$link1="<a href=\"".$view[pageUrl]."\" target=\"_blank\">";
+											$link1="<a href=\"".$view['pageUrl']."\" target=\"_blank\">";
 											$link2="</a>";
 											//== 위치 네비게이션
-											$gnbCode=explode("_",$view[siteCode]);
+											$gnbCode=explode("_",$view['siteCode']);
 											$sitePath=$gnb_Arr[$gnbCode[0]];
 											if($gnbCode[1]) $sitePath .= " > ".$lnb_Arr[$gnbCode[0]][$gnbCode[1]];
 											if($gnbCode[2]) $sitePath .= " > ".$cnb_Arr[$gnbCode[0]][$gnbCode[1]][$gnbCode[2]];
 											if(!$sitePath) $sitePath="인덱스";
-											if(mb_strlen($view[pageUrl], 'UTF-8') > 50) $view[pageUrl] = han_cut($view[pageUrl], 50, "..");
+											if(mb_strlen($view['pageUrl'], 'UTF-8') > 50) $view['pageUrl'] = han_cut($view['pageUrl'], 50, "..");
 									?>
 										<tr>
 											<td><?=$i;?></td>
 											<td class="ListAlign"><?=$link1.$sitePath.$link2;?></td>
-											<td><?=$link1.$view[vCount].$link2;?></td>
-											<td class="ListAlign"><?=$link1.$view[pageUrl].$link2;?></td>
+											<td><?=$link1.$view['vCount'].$link2;?></td>
+											<td class="ListAlign"><?=$link1.$view['pageUrl'].$link2;?></td>
 										</tr>
-									<?$i++; }?>
+									<?php $i++; }?>
 									</tbody>
 								</table>
 							</div>
@@ -165,13 +165,13 @@ if(DB::isError($result)) die($result->getMessage());
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

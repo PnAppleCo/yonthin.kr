@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'sneil'
@@ -10,16 +10,16 @@ include ("inc/staticsInc.php");
 
 if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용하세요.", 1);
 
-if(isset($_GET[nYear])) $vYear=$_GET[nYear]; else $vYear=date('Y');
-if(isset($_GET[nMonth])) $vMonth=$_GET[nMonth]; else $vMonth=date('m');
-if(isset($_GET[nDay])) $vDay=$_GET[nDay]; else $vDay=date('d');
-if($_GET[sStandard]==1) {
+if(isset($_GET['nYear'])) $vYear=$_GET['nYear']; else $vYear=date('Y');
+if(isset($_GET['nMonth'])) $vMonth=$_GET['nMonth']; else $vMonth=date('m');
+if(isset($_GET['nDay'])) $vDay=$_GET['nDay']; else $vDay=date('d');
+if($_GET['sStandard']==1) {
 	$vStatistics=monthStatics($vYear,$vMonth,$vDay);
-}else if($_GET[sStandard]==2) {
+}else if($_GET['sStandard']==2) {
 	$vStatistics=dayStatics($vYear,$vMonth,$vDay);
-}else if($_GET[sStandard]==3) {
+}else if($_GET['sStandard']==3) {
 	$vStatistics=weekStatics($vYear,$vMonth,$vDay);
-}else if($_GET[sStandard]==4) {
+}else if($_GET['sStandard']==4) {
 	$vStatistics=timeStatics($vYear,$vMonth,$vDay);
 }else {
 	$vStatistics .= monthStatics($vYear,$vMonth,$vDay);
@@ -100,13 +100,13 @@ if($_GET[sStandard]==1) {
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle">접속로그 보기</h3>
@@ -125,8 +125,8 @@ if($_GET[sStandard]==1) {
 										<tr>
 											<td width="100" align="center" bgcolor="#EEEEEE"><b>검색기간</b></td>
 											<td>
-												<input type="text" name="start_date" size="10" maxlength="10" onClick="changeCal2('<?=date(Y.'-'.m.'-'.d);?>',''); ret_name = document.dForm.start_date;showXY(document.all.start_date);" value="<?=$_GET[start_date];?>" class="textbox1"> ~
-												<input type="text" name="stop_date" size="10" maxlength="10" onClick="changeCal2('<?=date(Y.'-'.m.'-'.d);?>',''); ret_name = document.dForm.stop_date;showXY(document.all.stop_date);" value="<?=$_GET[stop_date];?>" class="textbox1">
+												<input type="text" name="start_date" size="10" maxlength="10" onClick="changeCal2('',''); ret_name = document.dForm.start_date;showXY(document.all.start_date);" value="" class="textbox1"> ~
+												<input type="text" name="stop_date" size="10" maxlength="10" onClick="changeCal2('',''); ret_name = document.dForm.stop_date;showXY(document.all.stop_date);" value="" class="textbox1">
 												<a href="javascript:setDate('start_date','stop_date',0);" class="mainMenu">오늘</a>
 												<a href="javascript:setDate('start_date','stop_date',-1);" class="mainMenu">어제</a>
 												<a href="javascript:setDate('start_date','stop_date',-6);" class="mainMenu">1주일</a>
@@ -142,9 +142,9 @@ if($_GET[sStandard]==1) {
 											<td>
 												<select name="nYear" class="selectbox">
 													<option value="">--년--</option>
-														<?
+														<?php 
 															for($i=2016; $i<=date('Y'); $i++) {
-																if(isset($_GET[nYear])) $yearS=$_GET[nYear]; else $yearS=date('Y');
+																if(isset($_GET['nYear'])) $yearS=$_GET['nYear']; else $yearS=date('Y');
 																if($yearS==$i) $ySelected=" selected"; else $ySelected="";
 																echo "<option value=\"$i\"".$ySelected.">$i</option>";
 															}
@@ -152,9 +152,9 @@ if($_GET[sStandard]==1) {
 												</select>
 												<select name="nMonth" class="selectbox">
 													<option value="">--월--</option>
-														<?
+														<?php 
 															for($i=1; $i<=12;$i++) {
-																if(isset($_GET[nMonth])) $monthS=$_GET[nMonth]; else $monthS=date('m');
+																if(isset($_GET['nMonth'])) $monthS=$_GET['nMonth']; else $monthS=date('m');
 																if($monthS==$i) $mSelected=" selected"; else $mSelected="";
 																echo "<option value=\"".sprintf('%02d',$i)."\"".$mSelected.">$i</option>";
 															}
@@ -162,18 +162,18 @@ if($_GET[sStandard]==1) {
 													</select>
 													<select name="nDay" class="selectbox">
 														<option value="">--일--</option>
-															<?
+															<?php 
 																for($i=1; $i<=31;$i++) {
-																	if(isset($_GET[nDay])) $dayS=$_GET[nDay]; else $dayS=date('d');
+																	if(isset($_GET['nDay'])) $dayS=$_GET['nDay']; else $dayS=date('d');
 																	if($dayS==$i) $dSelected=" selected"; else $dSelected="";
 																	echo "<option value=\"".sprintf('%02d',$i)."\"".$dSelected.">$i</option>";
 																}
 															?>
 													</select>
-													<input type="radio" name="sStandard" value="1"<?if($_GET[sStandard]==1) echo " checked";?> style="vertical-align:middle;" />월별
-													<input type="radio" name="sStandard" value="2"<?if($_GET[sStandard]==2) echo " checked";?> style="vertical-align:middle;" />일별
-													<input type="radio" name="sStandard" value="3"<?if($_GET[sStandard]==3) echo " checked";?> style="vertical-align:middle;" />요일별
-													<input type="radio" name="sStandard" value="4"<?if($_GET[sStandard]==4) echo " checked";?> style="vertical-align:middle;" />시간별
+													<input type="radio" name="sStandard" value="1"<?php if($_GET['sStandard']==1) echo " checked";?> style="vertical-align:middle;" />월별
+													<input type="radio" name="sStandard" value="2"<?php if($_GET['sStandard']==2) echo " checked";?> style="vertical-align:middle;" />일별
+													<input type="radio" name="sStandard" value="3"<?php if($_GET['sStandard']==3) echo " checked";?> style="vertical-align:middle;" />요일별
+													<input type="radio" name="sStandard" value="4"<?php if($_GET['sStandard']==4) echo " checked";?> style="vertical-align:middle;" />시간별
 													<input type="image" src="../wTools/img/search.gif" style="vertical-align:middle;" alt="검색하기" />
 											</td>
 										</tr>

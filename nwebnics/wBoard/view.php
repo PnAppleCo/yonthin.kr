@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'jisuk'
@@ -8,58 +8,58 @@
 include ("inc/boardLib.php");
 
 //== 게시판 code 체크
-if(!$_GET[code]) js_action(1, "게시판코드를 찾을 수 없습니다.", "/", -1);
-if(!$_GET[idx]) js_action(1, "중요정보를 찾을 수 없습니다.", "/", -1);
+if(!$_GET['code']) js_action(1, "게시판코드를 찾을 수 없습니다.", "/", -1);
+if(!$_GET['idx']) js_action(1, "중요정보를 찾을 수 없습니다.", "/", -1);
 
-//== 접근 권한 설정
-include ("inc/levelCheck_Inc.php");
+//== 접근 권한 설정[삭제필요]
+// include ("inc/levelCheck_Inc.php");
 
 	//== 선택한 게시물 질의
 	$sql_str="SELECT * FROM $b_cfg_tb[1] WHERE code='$_GET[code]' and idx=$_GET[idx]";
 	$view = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 	if(DB::isError($view)) die($view->getMessage());
 	if(!$view) error_view(999, "죄송합니다!. 고객님의 요청과 일치하는 정보를 찾을수 없습니다.","올바른 방법으로 이용하세요.");
-	if(!$view[subject]) $view[subject]="제목이 입력되지 않았습니다.";
+	if(!$view['subject']) $view['subject']="제목이 입력되지 않았습니다.";
 	//== 태그 및 개행처리
-	$view[subject] = stripslashes($view[subject]);
-	$view[ucontents] = stripslashes($view[ucontents]);
-	$view[subject] = htmlspecialchars($view[subject]);
+	$view['subject'] = stripslashes($view['subject']);
+	$view['ucontents'] = stripslashes($view['ucontents']);
+	$view['subject'] = htmlspecialchars($view['subject']);
 	/* 제품소개 */
-	$specification =$view[ucontents];
-	$feature =nl2br($view[feature]);
+	$specification =$view['ucontents'];
+	$feature =nl2br($view['feature']);
 
-	$titleBars=$view[subject];
+	$titleBars=$view['subject'];
 	//if($view[html] !=1) $view[ucontents] = htmlspecialchars($view[ucontents]);
-	if($view[auto_enter]>0) $view[ucontents] = nl2br($view[ucontents]);
-	if($board_info[ps_center]>0) {
-		$view[svc_reply] = stripslashes($view[svc_reply]);
-		$view[svc_reply] = htmlspecialchars($view[svc_reply]);
-		$view[svc_reply] = nl2br($view[svc_reply]);
+	if($view['auto_enter']>0) $view['ucontents'] = nl2br($view['ucontents']);
+	if($board_info['ps_center']>0) {
+		$view['svc_reply'] = stripslashes($view['svc_reply']);
+		$view['svc_reply'] = htmlspecialchars($view['svc_reply']);
+		$view['svc_reply'] = nl2br($view['svc_reply']);
 	}
 	//== 승인제 게시판일경우
-	if($board_info[approve]>0 && !member_session(1)) {
-		if($view[approve]<1 && member_session(1)==false) error_view(999, "죄송합니다. 관리자 승인이 이루어지지 않았습니다.","관리자에게 문의하세요.");
+	if($board_info['approve']>0 && !member_session(1)) {
+		if($view['approve']<1 && member_session(1)==false) error_view(999, "죄송합니다. 관리자 승인이 이루어지지 않았습니다.","관리자에게 문의하세요.");
 	}
 	//== 비공개글일 경우 세션체크와 비밀번호 요청
-	if($view[secret]>0) {
-		$secretCookie="secret".$_GET[code].$_GET[idx];
+	if($view['secret']>0) {
+		$secretCookie="secret".$_GET['code'].$_GET['idx'];
 		//== 자기글도 아니도 열람 비버도 모르고 관리자도 아니면
-		if($view[mem_id]!=$_SESSION[my_id] && $_COOKIE[$secretCookie]!=base64_encode($secretCookie) && member_session(1) == false) error_view(999, "죄송합니다. 비공개글입니다.","올바른 접근 경로를 통하여 열람하시기 바랍니다.");
+		if($view['mem_id']!=$_SESSION['my_id'] && $_COOKIE[$secretCookie]!=base64_encode($secretCookie) && member_session(1) == false) error_view(999, "죄송합니다. 비공개글입니다.","올바른 접근 경로를 통하여 열람하시기 바랍니다.");
 	}
 	//== 검색했을 경우 붉은색 처리
-	if($_GET[keyword]) {
-		$view[subject] = eregi_replace($_GET[keyword], "<span style=\"color:#FF6633;\"><strong>$_GET[keyword]</strong></span>", $view[subject]);
-		$view[ucontents] = eregi_replace($_GET[keyword], "<span style=\"color:#FF6633;\"><strong>$_GET[keyword]</strong></span>", $view[ucontents]);
+	if($_GET['keyword']) {
+		$view['subject'] = preg_replace($_GET['keyword'], "<span style=\"color:#FF6633;\"><strong>$_GET[keyword]</strong></span>", $view['subject']);
+		$view['ucontents'] = preg_replace($_GET['keyword'], "<span style=\"color:#FF6633;\"><strong>$_GET[keyword]</strong></span>", $view['ucontents']);
 	}
-	$signdate=strtr($view[signdate],"-",".");
+	$signdate=strtr($view['signdate'],"-",".");
 
 	//== 전자우편설정
-	if($view[email]) $o_email = "<a href=\"./sendmail.php?email=".base64_encode($view[email])."\" target=\"mail_cipher\"><img src=\"/img/board/yes_email.gif\" align=\"absmiddle\"></a>"; else $o_email = "<img src=\"/img/board/no_email.gif\" align=\"absmiddle\">";
+	if($view['email']) $o_email = "<a href=\"./sendmail.php?email=".base64_encode($view['email'])."\" target=\"mail_cipher\"><img src=\"/img/board/yes_email.gif\" align=\"absmiddle\"></a>"; else $o_email = "<img src=\"/img/board/no_email.gif\" align=\"absmiddle\">";
 	//== 홈페이지 설정
-	if($view[homepage]) $o_homepage = "<a href=\"".$view[homepage]."\" target=\"_blank\"><img src=\"/img/board/yes_homepage.gif\" align=\"absmiddle\"></a>"; else $o_homepage = "<img src=\"/img/board/no_homepage.gif\" align=\"absmiddle\">";
+	if($view['homepage']) $o_homepage = "<a href=\"".$view['homepage']."\" target=\"_blank\"><img src=\"/img/board/yes_homepage.gif\" align=\"absmiddle\"></a>"; else $o_homepage = "<img src=\"/img/board/no_homepage.gif\" align=\"absmiddle\">";
 
 	//== 조회수 증가
-	$cookiename=$_GET[code].$_GET[idx].$view[fid];
+	$cookiename=$_GET['code'].$_GET['idx'].$view['fid'];
 	if(!$_COOKIE[$cookiename]) {
 		$rst=$db->query("UPDATE $b_cfg_tb[1] SET click = click+1 WHERE code='$_GET[code]' and idx=$_GET[idx]");
 		if(DB::isError($rst)) die($rst->getMessage());
@@ -67,34 +67,34 @@ include ("inc/levelCheck_Inc.php");
 		setcookie($cookiename,$cookiename,time()+85000,"/");
 	}
 	//== 회원 비회원 구분
-	if($board_info[private_board]>0 && $view[mem_id]) $v_names=$view[name]."[".$view[mem_id]."]"; else $v_names=$view[name];
+	if($board_info['private_board']>0 && $view['mem_id']) $v_names=$view['name']."[".$view['mem_id']."]"; else $v_names=$view['name'];
 
 	//== 등록파일 형식 출력(다운로드)
-	if($board_info[upload_count]>0) {
+	if($board_info['upload_count']>0) {
 		//== 파일 경로
-		$savedir="./files/".$_GET[code];
-		for($i=0; $i<$board_info[upload_count]; $i++) {
-			if($view[filename.$i]) {
+		$savedir="./files/".$_GET['code'];
+		for($i=0; $i<$board_info['upload_count']; $i++) {
+			if($view['filename'.$i]) {
 				//== 이미지 기본정보 처리
 
 				//== 확장자 추출
-				$upfile=explode(".",$view[filename.$i]);
+				$upfile=explode(".",$view['filename'.$i]);
 				switch ($upfile[1]) {
 					case ("wmv") : case ("asf") : case ("mpg") : case ("mpeg") :
 							//== 동영상보기
-						$movie_path="files/".$_GET[code]."/".$view[filename.$i];
+						$movie_path="files/".$_GET['code']."/".$view['filename'.$i];
 						$o_img_news .= "<div><embed src=\"".$movie_path."\" type=\"application/x-mplayer2\" width=\"280\" height=\"240\" autostart=\"false\" loop=\"false\"></embed></div><br>";
 
-						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET[code]."&save_dir=".$savedir."&filename=".urlencode($view[filename.$i])."\">".file_view("",$savedir,$view[filename.$i])."</a></span>";
+						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET['code']."&save_dir=".$savedir."&filename=".urlencode($view['filename'.$i])."\">".file_view("",$savedir,$view['filename'.$i])."</a></span>";
 
 					break;
 					case ("gif") : case ("GIF") : case ("jpg") : case ("JPG") : case ("jpeg") : case ("bmp") : case ("png") : case ("PNG") :
-					$img_dir = $savedir."/".$view[filename.$i];
+					$img_dir = $savedir."/".$view['filename'.$i];
 						$img_size = @getimagesize($img_dir);
-						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET[code]."&save_dir=".$savedir."&filename=".urlencode($view[filename.$i])."\">".file_view("",$savedir,$view[filename.$i])."</a></span>";
+						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET['code']."&save_dir=".$savedir."&filename=".urlencode($view['filename'.$i])."\">".file_view("",$savedir,$view['filename'.$i])."</a></span>";
 					break;
 					default :
-						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET[code]."&save_dir=".$savedir."&filename=".urlencode($view[filename.$i])."\">".file_view("",$savedir,$view[filename.$i])."</a></span>";
+						$o_data .= "<span style=\"padding:1em;\"><a href=\"./down.php?code=".$_GET['code']."&save_dir=".$savedir."&filename=".urlencode($view['filename'.$i])."\">".file_view("",$savedir,$view['filename'.$i])."</a></span>";
 				}
 			}else {
 				$o_img_news .= "";
@@ -107,9 +107,9 @@ include ("inc/levelCheck_Inc.php");
 	//== 메타태그 설정(2016.03.22)
 	$Title_Txt=$titleBars;
 	//$Description_Txt=strip_tags(str_replace("&nbsp;","",$view[ucontents]));
-	$desTxt=han_cut($view[ucontents], 50, "..");
+	$desTxt=han_cut($view['ucontents'], 50, "..");
 	$Description_Txt=strip_tags(str_replace("&nbsp;","",$desTxt));
-	$Keywords_Txt=strip_tags($view[keytag]);
+	$Keywords_Txt=strip_tags($view['keytag']);
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -284,7 +284,7 @@ include ("inc/levelCheck_Inc.php");
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 
 			<hr/>
@@ -294,14 +294,14 @@ include ("inc/levelCheck_Inc.php");
 				<div id="contentsArea">
 
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->
 					<div id="contentsView">
 						<div id="contentsPrint">
 						<!-- 메인 콘텐츠 시작 -->
-						<?if($board_info[skin]) require "./skin/".$board_info[skin]."/view_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
+						<?php if($board_info['skin']) require "./skin/".$board_info['skin']."/view_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
 						<!-- 메인 콘텐츠 종료 -->
 						</div>
 
@@ -315,7 +315,7 @@ include ("inc/levelCheck_Inc.php");
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 
@@ -324,4 +324,4 @@ include ("inc/levelCheck_Inc.php");
 		</div>
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount(); $db->disconnect();?>

@@ -1,4 +1,4 @@
-<?
+<?php
 //========================================================//
 //== last modify date : 2012. 05. 26
 //========================================================//
@@ -9,22 +9,22 @@ if(DB::isError($rst)) die ($rst->getMessage());
 	$k = 0;
 	while($c_view = $rst->fetchRow(DB_FETCHMODE_ASSOC)) {
 		//== 내용 복구
-		$content_edit=stripslashes($c_view[ucontents]);
-		$c_view[ucontents] = stripslashes($c_view[ucontents]);
+		$content_edit=stripslashes($c_view['ucontents']);
+		$c_view['ucontents'] = stripslashes($c_view['ucontents']);
 		//== 내용에 태그를 허용하지 않을 경우
-		if(!$c_view[html] >0) $c_view[ucontents] = htmlspecialchars($c_view[ucontents]);
-		$c_view[ucontents] = str_replace(" ","&nbsp;",$c_view[ucontents]);
+		if(!$c_view['html'] >0) $c_view['ucontents'] = htmlspecialchars($c_view['ucontents']);
+		$c_view['ucontents'] = str_replace(" ","&nbsp;",$c_view['ucontents']);
 		//== 내용 개행처리
-		$c_view[ucontents] = nl2br($c_view[ucontents]);
+		$c_view['ucontents'] = nl2br($c_view['ucontents']);
 		//== 등록일
-		$old_date=explode(" ", $c_view[signdate]);
+		$old_date=explode(" ", $c_view['signdate']);
 		$v_time=explode(":", $old_date[1]);
 		$v_date=strtr($old_date[0],"-",".")." ".$v_time[0].":".$v_time[1];
-		$v_char_img="char".$c_view[char_img].".gif";
-		$t_user_ip=explode('.',$c_view[user_ip]);
+		$v_char_img="char".$c_view['char_img'].".gif";
+		$t_user_ip=explode('.',$c_view['user_ip']);
 		$v_user_ip=$t_user_ip[0].'.'.$t_user_ip[1].'.xx.'.$t_user_ip[3];
 		//== 코멘트삭제 : 관리자와 사원 코멘트(사원자신이 작성한코멘트)는 비번입력생략
-		if(member_session(1) == true || (login_session() == true && !strcmp($c_view[mem_id],$_SESSION[my_id]))) {
+		if(member_session(1) == true || (login_session() == true && !strcmp($c_view['mem_id'],$_SESSION['my_id']))) {
 				$v_link="<img src=\"/img/comm/w_delete.gif\" onclick=\"mentChk(this.form,'del','$view[code]','$view[idx]','$c_view[idx]','$_GET[page]','$_GET[mnv]');\" alt=\"삭제\" style=\"cursor:pointer;\"> <a href=\"javascript:SwitchMenu('sub".$k."')\"\"><img src=\"/img/comm/w_edit.gif\" alt=\"수정\"></a>";
 		}else {
 			$v_link="";
@@ -35,7 +35,7 @@ if(DB::isError($rst)) die ($rst->getMessage());
 					<td style=\"text-align:right;\">".$v_link." ".$v_date."</td>
 				</tr>
 				<tr>
-					<td colspan=\"2\" style=\"text-align:left;\"><div style=\"margin-left:15px; padding:3px; background-color:#F7F7F7;\">".$c_view[ucontents]."</div></td>
+					<td colspan=\"2\" style=\"text-align:left;\"><div style=\"margin-left:15px; padding:3px; background-color:#F7F7F7;\">".$c_view['ucontents']."</div></td>
 				</tr>
 				<tr id=\"sub".$k."\" style=\"display: none;\">
 					<td colspan=\"2\">
@@ -98,7 +98,7 @@ if(DB::isError($rst)) die ($rst->getMessage());
 		</table>
 	</div>
 
-<?
+<?php
 if(!login_session()) {
 	$nologinMent="로그인후 댓글을 작성하세요.";
 	$nickName="회원전용 서비스입니다.";
@@ -106,8 +106,8 @@ if(!login_session()) {
 	$txtArea=" disabled";
 }else {
 	$nologinMent="";
-	$nickName=$_SESSION[my_name];
-	$lgnJs="mentChk(document.cForm,'add','".$view[code]."','".$view[idx]."','','".$_GET[page]."','".$_GET[mnv]."'); return false;";
+	$nickName=$_SESSION['my_name'];
+	$lgnJs="mentChk(document.cForm,'add','".$view['code']."','".$view['idx']."','','".$_GET['page']."','".$_GET['mnv']."'); return false;";
 	$txtArea="";
 }
 ?>
@@ -134,7 +134,7 @@ if(!login_session()) {
 	</div>
 
 </div>
-<?
+<?php
 //== 비밀번호 입력 레이어폼
 require "inc/passForm.htm";
 ?>

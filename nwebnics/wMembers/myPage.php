@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'danah'
@@ -73,7 +73,7 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/contents_headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 
 			<hr/>
@@ -82,7 +82,7 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 			<div id="contentsWrap">
 				<div id="contentsArea">
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->
@@ -114,7 +114,7 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 										</tr>
 									</thead>
 									<tbody>
-									<?=inuriList($_SESSION[my_id]);?>
+									<?=inuriList($_SESSION['my_id']);?>
 									</tbody>
 								</table>
 							</div>
@@ -140,7 +140,7 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 										</tr>
 									</thead>
 									<tbody>
-									<?=edueventList($_SESSION[my_id]);?>
+									<?=edueventList($_SESSION['my_id']);?>
 									</tbody>
 								</table>
 								<p style="text-align:right; padding:1em 0; color:#FD544F;">※ 예약 취소 시, 당일 취소는 불가능합니다.<br />※ 복구 요청은 군산시육아종합지원센터로 문의바랍니다.</p>
@@ -156,7 +156,7 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 		<div id="gotop" class="gotop">
@@ -164,4 +164,4 @@ if(!login_session()) redirect(1, "/", "회원 로그인후 이용하세요.", 1)
 		</div>
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount(); $db->disconnect();?>

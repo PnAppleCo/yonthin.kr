@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'boram'
@@ -98,7 +98,7 @@
 				<div id="contentsArea">
 
 					<!-- 로컬 메뉴 섹션 시작 -->
-					<?@include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+					<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 					<!-- 로컬 메뉴 섹션 종료 -->
 
 					<!-- 콘텐츠 시작 -->

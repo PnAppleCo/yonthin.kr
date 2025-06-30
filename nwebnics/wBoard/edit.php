@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnicsoft.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin' and 'jisuk'
@@ -11,11 +11,11 @@ include ("inc/boardLib.php");
 include ("inc/levelCheck_Inc.php");
 
 //== 기본데이터 확인
-if(!$_GET[idx] || !$_GET[code]) error_view(999, "죄송합니다. 요청하신 페이지는 열람이 불가합니다.","중요 파라메터를 찾을 수 없습니다.");
+if(!$_GET['idx'] || !$_GET['code']) error_view(999, "죄송합니다. 요청하신 페이지는 열람이 불가합니다.","중요 파라메터를 찾을 수 없습니다.");
 
 //== 수정URL 쿠키 체크
-$editCookie="edit".$_GET[code].$_GET[idx];
-//if($_COOKIE[$editCookie]!=base64_encode($editCookie) && member_session(1) == false) error_view(999, "죄송합니다. 올바른 접근이 아닙니다.","올바른 접근 경로를 통하여 열람하시기 바랍니다.");
+$editCookie="edit".$_GET['code'].$_GET['idx'];
+//if($_COOKIE['$editCookie]!=base64_encode($editCookie) && member_session(1) == false) error_view(999, "죄송합니다. 올바른 접근이 아닙니다.","올바른 접근 경로를 통하여 열람하시기 바랍니다.");
 
 //== 선택한 게시물 질의
 $sql_str="SELECT * FROM $b_cfg_tb[1] WHERE code='$_GET[code]' AND idx=$_GET[idx];";
@@ -23,13 +23,13 @@ $view = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 if(DB::isError($view)) die($view->getMessage());
 
 //== 제목과 내용 원상복구
-$view[subject] = stripslashes($view[subject]);
-$view[subject] = str_replace('"', '&#34;', $view[subject]);
-$view[ucontents] = stripslashes($view[ucontents]);
-$view[svc_reply] = stripslashes($view[svc_reply]);
+$view['subject'] = stripslashes($view['subject']);
+$view['subject'] = str_replace('"', '&#34;', $view['subject']);
+$view['ucontents'] = stripslashes($view['ucontents']);
+$view['svc_reply'] = stripslashes($view['svc_reply']);
 
 //==스마트에디터 업로드 폴더 설정
-$imgFolder="b_".$view[code]."_".$view[idx];
+$imgFolder="b_".$view['code']."_".$view['idx'];
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -101,11 +101,11 @@ $imgFolder="b_".$view[code]."_".$view[idx];
 			<hr/>
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/headInc.htm";?>
 			<!-- 헤더 섹션 종료 -->
 
 			<!-- 로컬 메뉴 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 			<!-- 로컬 메뉴 섹션 종료 -->
 
 			<hr/>
@@ -118,12 +118,12 @@ $imgFolder="b_".$view[code]."_".$view[idx];
 					<div id="contentsView">
 						<div id="contentsPrint">
 						<!-- 메인 콘텐츠 시작 -->
-						<?if($board_info[skin]) require "./skin/".$board_info[skin]."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
+						<?php if($board_info['skin']) require "./skin/".$board_info['skin']."/write_skin.php"; else error_view(999, "스킨이 선택되지 않았습니다.","관리자에게 문의 하세요.");?>
 						<!-- 메인 콘텐츠 종료 -->
 						</div>
 
 						<!-- 로컬 메뉴 섹션 시작 -->
-						<?//@include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
+						<?php //@include $_SERVER["DOCUMENT_ROOT"]."/inc/lnbInc.htm";?>
 						<!-- 로컬 메뉴 섹션 종료 -->
 
 					</div>
@@ -136,7 +136,7 @@ $imgFolder="b_".$view[code]."_".$view[idx];
 			<hr/>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
 			<!-- 풋터 섹션 시작 -->
-			<?include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
 			<!-- 풋터 섹션 종료 -->
 		</div>
 
@@ -146,4 +146,4 @@ $imgFolder="b_".$view[code]."_".$view[idx];
 
 	</body>
 </html>
-<?addCount(); $db->disconnect();?>
+<?php addCount(); $db->disconnect();?>

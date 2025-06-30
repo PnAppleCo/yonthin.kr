@@ -1,4 +1,4 @@
-<?
+<?php
 //==================================================================
 //== webnics board  http://www.webnics.co.kr
 //== made by webnicsoft member's 'gangster' and 'freekevin'
@@ -8,15 +8,15 @@
 include ("inc/configInc.php");
 
 if(member_session(1) == false) redirect(1, "/", "관리자 로그인후 이용하세요.", 1);
-if($_GET[mode]==='edit') {
-	if(!$_GET[idx]) error_view(999, "IDX 정보를 찾을수 없습니다.","관리자에게 문의하시기 바랍니다.");
+if($_GET['mode']==='edit') {
+	if(!$_GET['idx']) error_view(999, "IDX 정보를 찾을수 없습니다.","관리자에게 문의하시기 바랍니다.");
 	$sql_str="SELECT * FROM infoTbl WHERE idx=$_GET[idx]";
 	$view = $db->getRow($sql_str,DB_FETCHMODE_ASSOC);
 	if(DB::isError($view)) die($view->getMessage());
-	$o_agreeinfo=stripslashes($view[agreeinfo]);
-	$o_privateinfo=stripslashes($view[privateinfo]);
-	$o_privat_agree=stripslashes($view[private_agree]);
-	if($_GET[code]=="1") $vTitle="사업정보"; else if($_GET[code]=="2") $vTitle="이용약관"; else if($_GET[code]=="3") $vTitle="개인정보보호방침"; else if($_GET[code]=="4") $vTitle="사이트 정보"; else if($_GET[code]=="5") $vTitle="개인정이용 및 파기";
+	$o_agreeinfo=stripslashes($view['agreeinfo']);
+	$o_privateinfo=stripslashes($view['privateinfo']);
+	$o_privat_agree=stripslashes($view['private_agree']);
+	if($_GET['code']=="1") $vTitle="사업정보"; else if($_GET['code']=="2") $vTitle="이용약관"; else if($_GET['code']=="3") $vTitle="개인정보보호방침"; else if($_GET['code']=="4") $vTitle="사이트 정보"; else if($_GET['code']=="5") $vTitle="개인정이용 및 파기";
 }
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
@@ -138,13 +138,13 @@ if($_GET[mode]==='edit') {
 		<div id="wrapper">
 			<h2 class="blind"><a name="navi-quick" id="navi-quick" href="#navi-quick">메인 메뉴</a></h2>
 			<!-- 헤더 -->
-			<?if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
+			<?php if($Top_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Top_Inc_File);?>
 			<!-- 콘텐츠 시작 -->
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">메인 콘텐츠</a></h2>
 			<div id="container_wrap">
 				<div id="sub_container">
 					<!-- 콘텐츠 좌측 -->
-					<?if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
+					<?php if($Left_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Left_Inc_File);?>
 					<!-- 콘텐츠 메인 -->
 					<div id="contents_container">
 						<h3 id="headTitle"><?=$vTitle;?></h3>
@@ -164,49 +164,49 @@ if($_GET[mode]==='edit') {
 												<col width="35%" />
 											</colgroup>
 											<tbody>
-												<?if($_GET[code]=="1") {?>
+												<?php if($_GET['code']=="1") {?>
 												<tr>
 													<th>상 호 명</th>
-													<td colspan="3"><input type="text" name="c_name" size="40" maxlength="100" class="wTbox" value="<?=$view[c_name];?>" /></td>
+													<td colspan="3"><input type="text" name="c_name" size="40" maxlength="100" class="wTbox" value="<?=$view['c_name'];?>" /></td>
 												</tr>
 												<tr>
 													<th>업 태</th>
-													<td><input type="text" name="c_cate" size="20" maxlength="100" class="wTbox" value="<?=$view[c_cate];?>" /></td>
+													<td><input type="text" name="c_cate" size="20" maxlength="100" class="wTbox" value="<?=$view['c_cate'];?>" /></td>
 													<th>종 목</th>
-													<td><input type="text" name="c_event" size="20" maxlength="100" class="wTbox" value="<?=$view[c_event];?>" /></td>
+													<td><input type="text" name="c_event" size="20" maxlength="100" class="wTbox" value="<?=$view['c_event'];?>" /></td>
 												</tr>
 												<tr>
 													<th><label for="hzipcode1">사업장주소</label></th>
 													<td colspan="3">
-														<div><input type="text" id="zipcode" name="zipcode" size="5" maxlength="5" value="<?=$view[zipcode];?>" class="wTbox" readonly title="우편번호"><span onClick="DaumPostcode('1');" style="cursor:pointer;">주소찾기</span></div>
-															<div><input type="text" id="haddress1" name="haddress1" size="45" maxlength="60" value="<?=$view[haddress1];?>" class="wTbox" title="주소 입력">
-															<input type="text" id="haddress2" name="haddress2" size="30" maxlength="30" value="<?=$view[haddress2];?>" class="wTbox" title="나머지 상세주소 입력"></div>
+														<div><input type="text" id="zipcode" name="zipcode" size="5" maxlength="5" value="<?=$view['zipcode'];?>" class="wTbox" readonly title="우편번호"><span onClick="DaumPostcode('1');" style="cursor:pointer;">주소찾기</span></div>
+															<div><input type="text" id="haddress1" name="haddress1" size="45" maxlength="60" value="<?=$view['haddress1'];?>" class="wTbox" title="주소 입력">
+															<input type="text" id="haddress2" name="haddress2" size="30" maxlength="30" value="<?=$view['haddress2'];?>" class="wTbox" title="나머지 상세주소 입력"></div>
 													</td>
 												</tr>
 												<tr>
 													<th>사업자번호</th>
-													<td><input type="text" name="c_num" size="20" maxlength="20" class="wTbox" value="<?=$view[c_num];?>" /></td>
+													<td><input type="text" name="c_num" size="20" maxlength="20" class="wTbox" value="<?=$view['c_num'];?>" /></td>
 													<th>통신판매신고번호</th>
-													<td><input type="text" name="c_t_num" size="20" maxlength="50" class="wTbox" value="<?=$view[c_t_num];?>" /></td>
+													<td><input type="text" name="c_t_num" size="20" maxlength="50" class="wTbox" value="<?=$view['c_t_num'];?>" /></td>
 												</tr>
 												<tr>
 													<th>대표자명</th>
-													<td><input type="text" name="c_ceo" size="20" maxlength="20" class="wTbox" value="<?=$view[c_ceo];?>" /></td>
+													<td><input type="text" name="c_ceo" size="20" maxlength="20" class="wTbox" value="<?=$view['c_ceo'];?>" /></td>
 													<th>개인정보책임자명</th>
-													<td><input type="text" name="c_user" size="20" maxlength="20" class="wTbox" value="<?=$view[c_user];?>" /></td>
+													<td><input type="text" name="c_user" size="20" maxlength="20" class="wTbox" value="<?=$view['c_user'];?>" /></td>
 												</tr>
 												<tr>
 													<th>전화번호</th>
-													<td><input type="text" name="c_tel" size="15" maxlength="20" class="wTbox" value="<?=$view[c_tel];?>" /></td>
+													<td><input type="text" name="c_tel" size="15" maxlength="20" class="wTbox" value="<?=$view['c_tel'];?>" /></td>
 													<th>팩스번호</th>
-													<td><input type="text" name="c_fax" size="15" maxlength="20" class="wTbox" value="<?=$view[c_tel];?>" /></td>
+													<td><input type="text" name="c_fax" size="15" maxlength="20" class="wTbox" value="<?=$view['c_tel'];?>" /></td>
 												</tr>
-												<?}else if($_GET[code]=="2") {?>
+												<?php }else if($_GET['code']=="2") {?>
 												<tr>
 													<td colspan="4">
-													<?
+													<?php 
 														echo "<div style=\"clear:both;\"><script type=\"text/javascript\" src=\"/nwebnics/htmlEditor/SE2.3.10/js/HuskyEZCreator.js\" charset=\"utf-8\"></script>";
-														echo "<textarea id=\"agreeinfo\" name=\"agreeinfo\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view[agreeinfo]."</textarea></div>";
+														echo "<textarea id=\"agreeinfo\" name=\"agreeinfo\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view['agreeinfo']."</textarea></div>";
 													?>
 													<script type="text/javascript">
 														var oEditors = [];
@@ -256,12 +256,12 @@ if($_GET[mode]==='edit') {
 													</script>
 													</td>
 												</tr>
-												<?}else if($_GET[code]=="3") {?>
+												<?php }else if($_GET['code']=="3") {?>
 												<tr>
 													<td colspan="4">
-													<?
+													<?php 
 														echo "<div style=\"clear:both;\"><script type=\"text/javascript\" src=\"/nwebnics/htmlEditor/SE2.3.10/js/HuskyEZCreator.js\" charset=\"utf-8\"></script>";
-														echo "<textarea id=\"privateinfo\" name=\"privateinfo\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view[privateinfo]."</textarea></div>";
+														echo "<textarea id=\"privateinfo\" name=\"privateinfo\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view['privateinfo']."</textarea></div>";
 													?>
 													<script type="text/javascript">
 														var oEditors = [];
@@ -311,25 +311,25 @@ if($_GET[mode]==='edit') {
 													</script>
 													</td>
 												</tr>
-												<?}else if($_GET[code]=="4") {?>
+												<?php }else if($_GET['code']=="4") {?>
 												<tr>
 													<th>사이트 타이틀</th>
-													<td colspan="3"><input type="text" name="c_title" size="50" maxlength="255" class="wTbox" value="<?=$view[c_title];?>" /></td>
+													<td colspan="3"><input type="text" name="c_title" size="50" maxlength="255" class="wTbox" value="<?=$view['c_title'];?>" /></td>
 												</tr>
 												<tr>
 													<th>메타키워드</th>
-													<td colspan="3"><input type="text" name="c_meta" size="50" maxlength="255" class="wTbox" value="<?=$view[c_meta];?>" /></td>
+													<td colspan="3"><input type="text" name="c_meta" size="50" maxlength="255" class="wTbox" value="<?=$view['c_meta'];?>" /></td>
 												</tr>
 												<tr>
 													<th>가입 불가ID</th>
-													<td colspan="3"><input type="text" name="c_noid" size="50" maxlength="255" class="wTbox" value="<?=$view[c_noid];?>" /></td>
+													<td colspan="3"><input type="text" name="c_noid" size="50" maxlength="255" class="wTbox" value="<?=$view['c_noid'];?>" /></td>
 												</tr>
-												<?}else if($_GET[code]=="5") {?>
+												<?php }else if($_GET['code']=="5") {?>
 												<tr>
 													<td colspan="4">
-													<?
+													<?php
 														echo "<div style=\"clear:both;\"><script type=\"text/javascript\" src=\"/nwebnics/htmlEditor/SE2.3.10/js/HuskyEZCreator.js\" charset=\"utf-8\"></script>";
-														echo "<textarea id=\"private_agree\" name=\"private_agree\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view[private_agree]."</textarea></div>";
+														echo "<textarea id=\"private_agree\" name=\"private_agree\" rows=\"10\" cols=\"100\" style=\"width:100%; height:300px; min-width:610px; display:none;\">".$view['private_agree']."</textarea></div>";
 													?>
 													<script type="text/javascript">
 														var oEditors = [];
@@ -379,12 +379,12 @@ if($_GET[mode]==='edit') {
 													</script>
 													</td>
 												</tr>
-												<?}?>
+												<?php }?>
 												<tr>
 													<td colspan="4" style="text-align:center;">
-														<input type="hidden" name="upfile" value="<?=$view[filename0];?>">
-														<?if($_GET[mode]==="add") $v_text="등 록"; else if($_GET[mode]==="edit") $v_text="수 정";?>
-															<input type="button" value="<?=$v_text;?>" onClick="formChk(this.form,'<?=$_GET[mode];?>','<?=$view[idx];?>','<?=$_GET[page];?>','<?=$_GET[code];?>'); return false;" class="button">
+														<input type="hidden" name="upfile" value="<?=$view['filename0'];?>">
+														<?php if($_GET['mode']==="add") $v_text="등 록"; else if($_GET['mode']==="edit") $v_text="수 정";?>
+															<input type="button" value="<?=$v_text;?>" onClick="formChk(this.form,'<?=$_GET['mode'];?>','<?=$view['idx'];?>','<?=$_GET['page'];?>','<?=$_GET['code'];?>'); return false;" class="button">
 														<input type="reset" value="재작성" class="button">
 														<input type="button" value="뒤 로" onclick="history.back();" class="button">
 													</td>
@@ -398,13 +398,13 @@ if($_GET[mode]==='edit') {
 						<!-- 콘텐츠 종료 -->
 					</div>
 					<!-- 콘텐츠 우측 -->
-					<?if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
+					<?php if($Right_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Right_Inc_File);?>
 				</div>
 			</div>
 			<!-- 주소 및 보텀 메뉴 시작 -->
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#footer-quick">주소 및 카피라이터 메뉴</a></h2>
-			<?if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
+			<?php if($Foot_Inc_File) include($_SERVER['DOCUMENT_ROOT'].$Foot_Inc_File);?>
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>
