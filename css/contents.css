@@ -757,6 +757,27 @@
 	display: none;
 }
 
+.section7 .links a {
+
+	display: flex;
+	width: 253px;
+	height: 62px;
+	flex-shrink: 0;
+	border-radius: 5px;
+	background: #2775DE;
+
+	color: #FFF;
+	text-align: center;
+	font-family: "Noto Sans KR";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 900;
+	line-height: normal;
+
+	justify-content: center;   /* 수평 가운데 정렬 */
+	align-items: center;       /* 수직 가운데 정렬 */
+}
+
 .section8 {
 	width: 1200px;
 	margin: 90px auto;
@@ -2036,7 +2057,7 @@
     padding-bottom: 20px;
     text-align: left;
 }
-}
+
 
 .section16 .t1 strong {
 	font-size: 3.6rem;
@@ -2144,15 +2165,23 @@ display: flex;
 
 }
 
-.section16 .info p {
-    display: inline-block;
-	font-size: 2rem;
-	color: #666;
-	display: flex;
+.section16 .date info a.link_cont{
+cursor: pointer;
 }
 
+a, a:active, a:hover {
+    text-decoration: none;
+	color: #272727;
+}
+
+.section16 .date info {
+display: flex;
+
+}
+
+
 .section16 .year-img {
-  width: 80%;
+  width: 100%;
   max-height: 300px;
   object-fit: cover;
   margin-top: 2rem;
