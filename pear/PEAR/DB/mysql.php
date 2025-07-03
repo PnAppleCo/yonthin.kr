@@ -6,7 +6,7 @@
  * The PEAR DB driver for PHP's mysql extension
  * for interacting with MySQL databases
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * LICENSE: This source file is subject to version 3.0 of the PHP license
  * that is available through the world-wide-web at the following URI:
@@ -20,8 +20,8 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: mysql.php 242769 2007-09-21 13:32:52Z aharvey $
  * @link       http://pear.php.net/package/DB
+ * @deprecated since 1.12.0
  */
 
 /**
@@ -41,8 +41,9 @@ require_once 'DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14
+ * @version    Release: 1.12.2
  * @link       http://pear.php.net/package/DB
+ * @deprecated since 1.12.0
  */
 class DB_mysql extends DB_common
 {
@@ -109,9 +110,12 @@ class DB_mysql extends DB_common
         1136 => DB_ERROR_VALUE_COUNT_ON_ROW,
         1142 => DB_ERROR_ACCESS_VIOLATION,
         1146 => DB_ERROR_NOSUCHTABLE,
+        1205 => DB_ERROR_LOCK_TIMEOUT,
+        1213 => DB_ERROR_DEADLOCK,
         1216 => DB_ERROR_CONSTRAINT,
         1217 => DB_ERROR_CONSTRAINT,
-        1356 => DB_ERROR_DIVZERO,
+        1356 => DB_ERROR_INVALID_VIEW,
+        1365 => DB_ERROR_DIVZERO,
         1451 => DB_ERROR_CONSTRAINT,
         1452 => DB_ERROR_CONSTRAINT,
     );
@@ -162,13 +166,13 @@ class DB_mysql extends DB_common
     // {{{ constructor
 
     /**
-     * This constructor calls <kbd>$this->DB_common()</kbd>
+     * This constructor calls <kbd>parent::__construct()</kbd>
      *
      * @return void
      */
-    function DB_mysql()
+    function __construct()
     {
-        $this->DB_common();
+        parent::__construct();
     }
 
     // }}}
@@ -587,7 +591,7 @@ class DB_mysql extends DB_common
         do {
             $repeat = 0;
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
-            $result = $this->query("UPDATE ${seqname} ".
+            $result = $this->query("UPDATE {$seqname} ".
                                    'SET id=LAST_INSERT_ID(id+1)');
             $this->popErrorHandling();
             if ($result === DB_OK) {
@@ -599,7 +603,7 @@ class DB_mysql extends DB_common
                 // EMPTY SEQ TABLE
                 // Sequence table must be empty for some reason, so fill
                 // it and return 1 and obtain a user-level lock
-                $result = $this->getOne("SELECT GET_LOCK('${seqname}_lock',10)");
+                $result = $this->getOne("SELECT GET_LOCK('{$seqname}_lock',10)");
                 if (DB::isError($result)) {
                     return $this->raiseError($result);
                 }
@@ -609,14 +613,14 @@ class DB_mysql extends DB_common
                 }
 
                 // add the default value
-                $result = $this->query("REPLACE INTO ${seqname} (id) VALUES (0)");
+                $result = $this->query("REPLACE INTO {$seqname} (id) VALUES (0)");
                 if (DB::isError($result)) {
                     return $this->raiseError($result);
                 }
 
                 // Release the lock
                 $result = $this->getOne('SELECT RELEASE_LOCK('
-                                        . "'${seqname}_lock')");
+                                        . "'{$seqname}_lock')");
                 if (DB::isError($result)) {
                     return $this->raiseError($result);
                 }
@@ -651,6 +655,29 @@ class DB_mysql extends DB_common
     }
 
     // }}}
+    // {{{ lastId()
+
+    /**
+     * Returns the row ID of the most recent INSERT into the database
+     *
+     * @param string  $link_identifier mysql link identifier
+     *
+     * @return int the row ID of the most recent INSERT into the database.
+     *             If no successful INSERTs into rowid tables have ever
+     *             occurred on this database connection then returns 0.
+     *
+     * @see DB_common::lastID()
+     */
+    function lastId($link_identifier = null)
+    {
+        $id = mysql_insert_id($link_identifier);
+        if(empty($id) || !is_int($id)) {
+            return 0;
+        }
+        return $id;
+    }
+
+    // }}}
     // {{{ createSequence()
 
     /**
@@ -673,12 +700,12 @@ class DB_mysql extends DB_common
             return $res;
         }
         // insert yields value 1, nextId call will generate ID 2
-        $res = $this->query("INSERT INTO ${seqname} (id) VALUES (0)");
+        $res = $this->query("INSERT INTO {$seqname} (id) VALUES (0)");
         if (DB::isError($res)) {
             return $res;
         }
         // so reset to zero
-        return $this->query("UPDATE ${seqname} SET id = 0");
+        return $this->query("UPDATE {$seqname} SET id = 0");
     }
 
     // }}}
@@ -717,7 +744,7 @@ class DB_mysql extends DB_common
         // Obtain a user-level lock... this will release any previous
         // application locks, but unlike LOCK TABLES, it does not abort
         // the current transaction and is much less frequently used.
-        $result = $this->getOne("SELECT GET_LOCK('${seqname}_lock',10)");
+        $result = $this->getOne("SELECT GET_LOCK('{$seqname}_lock',10)");
         if (DB::isError($result)) {
             return $result;
         }
@@ -727,7 +754,7 @@ class DB_mysql extends DB_common
             return $this->mysqlRaiseError(DB_ERROR_NOT_LOCKED);
         }
 
-        $highest_id = $this->getOne("SELECT MAX(id) FROM ${seqname}");
+        $highest_id = $this->getOne("SELECT MAX(id) FROM {$seqname}");
         if (DB::isError($highest_id)) {
             return $highest_id;
         }
@@ -743,7 +770,7 @@ class DB_mysql extends DB_common
         // If another thread has been waiting for this lock,
         // it will go thru the above procedure, but will have no
         // real effect
-        $result = $this->getOne("SELECT RELEASE_LOCK('${seqname}_lock')");
+        $result = $this->getOne("SELECT RELEASE_LOCK('{$seqname}_lock')");
         if (DB::isError($result)) {
             return $result;
         }
@@ -770,17 +797,6 @@ class DB_mysql extends DB_common
     function quoteIdentifier($str)
     {
         return '`' . str_replace('`', '``', $str) . '`';
-    }
-
-    // }}}
-    // {{{ quote()
-
-    /**
-     * @deprecated  Deprecated in release 1.6.0
-     */
-    function quote($str)
-    {
-        return $this->quoteSmart($str);
     }
 
     // }}}

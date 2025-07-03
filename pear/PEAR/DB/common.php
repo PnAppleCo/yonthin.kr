@@ -5,7 +5,7 @@
 /**
  * Contains the DB_common base class
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * LICENSE: This source file is subject to version 3.0 of the PHP license
  * that is available through the world-wide-web at the following URI:
@@ -20,7 +20,6 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: common.php 315557 2011-08-26 14:32:35Z danielc $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -42,7 +41,7 @@ require_once 'PEAR.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14
+ * @version    Release: 1.12.2
  * @link       http://pear.php.net/package/DB
  */
 class DB_common extends PEAR
@@ -145,7 +144,7 @@ class DB_common extends PEAR
      *
      * @return void
      */
-    function DB_common()
+    function __construct()
     {
         $this->PEAR('DB_Error');
     }
@@ -261,8 +260,8 @@ class DB_common extends PEAR
      */
     function quoteString($string)
     {
-        $string = $this->quote($string);
-        if ($string{0} == "'") {
+        $string = $this->quoteSmart($string);
+        if ($string[0] == "'") {
             return substr($string, 1, -1);
         }
         return $string;
@@ -284,8 +283,7 @@ class DB_common extends PEAR
      */
     function quote($string = null)
     {
-        return ($string === null) ? 'NULL'
-                                  : "'" . str_replace("'", "''", $string) . "'";
+        return $this->quoteSmart($string);
     }
 
     // }}}
@@ -316,6 +314,7 @@ class DB_common extends PEAR
      *   + odbc(db2)
      *   + pgsql
      *   + sqlite
+     *   + sqlite3
      *   + sybase (must execute <kbd>set quoted_identifier on</kbd> sometime
      *     prior to use)
      *
@@ -415,6 +414,10 @@ class DB_common extends PEAR
      *      </li>
      *      <li>
      *        <kbd>sqlite</kbd> -> <samp>1/0</samp>
+     *        (<kbd>INTEGER</kbd>)
+     *      </li>
+     *      <li>
+     *        <kbd>sqlite3</kbd> -> <samp>1/0</samp>
      *        (<kbd>INTEGER</kbd>)
      *      </li>
      *      <li>
@@ -642,6 +645,7 @@ class DB_common extends PEAR
      * + mysql
      * + mysqli
      * + sqlite
+     * + sqlite3
      *
      *
      * <samp>DB_PORTABILITY_NUMROWS</samp>
@@ -721,6 +725,7 @@ class DB_common extends PEAR
                         case 'mysql':
                         case 'mysqli':
                         case 'sqlite':
+                        case 'sqlite3':
                             $this->options['portability'] =
                                     DB_PORTABILITY_DELETE_COUNT;
                             break;
@@ -886,6 +891,9 @@ class DB_common extends PEAR
     function autoExecute($table, $fields_values, $mode = DB_AUTOQUERY_INSERT,
                          $where = false)
     {
+        if ($where) {
+            $where = strtr($where, array('?' => '\?', '!' => '\!', '&' => '\&',));
+        }
         $sth = $this->autoPrepare($table, array_keys($fields_values), $mode,
                                   $where);
         if (DB::isError($sth)) {
@@ -1203,7 +1211,8 @@ class DB_common extends PEAR
      */
     function &query($query, $params = array())
     {
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
             if (DB::isError($sth)) {
                 return $sth;
@@ -1342,7 +1351,8 @@ class DB_common extends PEAR
             }
         }
         // modifyLimitQuery() would be nice here, but it causes BC issues
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
             if (DB::isError($sth)) {
                 return $sth;
@@ -1650,7 +1660,8 @@ class DB_common extends PEAR
             }
         }
 
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
 
             if (DB::isError($sth)) {
@@ -1799,6 +1810,23 @@ class DB_common extends PEAR
      *      DB_common::getSequenceName()
      */
     function nextId($seq_name, $ondemand = true)
+    {
+        return $this->raiseError(DB_ERROR_NOT_CAPABLE);
+    }
+
+    // }}}
+    // {{{ lastId()
+
+    /**
+     * Returns the row ID of the most recent INSERT into the database
+     *
+     * @param string  $link_identifier  DBMS link identifier
+     *
+     * @return int the row ID of the most recent INSERT into the database.
+     *             If no successful INSERTs into rowid tables have ever
+     *             occurred on this database connection then returns 0.
+     */
+    function lastId($link_identifier = null)
     {
         return $this->raiseError(DB_ERROR_NOT_CAPABLE);
     }

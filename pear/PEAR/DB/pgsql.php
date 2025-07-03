@@ -6,7 +6,7 @@
  * The PEAR DB driver for PHP's pgsql extension
  * for interacting with PostgreSQL databases
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * LICENSE: This source file is subject to version 3.0 of the PHP license
  * that is available through the world-wide-web at the following URI:
@@ -21,7 +21,6 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: pgsql.php 306604 2010-12-24 06:09:35Z aharvey $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -43,7 +42,7 @@ require_once 'DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14
+ * @version    Release: 1.12.2
  * @link       http://pear.php.net/package/DB
  */
 class DB_pgsql extends DB_common
@@ -148,13 +147,13 @@ class DB_pgsql extends DB_common
     // {{{ constructor
 
     /**
-     * This constructor calls <kbd>$this->DB_common()</kbd>
+     * This constructor calls <kbd>parent::__construct()</kbd>
      *
      * @return void
      */
-    function DB_pgsql()
+    function __construct()
     {
-        $this->DB_common();
+        parent::__construct();
     }
 
     // }}}
@@ -325,14 +324,14 @@ class DB_pgsql extends DB_common
         $query = $this->modifyQuery($query);
         if (!$this->autocommit && $ismanip) {
             if ($this->transaction_opcount == 0) {
-                $result = @pg_exec($this->connection, 'begin;');
+                $result = @pg_query($this->connection, 'begin;');
                 if (!$result) {
                     return $this->pgsqlRaiseError();
                 }
             }
             $this->transaction_opcount++;
         }
-        $result = @pg_exec($this->connection, $query);
+        $result = @pg_query($this->connection, $query);
         if (!$result) {
             return $this->pgsqlRaiseError();
         }
@@ -460,21 +459,9 @@ class DB_pgsql extends DB_common
             unset($this->row[(int)$result]);
             unset($this->_num_rows[(int)$result]);
             $this->affected = 0;
-            return @pg_freeresult($result);
+            return @pg_free_result($result);
         }
         return false;
-    }
-
-    // }}}
-    // {{{ quote()
-
-    /**
-     * @deprecated  Deprecated in release 1.6.0
-     * @internal
-     */
-    function quote($str)
-    {
-        return $this->quoteSmart($str);
     }
 
     // }}}
@@ -546,7 +533,7 @@ class DB_pgsql extends DB_common
      */
     function numCols($result)
     {
-        $cols = @pg_numfields($result);
+        $cols = @pg_num_fields($result);
         if (!$cols) {
             return $this->pgsqlRaiseError();
         }
@@ -571,7 +558,7 @@ class DB_pgsql extends DB_common
      */
     function numRows($result)
     {
-        $rows = @pg_numrows($result);
+        $rows = @pg_num_rows($result);
         if ($rows === null) {
             return $this->pgsqlRaiseError();
         }
@@ -610,7 +597,7 @@ class DB_pgsql extends DB_common
         if ($this->transaction_opcount > 0) {
             // (disabled) hack to shut up error messages from libpq.a
             //@fclose(@fopen("php://stderr", "w"));
-            $result = @pg_exec($this->connection, 'end;');
+            $result = @pg_query($this->connection, 'end;');
             $this->transaction_opcount = 0;
             if (!$result) {
                 return $this->pgsqlRaiseError();
@@ -630,7 +617,7 @@ class DB_pgsql extends DB_common
     function rollback()
     {
         if ($this->transaction_opcount > 0) {
-            $result = @pg_exec($this->connection, 'abort;');
+            $result = @pg_query($this->connection, 'abort;');
             $this->transaction_opcount = 0;
             if (!$result) {
                 return $this->pgsqlRaiseError();
@@ -676,7 +663,7 @@ class DB_pgsql extends DB_common
         $repeat = false;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
-            $result = $this->query("SELECT NEXTVAL('${seqname}')");
+            $result = $this->query("SELECT NEXTVAL('{$seqname}')");
             $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
                 $result->getCode() == DB_ERROR_NOSUCHTABLE) {
@@ -715,7 +702,7 @@ class DB_pgsql extends DB_common
     function createSequence($seq_name)
     {
         $seqname = $this->getSequenceName($seq_name);
-        $result = $this->query("CREATE SEQUENCE ${seqname}");
+        $result = $this->query("CREATE SEQUENCE {$seqname}");
         return $result;
     }
 
@@ -803,7 +790,7 @@ class DB_pgsql extends DB_common
      */
     function errorNative()
     {
-        return @pg_errormessage($this->connection);
+        return @pg_last_error($this->connection);
     }
 
     // }}}
@@ -899,7 +886,7 @@ class DB_pgsql extends DB_common
              * Probably received a table name.
              * Create a result resource identifier.
              */
-            $id = @pg_exec($this->connection, "SELECT * FROM $result LIMIT 0");
+            $id = @pg_query($this->connection, "SELECT * FROM $result LIMIT 0");
             $got_string = true;
         } elseif (isset($result->result)) {
             /*
@@ -928,7 +915,7 @@ class DB_pgsql extends DB_common
             $case_func = 'strval';
         }
 
-        $count = @pg_numfields($id);
+        $count = @pg_num_fields($id);
         $res   = array();
 
         if ($mode) {
@@ -938,9 +925,9 @@ class DB_pgsql extends DB_common
         for ($i = 0; $i < $count; $i++) {
             $res[$i] = array(
                 'table' => $got_string ? $case_func($result) : '',
-                'name'  => $case_func(@pg_fieldname($id, $i)),
-                'type'  => @pg_fieldtype($id, $i),
-                'len'   => @pg_fieldsize($id, $i),
+                'name'  => $case_func(@pg_field_name($id, $i)),
+                'type'  => @pg_field_type($id, $i),
+                'len'   => @pg_field_size($id, $i),
                 'flags' => $got_string
                            ? $this->_pgFieldFlags($id, $i, $result)
                            : '',
@@ -955,7 +942,7 @@ class DB_pgsql extends DB_common
 
         // free the result only if we were called on a table
         if ($got_string) {
-            @pg_freeresult($id);
+            @pg_free_result($id);
         }
         return $res;
     }
@@ -979,7 +966,7 @@ class DB_pgsql extends DB_common
      */
     function _pgFieldFlags($resource, $num_field, $table_name)
     {
-        $field_name = @pg_fieldname($resource, $num_field);
+        $field_name = @pg_field_name($resource, $num_field);
 
         // Check if there's a schema in $table_name and update things
         // accordingly.
@@ -992,18 +979,18 @@ class DB_pgsql extends DB_common
             $tableWhere = "tab.relname = '$table_name'";
         }
 
-        $result = @pg_exec($this->connection, "SELECT f.attnotnull, f.atthasdef
+        $result = @pg_query($this->connection, "SELECT f.attnotnull, f.atthasdef
                                 FROM $from
                                 WHERE tab.relname = typ.typname
                                 AND typ.typrelid = f.attrelid
                                 AND f.attname = '$field_name'
                                 AND $tableWhere");
-        if (@pg_numrows($result) > 0) {
+        if (@pg_num_rows($result) > 0) {
             $row = @pg_fetch_row($result, 0);
             $flags  = ($row[0] == 't') ? 'not_null ' : '';
 
             if ($row[1] == 't') {
-                $result = @pg_exec($this->connection, "SELECT a.adsrc
+                $result = @pg_query($this->connection, "SELECT a.adsrc
                                     FROM $from, pg_attrdef a
                                     WHERE tab.relname = typ.typname AND typ.typrelid = f.attrelid
                                     AND f.attrelid = a.adrelid AND f.attname = '$field_name'
@@ -1015,14 +1002,14 @@ class DB_pgsql extends DB_common
         } else {
             $flags = '';
         }
-        $result = @pg_exec($this->connection, "SELECT i.indisunique, i.indisprimary, i.indkey
+        $result = @pg_query($this->connection, "SELECT i.indisunique, i.indisprimary, i.indkey
                                 FROM $from, pg_index i
                                 WHERE tab.relname = typ.typname
                                 AND typ.typrelid = f.attrelid
                                 AND f.attrelid = i.indrelid
                                 AND f.attname = '$field_name'
                                 AND $tableWhere");
-        $count = @pg_numrows($result);
+        $count = @pg_num_rows($result);
 
         for ($i = 0; $i < $count ; $i++) {
             $row = @pg_fetch_row($result, $i);
