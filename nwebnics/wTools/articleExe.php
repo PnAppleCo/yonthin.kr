@@ -22,80 +22,86 @@ $fileerror = $_FILES['filename']['error'];
 if($_POST['code']) $codeVal=$_POST['code']; else if($sCode) $codeVal=$sCode; else $codeVal="";
 $boardPath=$boardDir.$codeVal."/";
 
-$up_load = file_upload($filename, $filetype, $filesize, $filetmp, $fileerror, 10000000, $boardPath,"");
+// PHP82 변환 추가
+if(!empty($filename))
+{
+	$up_load = file_upload($filename, $filetype, $filesize, $filetmp, $fileerror, 10000000, $boardPath,"");
 
-//== 리턴받은 파일이름 지정(마지막에 "|"가 삽입되어 있으므로 하나 빼줌)
-$name_count = explode("|", $up_load);
+	//== 리턴받은 파일이름 지정(마지막에 "|"가 삽입되어 있으므로 하나 빼줌)
+	$name_count = explode("|", $up_load);
 
-for($i=0;$i<sizeof($name_count)-1;$i++) {
-	$filename[$i] = $name_count[$i];
-	$img_array = array("image/gif", "image/pjpeg", "image/jpeg", "image/bmp", "image/png","image/wbmp");
-	if(in_array($filetype[$i], $img_array) && $filesize[$i]>0) {
+	for($i=0;$i<sizeof($name_count)-1;$i++) {
+		$filename[$i] = $name_count[$i];
+		$img_array = array("image/gif", "image/pjpeg", "image/jpeg", "image/bmp", "image/png","image/wbmp");
+		if(in_array($filetype[$i], $img_array) && $filesize[$i]>0) {
 
-		//== 이미지 첫장 작은 썸네일 처리
-		$img_size = @getimagesize("./files/".$sCode."/".$filename[$i]);
-
-		if($img_size[0]>$board_info['thumbnail_width']) {
-			$thum_width=$board_info['thumbnail_width'];																														//== 가로 비율
-			$thum_height=(int)($img_size[1] * ($board_info['thumbnail_width']/$img_size[0]));			//== 세로 비율
-			thumbnail($_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/",$_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/thumbnail/",$filename[$i],$thum_width,$thum_height);
-		}
-		if($filename[$i]) {
-			if($board_info['thumbnail_width']) $thum_width = $board_info['thumbnail_width']; else $thum_width = 120;
-			if($board_info['thumbnail_height']) $thum_height = $board_info['thumbnail_height']; else $thum_height = 90;
-			thumbnail($_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/",$_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/thumbnail/",$filename[$i],$thum_width,$thum_height);
-		}
-
-		if($board_info['img_max_upload_width']>0 && $filename[$i]) {
-			//== 원본이미지 크기 추출후 상하 비율 측정
+			//== 이미지 첫장 작은 썸네일 처리
 			$img_size = @getimagesize("./files/".$sCode."/".$filename[$i]);
-			//== 원본이미지가 지정된 최대크기보다 클경우 섬넬 처리
-			if($img_size[0]>$board_info['img_max_upload_width']) {
+
+			if($img_size[0]>$board_info['thumbnail_width']) {
+				$thum_width=$board_info['thumbnail_width'];																														//== 가로 비율
+				$thum_height=(int)($img_size[1] * ($board_info['thumbnail_width']/$img_size[0]));			//== 세로 비율
+				thumbnail($_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/",$_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/thumbnail/",$filename[$i],$thum_width,$thum_height);
+			}
+			if($filename[$i]) {
+				if($board_info['thumbnail_width']) $thum_width = $board_info['thumbnail_width']; else $thum_width = 120;
+				if($board_info['thumbnail_height']) $thum_height = $board_info['thumbnail_height']; else $thum_height = 90;
+				thumbnail($_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/",$_SERVER["DOCUMENT_ROOT"]."/nwebnics/wBoard/files/".$sCode."/thumbnail/",$filename[$i],$thum_width,$thum_height);
+			}
+
+			if($board_info['img_max_upload_width']>0 && $filename[$i]) {
+				//== 원본이미지 크기 추출후 상하 비율 측정
+				$img_size = @getimagesize("./files/".$sCode."/".$filename[$i]);
+				//== 원본이미지가 지정된 최대크기보다 클경우 섬넬 처리
 				if($img_size[0]>$board_info['img_max_upload_width']) {
-					$img_width=$board_info['img_max_upload_width'];																											//== 가로 비율
-					$img_height=(($board_info['img_max_upload_width']*$img_size[1])/$img_size[0]);				//== 세로 비율
-					thumbnail("./files/".$sCode."/","./files/".$sCode."/",$filename[$i],$img_width,$img_height);
+					if($img_size[0]>$board_info['img_max_upload_width']) {
+						$img_width=$board_info['img_max_upload_width'];																											//== 가로 비율
+						$img_height=(($board_info['img_max_upload_width']*$img_size[1])/$img_size[0]);				//== 세로 비율
+						thumbnail("./files/".$sCode."/","./files/".$sCode."/",$filename[$i],$img_width,$img_height);
+					}
 				}
 			}
-		}
 
-/*
-		$sPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
-		$dPath=$_SERVER["DOCUMENT_ROOT"].$boardPath."/thumbnail/";
-		$exName=explode(".",$filename[$i]);
-		$dName=$exName[0];
-		$dExt=$exName[1];
-		$waterMark = new ThumbnailWatermark;
-		//Thumbnail::setOption('debug', true);
+	/*
+			$sPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
+			$dPath=$_SERVER["DOCUMENT_ROOT"].$boardPath."/thumbnail/";
+			$exName=explode(".",$filename[$i]);
+			$dName=$exName[0];
+			$dExt=$exName[1];
+			$waterMark = new ThumbnailWatermark;
+			//Thumbnail::setOption('debug', true);
 
-		Thumbnail::create($sPath.$filename[$i],
-			$board_info[thumbnail_width], $board_info[thumbnail_height],
-			SCALE_EXACT_FIT,
-			Array(
-			//'preprocess' => Array(&$waterMark, 'preprocess'),
-			'savepath' => $dPath.'%FILENAME%.'.$dExt
-		));
-
-		//== 원본이미지 크기 추출후 상하 비율 측정
-		$img_size = @getimagesize($_SERVER["DOCUMENT_ROOT"].$boardPath.$filename[$i]);
-		//== 원본이미지가 지정된 최대크기보다 클경우 섬넬 처리
-		if($img_size[0]>1080) {
-			$img_width=1080;																													//== 가로 비율
-			$img_height=(int)($img_size[1] * (1000/$img_size[0]));			//== 세로 비율
-			//thumbnail($_SERVER["DOCUMENT_ROOT"].$boardPath,$_SERVER["DOCUMENT_ROOT"].$boardPath,$filename[$i],$img_width,$img_height);
-			$ssPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
-			$sdPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
-			Thumbnail::create($ssPath.$filename[$i],
-				1080, 750,
+			Thumbnail::create($sPath.$filename[$i],
+				$board_info[thumbnail_width], $board_info[thumbnail_height],
 				SCALE_EXACT_FIT,
 				Array(
 				//'preprocess' => Array(&$waterMark, 'preprocess'),
-				'savepath' => $sdPath.'%FILENAME%.'.$dExt
+				'savepath' => $dPath.'%FILENAME%.'.$dExt
 			));
+
+			//== 원본이미지 크기 추출후 상하 비율 측정
+			$img_size = @getimagesize($_SERVER["DOCUMENT_ROOT"].$boardPath.$filename[$i]);
+			//== 원본이미지가 지정된 최대크기보다 클경우 섬넬 처리
+			if($img_size[0]>1080) {
+				$img_width=1080;																													//== 가로 비율
+				$img_height=(int)($img_size[1] * (1000/$img_size[0]));			//== 세로 비율
+				//thumbnail($_SERVER["DOCUMENT_ROOT"].$boardPath,$_SERVER["DOCUMENT_ROOT"].$boardPath,$filename[$i],$img_width,$img_height);
+				$ssPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
+				$sdPath=$_SERVER["DOCUMENT_ROOT"].$boardPath;
+				Thumbnail::create($ssPath.$filename[$i],
+					1080, 750,
+					SCALE_EXACT_FIT,
+					Array(
+					//'preprocess' => Array(&$waterMark, 'preprocess'),
+					'savepath' => $sdPath.'%FILENAME%.'.$dExt
+				));
+			}
+	*/
 		}
-*/
 	}
 }
+
+
 
 //== 사용자 IP
 $userIp=getenv('REMOTE_ADDR');
@@ -175,6 +181,7 @@ if($_GET['mode']=="add") {
 	if(!$_GET['idx'] || !member_session(1)) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 	//== 등록된 첨부파일 삭제
 	$delStr = "SELECT filename0,filename1,filename2,filename3,filename4,filename5,filename6,filename7,filename8 FROM $b_cfg_tb[1] WHERE idx=$_GET[idx]";
+
 	$uFiles = $db->getRow($delStr,DB_FETCHMODE_ASSOC);
 	if(DB::isError($uFiles)) die($uFiles->getMessage());
 	for($i=0; $i<=count($uFiles); $i++) {

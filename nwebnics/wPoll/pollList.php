@@ -5,16 +5,16 @@
 //== 게시판 기본정보 로드
 include ("inc/configInc.php");
 
-if(!$_GET[code]) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
+if(!$_GET['code']) js_action(1,"중요정보를 찾을수 없습니다.","",-1);
 
 //============================================================= 검색 질의 ===============================================================//
 $sqlStr1 = "SELECT COUNT(DISTINCT idx) FROM wPoll";
 $sqlStr2 = "SELECT * FROM wPoll";
 
 $addSql .=" code='$_GET[code]' AND";
-if($_GET[gWork]) $addSql .=" wType='$_GET[gWork]' AND";
-if($_GET[gWord] && $_GET[cField]) $addSql .=" $_GET[cField] like '%$_GET[gWord]%' AND";
-if($_GET[myjob]) $addSql .=" wUser like '%$_SESSION[my_name]%' AND";
+if($_GET['gWork']) $addSql .=" wType='$_GET[gWork]' AND";
+if($_GET['gWord'] && $_GET['cField']) $addSql .=" $_GET[cField] like '%$_GET[gWord]%' AND";
+if($_GET['myjob']) $addSql .=" wUser like '%$_SESSION[my_name]%' AND";
 
 //== 조건 질의어 생성
 if($addSql) {
@@ -23,8 +23,8 @@ if($addSql) {
 }
 
 //== 정렬필드와 차순결정
-if($_GET[aField]) $alignField=$_GET[aField]; else $alignField="idx";
-if($_GET[aType]) $alignType=$_GET[aType]; else $alignType="DESC";
+if($_GET['aField']) $alignField=$_GET['aField']; else $alignField="idx";
+if($_GET['aType']) $alignType=$_GET['aType']; else $alignType="DESC";
 $sqlStr2 .= " ORDER BY ".$alignField." ".$alignType;
 //== 다음 정렬 차순 결정
 if($alignType=="DESC") $alignType="ASC"; else if($alignType=="ASC") $alignType="DESC";
@@ -42,8 +42,8 @@ if(DB::isError($total)) die($total->getMessage());
 		$first = 1;
 		$last = 0;
 	}else {
-		$first = $num_per_page*($_GET[page]-1);
-		$last = $num_per_page*$_GET[page];
+		$first = $num_per_page*($_GET['page']-1);
+		$last = $num_per_page*$_GET['page'];
 		$next = $total - $last;
 		if($next > 0) {
 			$last -= 1;
@@ -54,7 +54,7 @@ if(DB::isError($total)) die($total->getMessage());
 	//== 총 페이지수
 	$total_page = ceil($total/$num_per_page);
 	//== 일련번호 설정
-	$article_num = $total - $num_per_page*($_GET[page]-1);
+	$article_num = $total - $num_per_page*($_GET['page']-1);
 	//== 오늘 등록된 게시물
 	$sql_str = "SELECT COUNT(idx) FROM wPoll WHERE signDate=now()";
 	$today = $db->getOne($sql_str);
@@ -65,7 +65,7 @@ if(DB::isError($total)) die($total->getMessage());
 	if(DB::isError($view)) die($view->getMessage());
 	//== 페이지 현황정보
 	$page_state="총 : <strong style=\"color:#F96807;\">".$total."</strong>개의 글이 있습니다. ";
-	if(!$_GET[gWork] && !$_GET[gField] & !$_GET[gWord]) {
+	if(!$_GET['gWork'] && !$_GET['gField'] & !$_GET['gWord']) {
 		//$page_state .= $_GET[page]." / ".$total_page." 페이지";
 	}else {
 		//$page_state .= "검색결과 : ".$_GET[page]." / ".$total_page;
@@ -117,10 +117,10 @@ if(DB::isError($total)) die($total->getMessage());
 							<span class="tblLeft"><?=$page_state;?></span>
 							<span class="tblRight">
 								<?
-								if(member_session(4) && $_GET[code] != "discuss" && $_GET[code] != "talk06") {
-									$linkbtn="<a href=\"pollForm.php?mode=add&code=".$_GET[code]."&mnv=".$_GET[mnv]."\"><img src=\"/img/comm/i_write.gif\" alt=\"글쓰기\" /></a>";
-								}else if(member_session(1) && $_GET[code] = "discuss") {
-									$linkbtn="<a href=\"pollForm.php?mode=add&code=".$_GET[code]."&mnv=".$_GET[mnv]."\"><img src=\"/img/comm/i_write.gif\" alt=\"글쓰기\" /></a>";
+								if(member_session(4) && $_GET['code'] != "discuss" && $_GET['code'] != "talk06") {
+									$linkbtn="<a href=\"pollForm.php?mode=add&code=".$_GET['code']."&mnv=".$_GET['mnv']."\"><img src=\"/img/comm/i_write.gif\" alt=\"글쓰기\" /></a>";
+								}else if(member_session(1) && $_GET['code'] = "discuss") {
+									$linkbtn="<a href=\"pollForm.php?mode=add&code=".$_GET['code']."&mnv=".$_GET['mnv']."\"><img src=\"/img/comm/i_write.gif\" alt=\"글쓰기\" /></a>";
 								}
 								echo $linkbtn;
 								?>
@@ -148,35 +148,35 @@ if(DB::isError($total)) die($total->getMessage());
 								echo $dLinks;
 								if(!$total) echo "<tr><td colspan=\"5\">현재 등록/검색된 게시물이 없습니다.</td></tr>";
 									for($i = $first; $i <= $last; $i++) {
-										$linkOption="?idx=".$view[$i][idx]."&mnv=".$_GET[mnv]."&code=".$_GET[code];
+										$linkOption="?idx=".$view[$i]['idx']."&mnv=".$_GET['mnv']."&code=".$_GET['code'];
 										$link1="<a href=\"pollView.php".$linkOption."\">";
 										$link2="</a>";
-										$newDate=$view[$i][signDate];
-										$newTime=$view[$i][regTime];
+										$newDate=$view[$i]['signDate'];
+										$newTime=$view[$i]['regTime'];
 										//$today=time();
 										$today=strtotime("today");
-										$write_day =strtotime($view[$i][signDate].$view[$i][regTime]);
+										$write_day =strtotime($view[$i]['signDate'].$view[$i]['regTime']);
 										$arr_day=explode("-",$newDate);
 										$arr_time=explode(":",$newTime);
 										//$write_day = mktime ($arr_time[0],$arr_time[1],$arr_time[2], $arr_day[1] , $arr_day[2], $arr_day[0]);
-										$write_day =strtotime($view[$i][signDate].$view[$i][regTime]);
+										$write_day =strtotime($view[$i]['signDate'].$view[$i]['regTime']);
 										//$view_day = $write_day+((60*60)*72);
-										$ddd=strtotime(date("Y-m-d", strtotime($view[$i][signDate]))."+3 day");
+										$ddd=strtotime(date("Y-m-d", strtotime($view[$i]['signDate']))."+3 day");
 										//echo $today." ".$ddd."<br/>";
-										$view_day = strtotime("+3 day", $view[$i][signDate].$view[$i][regTime]);
+										$view_day = strtotime("+3 day", $view[$i]['signDate'].$view[$i]['regTime']);
 
 										if($today < $ddd) {
 											$newIcon = "<span style=\"padding-left:2px;\"><img src=\"/img/comm/new.gif\" alt=\"new\"></span>";
 											//echo $today."--신규--".$view_day."<br>";
 										}else {
-											if($view[$i][editDate]) {									//== 수정된 경우
-												$tmpDate=explode(" ",$view[$i][editDate]);
+											if($view[$i]['editDate']) {									//== 수정된 경우
+												$tmpDate=explode(" ",$view[$i]['editDate']);
 												$eDate=$tmpDate[0];
 												$eime=$tmpDate[1];
 												$arrDay=explode("-",$eDate);
 												$arrTime=explode(":",$eTime);
 												//$writeDay = mktime ($arrTime[0],$arrTime[1],$arrTime[2], $arrDay[1] , $arrDay[2], $arrDay[0]);
-												$writeDay = strtotime($view[$i][editDate]);
+												$writeDay = strtotime($view[$i]['editDate']);
 												$viewDay = $writeDay+((60*60)*72);
 												if($today < $viewDay) {
 													$newIcon = "<span style=\"padding-left:2px;\"><img src=\"".$imgDir."edit.gif\" alt=\"edit\"></span>";
@@ -186,19 +186,19 @@ if(DB::isError($total)) die($total->getMessage());
 										}
 
 										//== 코멘트 카운트
-										$cCount=mentCount($view[$i]['idx'], $view[$i][code], "wpollMent");
+										$cCount=mentCount($view[$i]['idx'], $view[$i]['code'], "wpollMent");
 										if($cCount>0) $cMentv=" <span style=\"color:#F97501;\">[".$cCount."]</span>"; else $cMentv="";
 										//== 제목 길이 제한
-										if(strlen($view[$i][wSubject]) > 58) $view[$i][wSubject] = han_cut($view[$i][wSubject], 70, "..");
-										if(strlen($view[$i][wUser]) > 9) $view[$i][wUser] = han_cut($view[$i][wUser], 9, "");
+										if(strlen($view[$i]['wSubject']) > 58) $view[$i]['wSubject'] = han_cut($view[$i]['wSubject'], 70, "..");
+										if(strlen($view[$i]['wUser']) > 9) $view[$i]['wUser'] = han_cut($view[$i]['wUser'], 9, "");
 										//== 선택 레코드 색상 선택
-										if($_GET[eidx]==$view[$i][idx]) $selectedcolor="#CCFFCC"; else $selectedcolor="#FFFFFF";
+										if($_GET['eidx']==$view[$i]['idx']) $selectedcolor="#CCFFCC"; else $selectedcolor="#FFFFFF";
 								?>
 									<tr style="background:<?=$selectedcolor;?>;">
 										<td><?=$article_num;?></td>
-										<td class="ListAlign"><?=$link1.$view[$i][sSubject].$link2.$newIcon.$cMentv;?></td>
-										<td><?=$link1.$view[$i][click].$link2;?></td>
-										<td><?=$link1.substr(strtr($view[$i][signDate],"-","."),2).$link2;?></td>
+										<td class="ListAlign"><?=$link1.$view[$i]['sSubject'].$link2.$newIcon.$cMentv;?></td>
+										<td><?=$link1.$view[$i]['click'].$link2;?></td>
+										<td><?=$link1.substr(strtr($view[$i]['signDate'],"-","."),2).$link2;?></td>
 									</tr>
 								<?$article_num--; }?>
 								</tbody>
@@ -212,11 +212,11 @@ if(DB::isError($total)) die($total->getMessage());
 									<legend>검색</legend>
 									<select name="cField" class="selectbox">
 										<option value="">검색</option>
-										<option value="sSubject"<?if($_GET[cField]=="sSubject") echo " selected";?>>제목</option>
-										<option value="sContents"<?if($_GET[cField]=="sContents") echo " selected";?>>내용</option>
+										<option value="sSubject"<?if($_GET['cField']=="sSubject") echo " selected";?>>제목</option>
+										<option value="sContents"<?if($_GET['cField']=="sContents") echo " selected";?>>내용</option>
 									</select>
 									<input type="hidden" name="code" value="<?=$_GET['code'];?>" />
-									<input type="text" name="gWord" size="15" maxlength="20" class="textbox" title="검색 키워드 입력" value="<?=$_GET[gWord];?>" />
+									<input type="text" name="gWord" size="15" maxlength="20" class="textbox" title="검색 키워드 입력" value="<?=$_GET['gWord'];?>" />
 									<input type="image" src="/nwebnics/wBoard/skin/default/img/search.gif" style="vertical-align:-6px;" title="검색" />
 								</fieldset>
 							</form>

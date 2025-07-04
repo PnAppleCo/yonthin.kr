@@ -409,7 +409,7 @@ function content_check(string $content, string $mode): bool {
 // }
 class paging {
 
-    public function page_display(int $total, int $num_per_page, int $num_per_block, int $next): string {
+    public function page_display(int $total, int $num_per_page, int $num_per_block, ?int $next): string {
         $view_val = $this->val_reset();
 
         $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -425,6 +425,7 @@ class paging {
         $next_page = '';
         $next_page10 = '';
         $now_page = '';
+		$next = $next ?? 0;  //null 처리
 
         $self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
 
