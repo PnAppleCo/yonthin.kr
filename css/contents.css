@@ -1602,8 +1602,8 @@
 		width: 100%;
 		margin-top: 20px;
 	}
-	
-		.section7 .ex .text {
+
+	.section7 .ex .text {
 		font-size: 1.6rem;
 	}
 	
@@ -1924,6 +1924,10 @@
 		margin-top: 30px;
 	}
 
+	.section16 .intro .topimg .pc {
+		display: none;
+	}
+
 }
 
 
@@ -2053,9 +2057,8 @@
 
 
 .section16 .t1 {
-    width: 1200px;
-    margin:80px 0 80px 0;
-    padding-bottom: 20px;
+    margin:80px 0 20px 0;
+    padding-bottom: 10px;
     text-align: left;
 }
 
@@ -2069,7 +2072,7 @@
 
 .section16 .intro {
 	position:relative;
-	padding-bottom: 90px;
+	padding-bottom: 10px;
 }
 
 
@@ -2087,10 +2090,9 @@
 	right: 0;
 }
 
-.section16 .intro topimg .m {
-		display: block;
-		width: 100%;
-	}
+.section16 .intro .topimg pc {
+	display: block;
+}
 
 
 
@@ -2192,24 +2194,21 @@ display: flex;
  @media screen and (min-width: 768px) {
 
 	.section16 .intro {
-    display: grid;
-    grid-template-rows: auto 1fr;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		
+		/* gap을 개별로 분리 */
+		row-gap: 2rem;
+
+    }
+    .section16 .year-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		/* gap을 개별로 분리 */
+		column-gap: 2rem;
+		row-gap: 2rem;
+    }
 	
-	/* gap을 개별로 분리 */
-    row-gap: 2rem;
-
-  }
-  .section16 .year-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    /* gap을 개별로 분리 */
-    column-gap: 2rem;
-    row-gap: 2rem;
-  }
 }
 
-/*이제 깃허브테스트*/
-.section17 .t1{
-
-}
