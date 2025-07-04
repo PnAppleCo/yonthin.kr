@@ -1,0 +1,128 @@
+.gtbl1 {
+	width: 100%;
+	border-top: 2px solid #DBDBDB;
+    margin-bottom: 100px;   
+}
+
+.gtbl1 tr {
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.gtbl1 td {
+	padding-top: 25px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+}
+
+.gtbl1 td span {
+    color: #272727;
+
+    /* intro.text */
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+    letter-spacing: -1px;
+}
+
+.gtbl1 .bTitle{
+    margin-top: 17px;
+    width: 290px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #F5F5F5;
+
+    padding-top: 18px;
+}
+
+.gtbl1 .bTitle img {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.gtbl1 .bTitle b {
+    color: #2775DE;
+    font-family: "Noto Sans KR";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 15px; 
+    letter-spacing: -0.75px;
+
+}
+
+.gtbl1 .bTitle span {
+
+    color: #666;
+    font-family: "Noto Sans KR";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: -0.75px;
+    padding-left: 125px;
+}
+
+.gdiv {
+    margin-top: 10px;
+}
+
+.gdiv h1 {
+    text-align: left;
+    font-size: 40px;
+}
+
+
+.gtbl2 {
+    width: 100%;
+    background-color: #F5F5F5;
+
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border: 1px solid #D9D9D9;
+
+}
+
+.gtbl2 td{
+    border: 1px solid #D9D9D9;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.gtbl2 th{
+    width: 10%;    
+}
+
+.gtbl3 {
+    width: 100%;
+
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; 
+    border: 1px solid #DBDBDB;
+    margin-bottom: 30px;
+}
+
+.gtbl3 tr td{
+    border: 1px solid #DBDBDB;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.gtbl3 b{
+    color: #2775DE;
+}
+
+
+
