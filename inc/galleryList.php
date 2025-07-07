@@ -72,14 +72,19 @@ if(!$_GET['code']) js_action(1,"중요정보를 찾을 수 없습니다. 관리�
 			{
 				if(id == "2024"){
 					//2024수상작 보이기
-					document.getElementById("2024gd").style.display = "block";
+					document.getElementById("2024gd").style.display = "flex";
 					document.getElementById("2023gd").style.display = "none";
 
+					document.getElementById("2024btn").className = "on";
+					document.getElementById("2023btn").className = "";
 				}
 				else{
 					//2023수상작 보이기
 					document.getElementById("2024gd").style.display = "none";
-					document.getElementById("2023gd").style.display = "block";
+					document.getElementById("2023gd").style.display = "flex";
+
+					document.getElementById("2024btn").className = "";
+					document.getElementById("2023btn").className = "on";
 				}
 			}
 		</script>

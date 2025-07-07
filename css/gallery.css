@@ -1,29 +1,76 @@
+.tab {
+    cursor:pointer;
+    display: flex;
+}
+
+.tab a {
+
+    display: inline-block;
+
+    width: 178px;
+    height: 60px;
+
+    border-radius: 100px;
+    border: 1px solid #FFF;
+    background: #D9D9D9;
+    
+    color: #666;
+    text-align: center;
+   
+    font-family: "Noto Sans KR";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 60px; 
+    letter-spacing: -1.2px;
+
+}
+
+.tab a:hover{
+    color: #2775DE;
+    background: #FFF;
+    border-radius: 100px;
+    border: 1px solid #2775DE;
+}
+
+.tab .on{
+    color: #FFF;
+    background: #2775DE;
+}
+
 .gtbl1 {
 	width: 100%;
 	border-top: 2px solid #DBDBDB;
     margin-bottom: 100px;   
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* 이미지가 넘치면 다음 줄로 넘어가도록 설정 */
+    justify-content: space-between; /* 이미지 사이에 공간을 균등하게 배분 */
+
 }
 
-.gtbl1 tr {
-	border-bottom: 1px solid #D9D9D9;
+.gtbl1-item{   
+    width: 290px;
+    margin-bottom: 10px; 
+    padding-top: 28px;
+    padding-bottom: 10px;
 }
 
-.gtbl1 td {
-	padding-top: 25px;
-    padding-right: 40px;
-    padding-bottom: 20px;
+.gtbl1-item .atr img{
+    width: 100%;     /* 이미지 너비를 부모 요소에 맞춤 */
+    height: auto;    /* 이미지 높이 자동 조절 */
+    display: block;  /* 이미지 줄 바꿈 */
 }
 
-.gtbl1 td span {
+.gtbl1 span {
     color: #272727;
-
-    /* intro.text */
     font-family: "Noto Sans KR";
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    line-height: 32px; /* 160% */
+    line-height: 32px;
     letter-spacing: -1px;
+    text-align: left;
 }
 
 .gtbl1 .bTitle{
@@ -33,7 +80,6 @@
     flex-shrink: 0;
     border-radius: 10px;
     background: #F5F5F5;
-
     padding-top: 18px;
 }
 
@@ -53,17 +99,45 @@
 
 }
 
-.gtbl1 .bTitle span {
+.gtbl1 .gtbl1-item .bTitle .tbl{
+    width: 100%;
+}
 
+.gtbl1 .gtbl1-item .bTitle .rtd {
+    text-align: right;
+    vertical-align: top;
     color: #666;
     font-family: "Noto Sans KR";
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: 15px;
-    letter-spacing: -0.75px;
-    padding-left: 125px;
+    letter-spacing: -0.75px;   
+    padding-right: 20px;
 }
+
+/* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
+@media (max-width: 768px) {
+
+    .gtbl1-item{   
+        width: 100%;
+    }
+
+    .gtbl1-item .bTitle{
+        width: 100%; /* 한 줄에 하나씩 */
+    }
+    
+    .tab a {
+        width: 30%;
+        font-size: 18px;
+    }
+    .section7 .links a {
+        width: 40%;
+        font-size: 13px;
+    }
+}
+
+/* ////////////////////////////////////////////////////////// */
 
 .gdiv {
     margin-top: 10px;
@@ -123,6 +197,4 @@
 .gtbl3 b{
     color: #2775DE;
 }
-
-
 

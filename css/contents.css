@@ -1640,6 +1640,11 @@
 	.section7 .ex .item:first-child {
 		margin-top: 0 !important;
 	}
+
+	.section7 .tab img
+	{
+		width: 30%;
+	}
 	
 	.section8 {
 		width: 100%;
