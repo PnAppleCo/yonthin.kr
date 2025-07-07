@@ -6,7 +6,7 @@ $url = $_REQUEST["callback"].'?callback_func='.$_REQUEST["callback_func"];
 $bSuccessUpload = is_uploaded_file($_FILES['Filedata']['tmp_name']);
 
 // SUCCESSFUL
-if(bSuccessUpload) {
+if($bSuccessUpload) {
 	$tmp_name = $_FILES['Filedata']['tmp_name'];
 	$name = $_FILES['Filedata']['name'];
 
