@@ -120,7 +120,7 @@
 @media (max-width: 768px) {
 
     .gtbl1-item{   
-        width: 100%;
+        width: 50%;
     }
 
     .gtbl1-item .bTitle{
@@ -134,7 +134,16 @@
     .section7 .links a {
         width: 40%;
         font-size: 13px;
+    } 
+
+    .gdiv .innCon img{
+        position: relative;
+		top: auto;
+		right: auto;
+		width: 100%;
+		margin-top: 20px;
     }
+
 }
 
 /* ////////////////////////////////////////////////////////// */
@@ -145,56 +154,148 @@
 
 .gdiv h1 {
     text-align: left;
-    font-size: 40px;
-}
-
-
-.gtbl2 {
-    width: 100%;
-    background-color: #F5F5F5;
+    color: #272727;
 
     font-family: "Noto Sans KR";
-    font-size: 20px;
+    font-size: 36px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 32px; /* 160% */
-    margin-bottom: 30px;
-    margin-top: 10px;
-    border: 1px solid #D9D9D9;
-
+    font-weight: 700;
+    line-height: 48px; /* 133.333% */
+    letter-spacing: -1.8px;
 }
 
-.gtbl2 td{
-    border: 1px solid #D9D9D9;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.gdiv .line{
+    width: 1200px;
+    height: 1px;
+    background: #DBDBDB;
+
+    margin-top: 46px;
+    margin-bottom: 91px;
 }
 
-.gtbl2 th{
-    width: 10%;    
+.gdiv h2 {
+    color: #2775DE;
+    font-family: "Noto Sans KR";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 20px;
+    text-align: center;
 }
 
-.gtbl3 {
-    width: 100%;
+.gdiv h3 {
+    color: #666;
 
     font-family: "Noto Sans KR";
-    font-size: 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    margin-top: 12px;
+    text-align: center;    
+    margin-bottom: 39px;  
+}
+
+.gdiv .titleView {
+    display: flex;
+    width: 94px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50px;
+    background: #2775DE;
+
+    color: #FFF;
+
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 41px;
+    margin-bottom: 21px;
+
+}
+
+.gdiv .titleView b{
+    padding-left: 3px;
+}
+
+.gdiv .vCntHead{
+    width: 100%;    
+}
+
+
+.gdiv .vCnt{
+    display: flex;
+    border-radius: 20px;
+    border: 1px solid #2775DE;
+    width: 71.91px;
+    height: 24px;
+    flex-shrink: 0;
+
+    color: #2775DE;
+
+    font-family: "Noto Sans KR";
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
-    line-height: 32px; 
-    border: 1px solid #DBDBDB;
-    margin-bottom: 30px;
+    line-height: 15px; /* 100% */
+    letter-spacing: -0.75px;
+
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+
 }
 
-.gtbl3 tr td{
-    border: 1px solid #DBDBDB;
-    padding-left: 8px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+.gdiv .vCntInfo{
+    display: flex;
+    background:#F5F5F5;
+    width: 418px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    justify-content: center;    
+    margin: auto; 
+}
+.gtbl5{
+    width: 100%;
+    align-items: center;
 }
 
-.gtbl3 b{
+.gtbl5 th{
+    color: #666;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    letter-spacing: -0.8px;
+}
+
+.gtbl5 td{
+    color: #272727;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    letter-spacing: -0.8px;
+}
+
+.gtbl5 b{
     color: #2775DE;
 }
+
+.gdiv .innCon{
+    margin-top: 80px;
+}
+
+
 
