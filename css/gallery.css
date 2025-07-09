@@ -26,12 +26,17 @@
 
 }
 
-.tab a:hover{
-    color: #2775DE;
-    background: #FFF;
-    border-radius: 100px;
-    border: 1px solid #2775DE;
+@media (hover: hover) and (pointer: fine) {
+
+    /* pc에서만 hover 가 동작하도록 한다. 모바일 경우 적용 안됨 */
+    .tab a:hover{
+        color: #2775DE;
+        background: #FFF;
+        border-radius: 100px;
+        border: 1px solid #2775DE;
+    }
 }
+
 
 .tab .on{
     color: #FFF;
@@ -120,38 +125,6 @@
     padding-right: 20px;
 }
 
-/* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
-@media (max-width: 768px) {
-
-    .gtbl1-item{   
-        width: 100%;
-    }
-
-    .gtbl1-item .bTitle{
-        width: 100%; /* 한 줄에 하나씩 */
-    }
-    
-    .tab a {
-        width: 30%;
-        font-size: 18px;
-    }
-    .section7 .links a {
-        width: 40%;
-        font-size: 13px;
-    } 
-
-    .gdiv .innCon img{
-        position: relative;
-		top: auto;
-		right: auto;
-		width: 100%;
-		margin-top: 20px;
-    }
-
-}
-
-/* ////////////////////////////////////////////////////////// */
-
 .gdiv {
     margin-top: 10px;
 }
@@ -159,20 +132,17 @@
 .gdiv h1 {
     text-align: left;
     color: #272727;
-
     font-family: "Noto Sans KR";
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
-    line-height: 48px; /* 133.333% */
+    line-height: 48px;
     letter-spacing: -1.8px;
 }
 
 .gdiv .line{
-    width: 1200px;
-    height: 1px;
-    background: #DBDBDB;
-
+    
+    border-top: 2px solid #DBDBDB;
     margin-top: 46px;
     margin-bottom: 91px;
 }
@@ -230,9 +200,8 @@
 }
 
 .gdiv .vCntHead{
-    width: 100%;    
+    width: 100%;  
 }
-
 
 .gdiv .vCnt{
     display: flex;
@@ -241,19 +210,15 @@
     width: 71.91px;
     height: 24px;
     flex-shrink: 0;
-
     color: #2775DE;
-
     font-family: "Noto Sans KR";
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: 15px; /* 100% */
     letter-spacing: -0.75px;
-
     justify-content: center;
     align-items: center;
-
     margin: auto;
 
 }
@@ -267,7 +232,9 @@
     border-radius: 10px;
     justify-content: center;    
     margin: auto; 
+  
 }
+
 .gtbl5{
     width: 100%;
     align-items: center;
@@ -309,3 +276,64 @@
 }
 
 
+/* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
+@media (max-width: 768px) {
+
+    .gtbl1-item{   
+        width: 100%;
+    }
+
+    .gtbl1-item .bTitle{
+        width: 100%; /* 한 줄에 하나씩 */
+    }
+    
+    .tab a {
+        width: 30%;
+        font-size: 18px;
+    }
+    .section7 .links a {
+        width: 50%;
+        font-size: 13px;
+    } 
+
+    .gdiv h1 {
+        font-size: 20px;
+    }
+
+    .gdiv .line{
+    
+        border-top: 2px solid #DBDBDB;
+        margin-top: 20px;
+        margin-bottom: 45px;
+    }
+
+    .gdiv .innCon img{
+        position: relative;
+		top: auto;
+		right: auto;
+		width: 100%;
+		margin-top: 20px;
+    }    
+
+    .gdiv .vCntHead h2{
+        font-size: 1.6rem;
+    }
+
+    .gdiv .vCntHead h3{
+        font-size: 1.2rem;
+    }
+
+    .gdiv .vCntHead .vCntInfo .gtbl5 th{
+        font-size: 1.2rem;
+    }
+
+    .gdiv .vCntHead .vCntInfo .gtbl5 td{
+        font-size: 1.2rem;
+    }
+    
+    .gdiv .vCntInfo{
+        width: 100%;
+    }
+
+    
+}
