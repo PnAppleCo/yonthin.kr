@@ -99,6 +99,10 @@
 
 }
 
+.gtbl1 .bTitle .b1 {
+    margin-left: 15px;
+}
+
 .gtbl1 .gtbl1-item .bTitle .tbl{
     width: 100%;
 }
@@ -120,7 +124,7 @@
 @media (max-width: 768px) {
 
     .gtbl1-item{   
-        width: 50%;
+        width: 100%;
     }
 
     .gtbl1-item .bTitle{
@@ -297,5 +301,11 @@
     margin-top: 80px;
 }
 
+.gdiv .innCon img{
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    
+}
 
 

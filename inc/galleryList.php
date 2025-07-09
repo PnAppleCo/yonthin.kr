@@ -87,6 +87,16 @@ if(!$_GET['code']) js_action(1,"중요정보를 찾을 수 없습니다. 관리�
 					document.getElementById("2023btn").className = "on";
 				}
 			}
+			window.onload=function()
+			{
+				// 현재 페이지의 URL에서 파라미터 부분(쿼리 문자열)을 가져옵니다.
+				var urlParams = new URLSearchParams(window.location.search);
+
+				// 'name'이라는 파라미터 값을 가져옵니다.
+				var id = urlParams.get('id').substr(0,4);
+
+				if(id== "2023") onVisible(id);
+			}
 		</script>
 	</head>
     <body>
