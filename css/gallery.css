@@ -6,37 +6,18 @@
 .tab a {
 
     display: inline-block;
-
-    width: 178px;
-    height: 60px;
-
-    border-radius: 100px;
-    border: 1px solid #FFF;
-    background: #D9D9D9;
-    
-    color: #666;
+    width: 120px;
+    height: 35px;
+    margin-right: 10px;
+    padding-top: 4px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-radius: 50px;
+    background: #2775de;
     text-align: center;
-   
-    font-family: "Noto Sans KR";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 60px; 
-    letter-spacing: -1.2px;
-
+    font-size: 1.6rem;
+    color: #fff;
 }
-
-@media (hover: hover) and (pointer: fine) {
-
-    /* pc에서만 hover 가 동작하도록 한다. 모바일 경우 적용 안됨 */
-    .tab a:hover{
-        color: #2775DE;
-        background: #FFF;
-        border-radius: 100px;
-        border: 1px solid #2775DE;
-    }
-}
-
 
 .tab .on{
     color: #FFF;
@@ -46,25 +27,32 @@
 .gtbl1 {
 	width: 100%;
 	border-top: 2px solid #DBDBDB;
-    margin-bottom: 100px;   
+    margin-bottom: 90px;   
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap; /* 이미지가 넘치면 다음 줄로 넘어가도록 설정 */
-    justify-content: space-between; /* 이미지 사이에 공간을 균등하게 배분 */
+    justify-content: left;
 
 }
 
+.gtbl1-item-center,
 .gtbl1-item{   
-    width: 290px;
-    margin-bottom: 10px; 
-    padding-top: 28px;
-    padding-bottom: 10px;
+    width: 374px;
+    margin-bottom: 80px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.gtbl1-item-center{  /* 2,5,8 column*/
+    margin: 0px 38px 80px 38px; /* 상우하좌 */
 }
 
 .gtbl1-item .atr img{
     width: 100%;     /* 이미지 너비를 부모 요소에 맞춤 */
     height: auto;    /* 이미지 높이 자동 조절 */
     display: block;  /* 이미지 줄 바꿈 */
+    border: 1px solid #f5f5f5;
 }
 
 .gtbl1 span {
@@ -72,7 +60,7 @@
     font-family: "Noto Sans KR";
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 32px;
     letter-spacing: -1px;
     text-align: left;
@@ -80,7 +68,7 @@
 
 .gtbl1 .bTitle{
     margin-top: 17px;
-    width: 290px;
+    width: 374px;
     height: 40px;
     flex-shrink: 0;
     border-radius: 10px;
@@ -104,14 +92,14 @@
 
 }
 
-.gtbl1 .bTitle .b1 {
-    margin-left: 15px;
-}
-
+.gtbl1 .gtbl1-item-center .bTitle .tbl,
 .gtbl1 .gtbl1-item .bTitle .tbl{
     width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
+.gtbl1 .gtbl1-item-center .bTitle .rtd,
 .gtbl1 .gtbl1-item .bTitle .rtd {
     text-align: right;
     vertical-align: top;
@@ -141,7 +129,7 @@
 }
 
 .gdiv .line{
-    
+
     border-top: 2px solid #DBDBDB;
     margin-top: 46px;
     margin-bottom: 91px;
@@ -275,6 +263,14 @@
     
 }
 
+.line-text{
+    border-top: 1px solid #272727;
+    margin-top: 90px;
+    margin-bottom: 90px;
+
+}
+
+
 
 /* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
 @media (max-width: 768px) {
@@ -288,7 +284,7 @@
     }
     
     .tab a {
-        width: 30%;
+        /* width: 30%; */
         font-size: 18px;
     }
     .section7 .links a {
@@ -336,4 +332,15 @@
     }
 
     
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    /* pc에서만 hover 가 동작하도록 한다. 모바일 경우 적용 안됨 */
+    .tab a:hover{
+        color: #2775DE;
+        background: #FFF;
+        border-radius: 100px;
+        border: 1px solid #2775DE;
+    }
 }

@@ -759,24 +759,19 @@
 
 .section7 .links a {
 
-	display: flex;
-	width: 253px;
-	height: 62px;
-	flex-shrink: 0;
-	border-radius: 5px;
-	background: #2775DE;
+	display: inline-block;
+	width: 256px;
+	height: 35px;
+	margin-right: 10px;
+	padding-top: 4px;
+	vertical-align: middle;
 	box-sizing: border-box;
-
-	color: #FFF;
+	border-radius: 5px;
+	background: #2775de;
 	text-align: center;
-	font-family: "Noto Sans KR";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 900;
-	line-height: normal;
-
-	justify-content: center;   /* 수평 가운데 정렬 */
-	align-items: center;       /* 수직 가운데 정렬 */
+	font-size: 1.6rem;
+	color: #fff;
+	
 }
 
 .section8 {
@@ -893,6 +888,10 @@
 .section9 .item {
 	padding: 90px 0;
 	border-top: 1px solid #e5e5e5;
+}
+
+.section9 .item1 {
+	padding: 90px 0;
 }
 
 .section9 .item > ul > li {
@@ -1129,6 +1128,271 @@
 
 .section14 ul li:nth-child(-n+2) {
 	margin-top: 0;
+}
+
+
+.section15 {
+		width: 100%;
+	max-width: 1200px;
+	margin: 60px auto;
+	font-size: 0;
+}
+
+
+.section15 .title {
+	display: inline-block;
+	width: 120px;
+	vertical-align: top;
+}
+
+.section15 .title b {
+	font-size: 2.8rem;
+	color: #135fc6;
+}
+
+.section15 .title span {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #135fc6;
+}
+
+.section15 .tab-cont {
+	display: none;
+}
+
+.section15 .tab-cont:first-child {
+	display: block;
+}
+
+.section15 .cont {
+	position: relative;
+	display: inline-block;
+	width: 1080px;
+	padding: 30px 0;
+	vertical-align: top;
+	border-left: 1px solid #135fc6;
+	box-sizing: border-box;
+	font-size: 0;
+}
+
+.section3 .item:last-child .cont {
+	padding-bottom: 0;
+}
+
+.section15 .cont::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -8px;
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: #135fc6;
+	border-radius: 20px;
+	border: 3px solid #8eb5ea;
+}
+
+.section15 .cont dl {
+	margin-top: 10px;
+}
+
+.section15 .cont dl:first-child {
+	margin-top: 0;
+}
+
+.section15 .cont dt,
+.section15 .cont dd {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 180%;
+	font-size: 2rem;
+}
+
+.section15 .cont dt {
+	width: 15%;
+	padding-left: 10px;
+	box-sizing: border-box;
+	text-decoration: underline;
+	font-weight: 500;
+	color: #135fc6;
+}
+
+.section15 .cont dd {
+	width: 85%;
+	font-weight: 500;
+	color: #135fc6;
+}
+
+
+.section15 .cont dd > ul > li::before {
+	content: "";
+}
+
+.section15 .cont dd > ul > li > ul > li {
+	font-size: 2rem;
+}
+
+.section15 .cont dd > ul > li > ul > li::before {
+	content: "- ";
+}
+
+
+.section15 .cont dd > ul > li > ul > li > ul > li {
+	padding-left: 8px;
+}
+
+.section15 .cont dd > ul > li > ul > li > ul > li::before {
+	content: "· ";
+}
+
+
+/* ========== 연혁(section16) 전용 스타일 추가 ========== */
+
+.section16 {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+.section16 .t1 {
+    margin:80px 0 20px 0;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+
+.section16 .t1 strong {
+	font-size: 3.6rem;
+	font-weight: 600;
+}
+	
+.section16 .intro {
+	position:relative;
+	padding-bottom: 10px;
+}
+
+
+.section16 .intro strong {
+	font-size: 6rem;
+	color: #2775DE;
+	font-weight: 900;
+	line-height: normal;
+}
+
+
+.section16 .intro img {
+	position: absolute;
+	top: -20px;
+	right: 0;
+}
+
+.section16 .intro .topimg pc {
+	display: block;
+}
+
+.section16 .year-box {
+	padding-bottom: 40px;
+	padding-top: 40px;
+	padding-right: 80px;
+	border-top: 1px solid #272727;	
+}
+
+.section16 .year-box h3 {
+    position: relative;
+    margin-bottom: 30px;
+    color: #2775DE;
+    display: flex;
+    align-items: center;
+}
+
+.section16 .year-box h3 strong {
+	z-index: 2;
+    font-size: 3.2rem;
+	font-weight: 900;
+}
+
+.section16 .year-box h3::before {
+	z-index: 1;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -10px;
+	display: block;
+	width: 23px;
+	height: 23px;
+	border-radius: 100px;
+	background: #8eb3e8;
+}
+
+.section16 .year-box li {
+	position: relative;
+	padding:4px;
+	font-size: 2rem;
+	color: #666;
+	word-break: keep-all;
+	 display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60px 1fr;
+    /* gap을 개별로 분리 */
+    column-gap: 1rem;
+}
+
+.section16 .date {
+	display: flex;
+
+}
+
+.section16 .date span {
+  color: #2775de;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-right: 1.5rem;
+
+}
+
+.section16 .date a.link_cont{
+	cursor: pointer;
+}
+
+a, a:active, a:hover {
+    text-decoration: none;
+	color: #272727;
+}
+
+.section16 .info {
+	display: flex;
+
+}
+
+
+.section16 .year-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-top: 2rem;
+  border-radius: 8px;
+}
+
+ @media screen and (min-width: 768px) {
+
+	.section16 .intro {
+		display: grid;
+		grid-template-rows: auto 1fr;
+		
+		/* gap을 개별로 분리 */
+		row-gap: 2rem;
+
+    }
+
+    .section16 .year-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		/* gap을 개별로 분리 */
+		column-gap: 2rem;
+		row-gap: 2rem;
+    }
 }
 
 @media all and (max-width: 1000px) {
@@ -1934,287 +2198,3 @@
 	}
 
 }
-
-
-.section15 {
-		width: 100%;
-	max-width: 1200px;
-	margin: 60px auto;
-	font-size: 0;
-}
-
-
-.section15 .title {
-	display: inline-block;
-	width: 120px;
-	vertical-align: top;
-}
-
-.section15 .title b {
-	font-size: 2.8rem;
-	color: #135fc6;
-}
-
-.section15 .title span {
-	font-size: 2rem;
-	font-weight: 600;
-	color: #135fc6;
-}
-
-.section15 .tab-cont {
-	display: none;
-}
-
-.section15 .tab-cont:first-child {
-	display: block;
-}
-
-.section15 .cont {
-	position: relative;
-	display: inline-block;
-	width: 1080px;
-	padding: 30px 0;
-	vertical-align: top;
-	border-left: 1px solid #135fc6;
-	box-sizing: border-box;
-	font-size: 0;
-}
-
-.section3 .item:last-child .cont {
-	padding-bottom: 0;
-}
-
-.section15 .cont::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -8px;
-	display: block;
-	width: 10px;
-	height: 10px;
-	background: #135fc6;
-	border-radius: 20px;
-	border: 3px solid #8eb5ea;
-}
-
-.section15 .cont dl {
-	margin-top: 10px;
-}
-
-.section15 .cont dl:first-child {
-	margin-top: 0;
-}
-
-.section15 .cont dt,
-.section15 .cont dd {
-	display: inline-block;
-	vertical-align: top;
-	line-height: 180%;
-	font-size: 2rem;
-}
-
-.section15 .cont dt {
-	width: 15%;
-	padding-left: 10px;
-	box-sizing: border-box;
-	text-decoration: underline;
-	font-weight: 500;
-	color: #135fc6;
-}
-
-.section15 .cont dd {
-	width: 85%;
-	font-weight: 500;
-	color: #135fc6;
-}
-
-
-.section15 .cont dd > ul > li::before {
-	content: "";
-}
-
-.section15 .cont dd > ul > li > ul > li {
-	font-size: 2rem;
-}
-
-.section15 .cont dd > ul > li > ul > li::before {
-	content: "- ";
-}
-
-
-.section15 .cont dd > ul > li > ul > li > ul > li {
-	padding-left: 8px;
-}
-
-.section15 .cont dd > ul > li > ul > li > ul > li::before {
-	content: "· ";
-}
-
-
-
-/* ========== 연혁(section16) 전용 스타일 추가 ========== */
-
-.section16 {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-
-.section16 .t1 {
-    margin:80px 0 20px 0;
-    padding-bottom: 10px;
-    text-align: left;
-}
-
-
-.section16 .t1 strong {
-	font-size: 3.6rem;
-	font-weight: 600;
-}
-	
-
-
-.section16 .intro {
-	position:relative;
-	padding-bottom: 10px;
-}
-
-
-.section16 .intro strong {
-	font-size: 6rem;
-	color: #2775DE;
-	font-weight: 900;
-	line-height: normal;
-}
-
-
-.section16 .intro img {
-	position: absolute;
-	top: -20px;
-	right: 0;
-}
-
-.section16 .intro .topimg pc {
-	display: block;
-}
-
-
-
-
-/*
-.section16 .section16 .year-box 
-.section16 .year-box h3::before
-.section16 .year-box li
-.section16 .year-img
- @media
-*/
-
-.section16 .year-box {
-	padding-bottom: 40px;
-	padding-top: 40px;
-	padding-right: 80px;
-	border-top: 1px solid #272727;	
-}
-
-
-.section16 .year-box h3 {
-    position: relative;
-    margin-bottom: 30px;
-    color: #2775DE;
-    display: flex;
-    align-items: center;
-}
-
-.section16 .year-box h3 strong {
-	z-index: 2;
-    font-size: 3.2rem;
-	font-weight: 900;
-}
-
-.section16 .year-box h3::before {
-	z-index: 1;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -10px;
-	display: block;
-	width: 23px;
-	height: 23px;
-	border-radius: 100px;
-	background: #8eb3e8;
-}
-
-
-.section16 .year-box li {
-	position: relative;
-	padding:4px;
-	font-size: 2rem;
-	color: #666;
-	word-break: keep-all;
-	 display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-columns: 60px 1fr;
-    /* gap을 개별로 분리 */
-    column-gap: 1rem;
-}
-
-
-.section16 .date info {
-display: flex;
-
-}
-
-.section16 .date span {
-  color: #2775de;
-  font-size: 2rem;
-  font-weight: 600;
-  padding-right: 1.5rem;
-
-}
-
-.section16 .date info a.link_cont{
-cursor: pointer;
-}
-
-a, a:active, a:hover {
-    text-decoration: none;
-	color: #272727;
-}
-
-.section16 .date info {
-display: flex;
-
-}
-
-
-.section16 .year-img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  margin-top: 2rem;
-  border-radius: 8px;
-}
-
- @media screen and (min-width: 768px) {
-
-	.section16 .intro {
-		display: grid;
-		grid-template-rows: auto 1fr;
-		
-		/* gap을 개별로 분리 */
-		row-gap: 2rem;
-
-    }
-    .section16 .year-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-
-		/* gap을 개별로 분리 */
-		column-gap: 2rem;
-		row-gap: 2rem;
-    }
-	
-}
-
-
