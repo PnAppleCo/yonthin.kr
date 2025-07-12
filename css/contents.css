@@ -956,7 +956,7 @@
 	font-weight: 500;
 	color: #fff;
 }
-	
+
 .section10 {
 	width: 1200px;
 	margin: 90px auto;
@@ -1294,7 +1294,7 @@
 .section16 .year-box {
 	padding-bottom: 40px;
 	padding-top: 40px;
-	padding-right: 80px;
+	/* padding-right: 80px; */
 	border-top: 1px solid #272727;	
 }
 
@@ -1331,7 +1331,7 @@
 	font-size: 2rem;
 	color: #666;
 	word-break: keep-all;
-	 display: grid;
+	display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-columns: 60px 1fr;
     /* gap을 개별로 분리 */
@@ -2014,7 +2014,7 @@ a, a:active, a:hover {
 		padding: 50px 30px 0 30px;
 		border-top: 0;
 	}
-	
+
 	.section9 .item > ul > li {
 		font-size: 1.4rem;
 		word-break: keep-all;
@@ -2031,7 +2031,7 @@ a, a:active, a:hover {
 		margin-bottom: 50px;
 		overflow-x: auto;
 	}
-	
+
 	.section9 .tbl_wrap > div {
 		padding: 10px 20px;
 	}
@@ -2043,6 +2043,7 @@ a, a:active, a:hover {
 	.section9 .tbl_wrap > div strong {
 		margin-left: 5px;
 		font-size: 1.8rem;
+
 	}
 	
 	.section9 .tbl_wrap table {
