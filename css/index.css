@@ -963,5 +963,10 @@
     .idx_section3_slider .item img {
         width: 80px;
     }
-	
+
+    .idx_section1 .title strong {
+        font-size: 2.5rem;
+    }
+
+    
 }

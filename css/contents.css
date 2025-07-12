@@ -2010,6 +2010,7 @@ a, a:active, a:hover {
 		display: block;
 	}
 	
+	.section9 .item1,
 	.section9 .item {
 		padding: 50px 30px 0 30px;
 		border-top: 0;
@@ -2026,7 +2027,7 @@ a, a:active, a:hover {
 	}
 	
 	.section9 .tbl_wrap {
-		width: calc(100% + 60px);
+		width: calc(100% + 83px);
 		margin-left: -30px;
 		margin-bottom: 50px;
 		overflow-x: auto;
@@ -2198,4 +2199,10 @@ a, a:active, a:hover {
 		display: none;
 	}
 
+}
+
+@media ( max-width: 360px ) {
+	.section9 .tbl_wrap {
+		width: calc(100% + 200px);
+	}
 }
