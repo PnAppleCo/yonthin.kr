@@ -13,10 +13,10 @@
     vertical-align: middle;
     box-sizing: border-box;
     border-radius: 50px;
-    background: #2775de;
+    background: #D9D9D9;;
     text-align: center;
     font-size: 1.6rem;
-    color: #fff;
+    color: #666;
 }
 
 .tab .on{
@@ -274,23 +274,34 @@
 
 /* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
 @media (max-width: 768px) {
-
-    .gtbl1-item{   
-        width: 100%;
-    }
-
-    .gtbl1-item .bTitle{
-        width: 100%; /* 한 줄에 하나씩 */
-    }
-    
+     
     .tab a {
         /* width: 30%; */
         font-size: 18px;
     }
+
     .section7 .links a {
         width: 50%;
         font-size: 13px;
     } 
+
+    
+    .gtbl1-item-center,
+    .gtbl1-item{   
+         width: 100%;
+    }
+
+    .gtbl1-item-center .atr img,
+    .gtbl1-item-center .bTitle,
+    .gtbl1-item .bTitle{
+        width: 100%; /* 한 줄에 하나씩 */
+    }
+
+    .gtbl1-item-center{
+        margin-left: 0px;
+        margin-right: 0px;
+    }  
+   
 
     .gdiv h1 {
         font-size: 20px;
