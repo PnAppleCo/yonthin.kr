@@ -1,3 +1,33 @@
+.board_view_gd {
+	padding-bottom: 50px;
+	border-top: 2px solid #272727;
+	border-bottom: 1px solid #c5c5c5;
+}
+
+.button#pc a{
+    display: flex;
+	width: 241px;
+    height: 54px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: #2775DE;
+    justify-content: center;
+    align-items: center;
+
+    color: #FFF;
+    text-align: center;
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+    letter-spacing: -1px;
+}
+
+.button#mobile a{
+    display: none;
+}
+
 .tab {
     cursor:pointer;
     display: flex;
@@ -5,11 +35,12 @@
 
 .tab a {
 
-    display: inline-block;
+    display: flex;
     width: 120px;
     height: 35px;
     margin-right: 10px;
     padding-top: 4px;
+    justify-content: center;
     vertical-align: middle;
     box-sizing: border-box;
     border-radius: 50px;
@@ -17,6 +48,7 @@
     text-align: center;
     font-size: 1.6rem;
     color: #666;
+    font-family: "Noto Sans KR";
 }
 
 .tab .on{
@@ -26,9 +58,10 @@
 
 .gtbl1 {
 	width: 100%;
-	border-top: 2px solid #DBDBDB;
-    margin-bottom: 90px;   
+	border-top: 1px solid #DBDBDB;
+    /* margin-bottom: 90px;    */
     margin-top: 20px;
+    padding-top: 20px;
     display: flex;
     flex-wrap: wrap; /* 이미지가 넘치면 다음 줄로 넘어가도록 설정 */
     justify-content: left;
@@ -39,13 +72,16 @@
 .gtbl1-item{   
     width: 374px;
     margin-bottom: 80px; 
-    padding-top: 20px;
-    padding-bottom: 20px;
-
 }
 
 .gtbl1-item-center{  /* 2,5,8 column*/
     margin: 0px 38px 80px 38px; /* 상우하좌 */
+}
+
+.gtbl1-item-center .txt,
+.gtbl1-item .txt{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .gtbl1-item .atr img{
@@ -60,25 +96,25 @@
     font-family: "Noto Sans KR";
     font-size: 20px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 32px;
     letter-spacing: -1px;
     text-align: left;
 }
 
 .gtbl1 .bTitle{
-    margin-top: 17px;
     width: 374px;
-    height: 40px;
+    height: 30px;
     flex-shrink: 0;
     border-radius: 10px;
     background: #F5F5F5;
-    padding-top: 18px;
+    padding-top: 16px;
+   
 }
 
 .gtbl1 .bTitle img {
-    padding-left: 10px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 8px;
 }
 
 .gtbl1 .bTitle b {
@@ -95,8 +131,9 @@
 .gtbl1 .gtbl1-item-center .bTitle .tbl,
 .gtbl1 .gtbl1-item .bTitle .tbl{
     width: 100%;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    /* padding-top: 12px;
+    padding-bottom: 12px; */
+
 }
 
 .gtbl1 .gtbl1-item-center .bTitle .rtd,
@@ -113,10 +150,6 @@
     padding-right: 20px;
 }
 
-.gdiv {
-    margin-top: 10px;
-}
-
 .gdiv h1 {
     text-align: left;
     color: #272727;
@@ -124,15 +157,15 @@
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
-    line-height: 48px;
+    line-height: 36px;
     letter-spacing: -1.8px;
 }
 
 .gdiv .line{
 
     border-top: 2px solid #DBDBDB;
-    margin-top: 46px;
-    margin-bottom: 91px;
+    margin-top: 40px;
+    margin-bottom: 90px;
 }
 
 .gdiv h2 {
@@ -178,8 +211,9 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 41px;
-    margin-bottom: 21px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+
 
 }
 
@@ -253,7 +287,7 @@
 }
 
 .gdiv .innCon{
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 .gdiv .innCon img{
@@ -275,20 +309,50 @@
 /* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
 @media (max-width: 768px) {
      
-    .tab a {
-        /* width: 30%; */
-        font-size: 18px;
+    .button a {
+        margin-top: 40px;
     }
 
-    .section7 .links a {
-        width: 50%;
-        font-size: 13px;
-    } 
+     .button#mobile {
+        margin-right: 20px
+     }
+   
 
+    .button#mobile a{
+        width: 100%;
+        height: 48px;
+        border-radius: 5px;
+        background: #2775DE;
+
+        display: flex;
+       
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+
+        color: #FFF;
+
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; 
+        letter-spacing: -0.8px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .button#pc a{
+        display: none;
+    }
+
+    .tab a {
+        font-size: 16px;
+    }
     
     .gtbl1-item-center,
     .gtbl1-item{   
          width: 100%;
+         margin-bottom: 50px;
     }
 
     .gtbl1-item-center .atr img,
@@ -305,12 +369,11 @@
 
     .gdiv h1 {
         font-size: 20px;
+        line-height: 23px;
     }
 
-    .gdiv .line{
-    
+    .gdiv .line{    
         border-top: 2px solid #DBDBDB;
-        margin-top: 20px;
         margin-bottom: 45px;
     }
 
@@ -342,6 +405,10 @@
         width: 100%;
     }
 
+    .imgPd{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
     
 }
 

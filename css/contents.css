@@ -659,6 +659,10 @@
 }
 
 .section7#b3 {
+	padding-bottom: 90px;	
+}
+
+.section7#b3 {
 	padding-bottom: 90px;
 }
 
@@ -755,23 +759,6 @@
 
 .section7 .ex .item img.m {
 	display: none;
-}
-
-.section7 .links a {
-
-	display: inline-block;
-	width: 256px;
-	height: 35px;
-	margin-right: 10px;
-	padding-top: 4px;
-	vertical-align: middle;
-	box-sizing: border-box;
-	border-radius: 5px;
-	background: #2775de;
-	text-align: center;
-	font-size: 1.6rem;
-	color: #fff;
-	
 }
 
 .section8 {
@@ -1831,6 +1818,10 @@ a, a:active, a:hover {
 	
 	.section7#b3 {
 		padding-bottom: 60px;
+	}
+
+	.section7#b5 {
+		padding-bottom: 0px;	
 	}
 	
 	.section7.line {

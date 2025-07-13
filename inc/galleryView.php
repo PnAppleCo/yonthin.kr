@@ -85,7 +85,7 @@ if(!$_GET['code']) js_action(1,"중요정보를 찾을 수 없습니다. 관리�
                     
 					<!-- 콘텐츠 시작 -->
 					<div class="board_view_wrap">
-						<div class="board_view">
+						<div class="board_view_gd">
 							<?php
 								
 								$loadFile=$_SERVER["DOCUMENT_ROOT"]."/contents/".str_pad($gnbPath[0],2,'0',0)."/".$_GET['code']."_".$_GET['id'].".htm";
