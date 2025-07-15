@@ -6,6 +6,10 @@
 //==================================================================
 //== 기본정보 로드
 include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
+
+//블로그 금융사회복지실천 url
+$blogUrl="https://blog.naver.com/osun68";
+
 ?>
 <!DOCTYPE <?=$doctypeSet;?>>
 <!--[if lt IE 7 ]><html class="no-js ie6 oldie" lang="<?=$languageSet;?>"><![endif]-->
@@ -105,17 +109,12 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 									</div>
 									<div class="links">
 										<div class="link">
-											<a href="/contents.htm?code=3_1#b1"><img src="/img/index/s1_icon2.png" alt="icon"></a>
-											<strong><a href="contents.htm?code=3_4">장애인교육&코칭프로그램</a></strong>
-											<!-- <span># 특허 기술 # 가계부pt # 지출 관리</span> -->
-											<!-- <p>
-												1주부터 8주까지 총 8개의 미션을 클리어하며<br>
-												나에게 맞는 지출관리 방법을 터득하고,<br>
-												수입과 지출의 균형을 맞춥니다.
-											</p> -->
+											<a href="/contents.htm?code=3_4"><img src="/img/index/s1_icon10.png" alt="icon"></a>
+											<strong><a href="/contents.htm?code=3_4">장애인교육 & 코칭</a></strong>											
+											<span>#발달장애인 금전관리 교육</span>
 											<p>
-												#발달장애인 금전관리 교육, 개인코칭 <br>
-												그리고 부모교육 프로그램을 소개합니다. <br><br>
+												개인코칭 그리고 부모교육<br>
+												프로그램을 소개합니다. <br><br>
 											</p>
 
 											<a href="contents.htm?code=3_4">
@@ -124,20 +123,14 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 											</a>
 										</div>
 										<div class="link">
-											<a href="/contents.htm?code=3_1#b2"><img src="/img/index/s1_icon1.png" alt="icon"></a>
-											<strong><a href="contents.htm?code=3_4">블로그 금융사회복지실천</a></strong>
-											<!-- <span># 알맹이청년생활경제지식</span> -->
-											<!-- <p>
-												청년 일상생활에 꼭 필요한 생활경제지식을<br>
-												쉬운 글과 그림으로 학습하며<br>
-												금융상품과 서비스에 대한 결정역량을 높입니다.
-											</p> -->
+											<a href="<?=$blogUrl?>"><img src="/img/index/s1_icon11.png" alt="icon"></a>
+											<strong><a href="<?=$blogUrl?>">블로그 금융사회복지실천</a></strong>											
+											<span>#청년장애인의 경제적자립</span>
 											<p>
-												#청년장애인의 경제적자립 발달장애인<br>
-												 청년들의 자립생활을 지원하기 위해<br>
-												 금전관리를 어떻게 도와줄 것인가?<br>
+												 발달장애인 청년들의 자립생활을<br>
+												 지원하기위해 금전관리를 <br> 어떻게 도와줄 것인가?<br>
 											</p>
-											<a href="contents.htm?code=3_4">
+											<a href="<?=$blogUrl?>">
 												<span>바로가기</span>
 												<img src="/img/index/s1_link.png" alt="icon">
 											</a>
@@ -284,30 +277,57 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 						</div>
 					</div>
 
-					<div class="idx_section2">
-						<!-- 청년 참여 후기 -->
+					<!--// 후기 공모전  -->
+					<div class="idx_section2">				
+						
 						<div class="item1">
-							<div class="idx_title c1">
-								<strong>청년저축클럽<br> 후기공모전 <br> 대상작품</strong>
+							
+							<!-- // pc 타이틀 시작 -->
+							<div class="pc"><img src="/img/index/index_prize_icon_L 2.png"></div>													
+							<div class="idx_title c1" >
+								<strong>청년금육교육<br>후기공모전 수상작</strong>								
+								<p>실제 체험한 청년들의 자유분망한<br> 후기 공모전 수상작 모음</p>													
+								<div class="link">
+									<a href="/inc/galleryList.php?code=5_3">
+										<span>바로가기</span>
+										<img src="/img/index/s1_link.png" alt="icon">
+									</a>
+								</div>
 							</div>
+							<!-- // pc 타이틀 끝 -->
+							
+							<!-- // 모바일 타이틀 시작 -->
+							 <div class="tite-m">
+								<div class="m">
+									<div>
+										<img src="/img/index/index_prize_icon_L 2_m.png">
+									</div>
+									<div>
+										<strong>청년금육교육후기공모전 수상작</strong>	
+									</div>
+								</div>
+								<div class="m">
+									<p>실제 체험한 청년들의 자유분망한 후기 공모전 수상작 모음</p>
+								</div>
+							</div>
+							<!-- // 모바일 타이틀 끝 -->	
+							
 							<div class="links">
-								<a href="toon.html" target="_blank">
-									<img src="/img/temp/5.png" alt="썸네일">
-									<span>만화 부문</span>
-								</a>
-								<a href="toon2.html" target="_blank">
-									<img src="/img/temp/6.png" alt="썸네일">
-									<span>캘리크라피 부문</span>
-								</a>
-							</div>
-						</div>
-						<!-- 나의 독립도 테스트 -->
-						<div class="item2">
-							<div class="idx_title c1">
-								<strong>나의 독립도<br> 테스트</strong>
-							</div>
-							<div class="links">
-								<a href="/contents.htm?code=2_1"><img src="/img/index/test.png" alt="나는 독립적인 사람일까? 자립과 의존 체크 리스트"></a>
+								<div class="prize1">
+									<a href="/inc/galleryView.php?code=5_3&id=2024_1">
+										<img src="/img/index/prize_index01.png">
+									</a>
+								</div>
+								<div class="prize2">
+									<a href="/inc/galleryView.php?code=5_3&id=2024_2">
+										<img src="/img/index/prize_index02.png">
+									</a>
+								</div>
+								<div class="prize3">
+									<a href="/inc/galleryView.php?code=5_3&id=2024_3">
+										<img src="/img/index/prize_index03.png">
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
