@@ -28,6 +28,11 @@
     background-image: url(/img/index/s1_bg4.jpeg);
 }
 
+.idx_section1 .item5 {
+    background-image: url(/img/index/s1_bg5.jpeg);
+}
+
+
 .idx_section1 .item > div {
     width: 1200px;
     margin: 0 auto;
@@ -295,6 +300,12 @@
 .idx_section2 .link{
     margin-left: 0px;
     margin-top: 10px;
+}
+
+.prize3 .m,
+.prize2 .m,
+.prize1 .m {
+    display: none;
 }
 
 .prize1{
@@ -722,9 +733,10 @@
 
     .idx_section2 {
         width: 100%;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        margin-top: 20px;
+        margin-bottom: 40px;
         box-sizing: border-box;
+        
     }
     .idx_section2 .idx_title {
         float: none;
@@ -745,18 +757,9 @@
         padding-left: 0px;
     }
 
-    .idx_section2 .links::before {
-        top: -40px;
-        left: auto;
-        right: -30px;
-        width: 100px;
-        height: 100px;
-    }
-
     .idx_section2 .item1 .links a {
         display: block;
         width: 100%;
-        margin-top: 20px;
     }
 
     .idx_section2 .item1 .links a:first-child {
@@ -766,19 +769,7 @@
     .idx_section2 .item1 .links a img {
         width: 100%;
     }
-
-    .idx_section2 .item2 {
-        margin-top: 40px;
-    }
-
-    .idx_section2 .item2 .links {
-        margin-top: 20px;
-    }
-
-    .idx_section2 .item2 .links a img {
-        width: 100%;
-    }
-
+    
     .idx_section2 .item1 .idx_title .c1,
     .idx_section2 .item1 .pc{
         display: none;
@@ -787,14 +778,20 @@
     .idx_section2 .pc,
     .idx_section2 .item1 .idx_title {
         display: none;
-    }     
+    }
+    
+    .prize3 .pc,
+    .prize2 .pc,
+    .prize1 .pc{
+        display: none;
+    }
         
     .prize3,
     .prize2,
     .prize1{
         position: static;
         margin-left: 0px;
-        margin-top: 20px;
+        margin-top: 0px;
     }
     
     .prize3 img,
@@ -804,14 +801,19 @@
         height: auto;
     }
 
-    /*  모바일 전용 */
+    .prize2 img,
+    .prize1 img{
+        padding-bottom: 20px;
+    }
+
+    /*  모바일 전용 START */
     .idx_section2 .m{
         display: flex;
         align-items: center;
     }
 
     .idx_section2 .tite-m{
-        margin-bottom: -30px;
+        margin-bottom: 10px;
     }
 
     .m strong{
@@ -837,6 +839,8 @@
     .idx_section2 .pc{
         display: none;
     }
+
+    /*  모바일 전용 END */
   
     .idx_section3_wrap {
         height: auto;
@@ -1043,4 +1047,9 @@
     .idx_section3_slider .item img {
         width: 80px;
     }    
+
+     .idx_section1 .title strong {
+        font-size: 2.5rem;
+     }
+
 }
