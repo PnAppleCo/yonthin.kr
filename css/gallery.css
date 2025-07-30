@@ -4,6 +4,13 @@
 	border-bottom: 1px solid #c5c5c5;
 }
 
+.board_view_gd .cont_wrap {
+	padding: 40px 20px;
+	line-height: 180%;
+	font-size: 2rem;
+	color: #666;
+}
+
 .button#pc a{
     display: flex;
 	width: 241px;
@@ -305,9 +312,13 @@
 }
 
 
-
 /* 미디어 쿼리: 작은 화면에서는 이미지를 한 줄에 하나씩 */
 @media (max-width: 768px) {
+
+    .board_view_gd .cont_wrap {
+		padding: 20px 0;
+		font-size: 1.4rem;
+	}
      
     .button a {
         margin-top: 40px;
