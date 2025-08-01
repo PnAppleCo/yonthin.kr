@@ -247,7 +247,7 @@ function poupZone($rType) {
 // 		}
 // 		return $rdata;
 // }
-function popupZones(): string {
+function poupZones(): string {
     global $db, $popupDir;
 
     $rdata = '';

@@ -92,7 +92,7 @@ $blogUrl="https://blog.naver.com/osun68";
 			<hr />
 			<h2 class="blind"><a name="content-quick" id="content-quick" href="#content-quick">콘텐츠</a></h2>
 			<div id="icontentsWrap">
-			  <div id="indexArea">
+				<div id="indexArea">
 					<!-- 인덱스 섹션 시작 -->
 					<!-- 상단 슬라이드 -->
 					<div class="idx_section1_wrap">
@@ -322,8 +322,7 @@ $blogUrl="https://blog.naver.com/osun68";
 					</div>
 
 					<!--// 후기 공모전  -->
-					<div class="idx_section2">				
-						
+					<div class="idx_section2">
 						<div class="item1">							
 							<!-- // pc 타이틀 시작 -->
 							<div class="pc"><img src="/img/index/index_prize_icon_L 2.png"></div>													
@@ -481,19 +480,7 @@ $blogUrl="https://blog.naver.com/osun68";
 								<strong>주요 알림</strong>
 							</div>
 							<div class="idx_imgbanner_slider">
-								<!--//php변환함수 popupZones();-->
 								<?=poupZones();?>
-<!--
-								<div class="item">
-									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
-								</div>
-								<div class="item">
-									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
-								</div>
-								<div class="item">
-									<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/4.png" alt="청년의 돈 체험프로젝트 신청하기"></a>
-								</div>
- -->
 							</div>
 						</div>
 					</div>
@@ -501,33 +488,18 @@ $blogUrl="https://blog.naver.com/osun68";
 				</div>
 			</div>
 			<h2 class="blind"><a name="footer-quick" id="footer-quick" href="#navi-quick">카피라이터</a></h2>
-			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>
-			<!--
-			<div class="idx_popup_wrap">
-				<div class="idx_popup">
-					<button class="bt_idx_popup_close" title="닫기"><img src="/img/bt_close_w.png" alt="닫기"></button>
-					<div class="view">
-						<a href="https://url.kr/vu3izj" target="_blank"><img src="/img/temp/3.jpeg" alt="청년의 돈 체험프로젝트 신청하기"></a>
-					</div>
-				</div>
+			<?php include $_SERVER["DOCUMENT_ROOT"]."/inc/footInc.htm";?>			
+		</div>
+		<div class="popupWrap popup1">
+			<div class="bg"></div>
+			<div class="popup">
+				<button class="bt_popup_close">닫기</button>
+				<?php
+					//$printPops=poupLayer();
+					//if($printPops) echo $printPops;
+				?>
 			</div>
-			-->
 		</div>
-		<div id="gotop" class="gotop">
-			<div></div>
-		</div>
-
-
-	<div class="popupWrap popup1">
-		<div class="bg"></div>
-		<div class="popup">
-			<button class="bt_popup_close">닫기</button>
-			<?php
-				//$printPops=poupLayer();
-				//if($printPops) echo $printPops;
-			?>
-		</div>
-	</div>
 	</body>
 </html>
 <?php addCount();  $db->disconnect();  ?>

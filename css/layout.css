@@ -197,6 +197,11 @@ body.noScroll {
     font-size: 0;
 }
 
+
+#footerWrap .menus img{    
+    float: right;
+}
+
 #footerWrap .menus a {
     position: relative;
     display: inline-block;
@@ -580,6 +585,13 @@ body.noScroll {
         height: auto;
         padding: 10px 30px;
         box-sizing: border-box;
+    }
+
+    #footerWrap .menus img{
+        float: none;
+        display: inline-block;
+        width: 100%;
+        margin-top: 10px;
     }
 
     #footerWrap .menus a {
