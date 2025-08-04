@@ -52,13 +52,12 @@ $wtoolType="2";
 //== 세션 환경설정 ========================================//
 //========================================================//
 session_save_path($_SERVER["DOCUMENT_ROOT"]."/nwebnics/sessionDir/");
-ini_set("session.cache_expire", 60);											//= 세션 유효시간 : 분
-ini_set("session.gc_maxlifetime", 3600);										//= 세션 가비지 컬렉션(로그인시 세션지속 시간) : 초
+ini_set("session.cache_expire", 60);																		//= 세션 유효시간 : 분
+ini_set("session.gc_maxlifetime", 3600);																//= 세션 가비지 컬렉션(로그인시 세션지속 시간) : 초
 ini_set('memory_limit',-1);
 ini_set("display_errors", 1);
 //error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-//error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING ^ E_STRICT);
-error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING);
+error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING ^ E_STRICT);
 //session_cache_limiter('nocache, must-revalidate');
 session_start();
 

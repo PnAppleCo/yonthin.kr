@@ -114,8 +114,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/nwebnics/inc/configInc.php";
 
 										<div style="clear:both; margin-top:120px;">
 											<dl>
-												<dt style="text-align:center;"><input type="text" name="mId" size="15" maxlength="20" class="id_blur" style="width:192px; padding:6px 5px; font-size:13px;" value="admin" onfocus="this.className='id_focus'" onblur="if ( this.value == '' ) { this.className='id_blur' }" placeholder="아이디" /></dt>
-												<dt style="text-align:center;"><input type="password" name="pass" size="15" maxlength="20" style="width:192px; padding:6px 5px; font-size:13px; margin-top:10px;" value="adm7052" onfocus="this.className='pw_focus'" onblur="if ( this.value == '' ) { this.className='pw_blur' }" onkeydown="if (event.keyCode == 13) divLogin_admin();" class="pw_blur" placeholder="비밀번호" /></dt>
+												<!--//계정정보 admin / adm7052 -->
+												<dt style="text-align:center;"><input type="text" name="mId" size="15" maxlength="20" class="id_blur" style="width:192px; padding:6px 5px; font-size:13px;" onfocus="this.className='id_focus'" onblur="if ( this.value == '' ) { this.className='id_blur' }" placeholder="아이디" /></dt>
+												<dt style="text-align:center;"><input type="password" name="pass" size="15" maxlength="20" style="width:192px; padding:6px 5px; font-size:13px; margin-top:10px;" onfocus="this.className='pw_focus'" onblur="if ( this.value == '' ) { this.className='pw_blur' }" onkeydown="if (event.keyCode == 13) divLogin_admin();" class="pw_blur" placeholder="비밀번호" /></dt>
 												<!-- <dd style="text-align:center; padding-top:10px;"><span><input type="checkbox" name="saveid" value="ok" class="align_left_middle" /> ID저장</span></dd> --><br />
 											</dl>
 											<div class="btn-r" style="text-align:center;">

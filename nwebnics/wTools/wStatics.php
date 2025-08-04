@@ -196,4 +196,4 @@ if($_GET['sStandard']==1) {
 		</div>
 	</body>
 </html>
-<?$db->disconnect();?>
+<?php $db->disconnect();?>

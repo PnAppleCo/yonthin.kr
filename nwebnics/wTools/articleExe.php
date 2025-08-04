@@ -111,6 +111,14 @@ if($board_info['onlySecret']>0) $_POST['secret']=1;
 $subject = addslashes($_POST['subject']);
 $ucontents = addslashes($_POST['ucontents']);
 
+// tinyint 값 공백을 0 처리 - MYSQL 버전 5.7 이상 대응
+$html = (isset($_POST['html']) && trim($_POST['html']) !== '') ? $_POST['html'] : 0;
+$auto_enter = (isset($_POST['auto_enter']) && trim($_POST['auto_enter']) !== '') ? $_POST['auto_enter'] : 0;
+$secret = (isset($_POST['secret']) && trim($_POST['secret']) !== '') ? $_POST['secret']: 0;
+$re_email = (isset($_POST['re_email']) && trim($_POST['re_email']) !== '') ? $_POST['re_email'] : 0;
+$notice = (isset($_POST['notice']) && trim($_POST['notice']) !== '') ? $_POST['notice'] : 0;
+$approve = (isset($_POST['approve']) && trim($_POST['approve']) !== '') ? $_POST['approve'] : 0;
+
 //== 등록 처리 ====================================================================================
 if($_GET['mode']=="add") {
 	//== 새로 등록할 고유번호 생성
@@ -119,7 +127,7 @@ if($_GET['mode']=="add") {
 	if($rows[0]) $new_idx = $rows[0] + 1;else $new_idx = 1;
 	if($rows[1]) $new_fid = $rows[1] + 1; else $new_fid = 1;
 
-	$mSqlStr = "INSERT INTO $b_cfg_tb[1] (idx, code, fid, name, email, homepage, subject, ucontents, keytag, passwd, thread, html, auto_enter, secret, re_email, notice, approve, filename0, filename1, filename2, filename3, filename4, filename5, filename6, filename7, filename8, mem_id, b_class, signdate, signtime, etc01, etc02, etc03, youtube, userip) VALUES ($new_idx, '$_POST[code]', $new_fid, '$_POST[name]', '$_POST[email]', '$homepy', '$subject', '$ucontents', '$_POST[keytag]', password('$_POST[passwd]'), 'A', '$_POST[html]', '$_POST[auto_enter]', '$_POST[secret]', '$_POST[re_email]', '$_POST[notice]', '$_POST[approve]', '$filename[0]', '$filename[1]','$filename[2]', '$filename[3]', '$filename[4]', '$filename[5]','$filename[6]', '$filename[7]','$filename[8]', '$_SESSION[my_id]', '$_POST[b_class]', now(), now(), '$_POST[etc01]', '$_POST[etc02]', '$_POST[etc03]', '$_POST[youtube]', '$userIp')";
+	$mSqlStr = "INSERT INTO $b_cfg_tb[1] (idx, code, fid, name, email, homepage, subject, ucontents, keytag, passwd, thread, html, auto_enter, secret, re_email, notice, approve, filename0, filename1, filename2, filename3, filename4, filename5, filename6, filename7, filename8, mem_id, b_class, signdate, signtime, etc01, etc02, etc03, youtube, userip, svc_reply) VALUES ($new_idx, '$_POST[code]', $new_fid, '$_POST[name]', '$_POST[email]', '$homepy', '$subject', '$ucontents', '$_POST[keytag]', '$_POST[passwd]', 'A', '$html', '$auto_enter', '$secret', '$re_email', '$notice', '$approve', '$filename[0]', '$filename[1]','$filename[2]', '$filename[3]', '$filename[4]', '$filename[5]','$filename[6]', '$filename[7]','$filename[8]', '$_SESSION[my_id]', '$_POST[b_class]', now(), now(), '$_POST[etc01]', '$_POST[etc02]', '$_POST[etc03]', '$_POST[youtube]', '$userIp','')";
 
 //== 수정 처리 ====================================================================================
 }else if($_GET['mode']=="edit") {
@@ -174,7 +182,7 @@ if($_GET['mode']=="add") {
 
 	if($_POST['signdate']) $addStr = ", signdate='$_POST[signdate]', signtime='$_POST[signtime]'";
 
-	$mSqlStr = "UPDATE $b_cfg_tb[1] SET code='$_POST[code]', name='$_POST[name]', subject='$subject', email='$_POST[email]', homepage='$homepy', ucontents='$ucontents', keytag='$_POST[keytag]', html='$_POST[html]', auto_enter='$_POST[auto_enter]', secret='$_POST[secret]', re_email='$_POST[re_email]', filename0='$filename[0]', filename1='$filename[1]', filename2='$filename[2]', filename3='$filename[3]', filename4='$filename[4]', filename5='$filename[5]', filename6='$filename[6]', filename7='$filename[7]', filename8='$filename[8]', b_class='$_POST[b_class]', etc01='$_POST[etc01]', etc02='$_POST[etc02]', etc03='$_POST[etc03]', youtube='$_POST[youtube]'".$addStr." WHERE idx=$_GET[idx]";
+	$mSqlStr = "UPDATE $b_cfg_tb[1] SET code='$_POST[code]', name='$_POST[name]', subject='$subject', email='$_POST[email]', homepage='$homepy', ucontents='$ucontents', keytag='$_POST[keytag]', html='$html', auto_enter='$auto_enter', secret='$secret', re_email='$re_email', filename0='$filename[0]', filename1='$filename[1]', filename2='$filename[2]', filename3='$filename[3]', filename4='$filename[4]', filename5='$filename[5]', filename6='$filename[6]', filename7='$filename[7]', filename8='$filename[8]', b_class='$_POST[b_class]', etc01='$_POST[etc01]', etc02='$_POST[etc02]', etc03='$_POST[etc03]', youtube='$_POST[youtube]'".$addStr." WHERE idx=$_GET[idx]";
 
 //== 삭제 처리 ====================================================================================
 }else if($_GET['mode']=="del" && $_GET['idx']) {
@@ -218,6 +226,11 @@ if($_GET['mode']=="add") {
 }else { $p_ment="오류가 발생하였습니다."; }
 
 $rst=$db->query($mSqlStr);
-if(DB::isError($rst)) die($rst->getMessage()); else redirect(1,"articleList.php?idx=".$_GET['idx']."&page=".$_GET['page'],$p_ment,1);
+if(DB::isError($rst)){
+	echo '디버깅 정보 : '. $rst->getDebugInfo();
+	die($rst->getMessage());
+} else {
+	redirect(1,"articleList.php?idx=".$_GET['idx']."&page=".$_GET['page'],$p_ment,1);
+}
 $db->disconnect();
 ?>
